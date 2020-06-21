@@ -23,6 +23,7 @@ $cliente = Cliente::obtenerPorId($id);
 	<?=$cliente->getNumeroDocumento();?>
 	<br>
 	<?=$cliente->getFechaNacimiento();?>
+	<br>
 	<!--<?php require_once '../../menu.php';?>-->
 </body>
 </html>

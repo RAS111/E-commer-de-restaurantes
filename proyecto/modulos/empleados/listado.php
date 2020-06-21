@@ -59,10 +59,6 @@ $listadoEmpleados = Empleado::obtenerTodos();
 					<a href="modificar.php?id=<?=$empleado->getIdEmpleado();?>">
 						<img src="../../imagenes/iconos/update.png" title="Modificar Empleado">
 					</a>
-					-
-					<a href="eliminar.php?id=<?=$empleado->getIdEmpleado();?>">
-						<img src="../../imagenes/iconos/delete.png" title="Eliminar Empleado">
-					</a>
 				</td>
 			</tr>
 

@@ -1,0 +1,109 @@
+<?php
+
+require_once 'MySQL.php';
+require_once 'Item.php';
+
+class Menu extends Item {
+
+	private $_idMenu;
+	private $_estado;
+	private $_receta;
+
+
+    /**
+     * @return mixed
+     */
+    public function getIdMenu()
+    {
+        return $this->_idMenu;
+    }
+
+    /**
+     * @param mixed $_idMenu
+     *
+     * @return self
+     */
+    public function setIdMenu($_idMenu)
+    {
+        $this->_idMenu = $_idMenu;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEstado()
+    {
+        return $this->_estado;
+    }
+
+    /**
+     * @param mixed $_estado
+     *
+     * @return self
+     */
+    public function setEstado($_estado)
+    {
+        $this->_estado = $_estado;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReceta()
+    {
+        return $this->_receta;
+    }
+
+    /**
+     * @param mixed $_receta
+     *
+     * @return self
+     */
+    public function setReceta($_receta)
+    {
+        $this->_receta = $_receta;
+
+        return $this;
+    }
+
+    public function guardar() {
+    	parent::guardar();
+    	$sql = "INSERT INTO Menu (id_menu, id_menu_estado, id_item)"
+    		 . "VALUES (NULL, $this->_estado, $this->_idItem)";
+
+    	$mysql = new MySQL();
+        $idInsertado = $mysql->insertar($sql);
+
+        $this->_idMenu = $idInsertado;
+    }
+
+    public function actualizar() {
+    	parent::actualizar();
+    	$sql = "UPDATE menu WHERE id_menu = $this->_idMenu";
+
+    	$mysql = new MySQL();
+        $mysql->actualizar($sql);
+    }
+
+    public static function obtenerPorId() {
+
+    }
+
+    private function _generarMenu() {
+
+    }
+
+    public static function obtenerTodos() {
+
+    }
+
+    private function _generarListadoMenus() {
+        
+    }
+}
+
+?>

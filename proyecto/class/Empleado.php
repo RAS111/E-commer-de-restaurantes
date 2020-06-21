@@ -52,9 +52,7 @@ class Empleado extends Persona {
     }
 
     public static function obtenerTodos() {
-        $sql = "SELECT persona.id_persona, persona.nombre, persona.apellido, empleado.id_empleado"
-             . "FROM persona "
-             . "INNER JOIN empleado ON empleado.id_persona = persona.id_persona";
+        $sql = "SELECT persona.id_persona, persona.nombre, persona.apellido, empleado.id_empleado FROM persona INNER JOIN empleado ON empleado.id_persona = persona.id_persona";
 
         $mysql = new MySQL();
         $datos = $mysql->consultar($sql);

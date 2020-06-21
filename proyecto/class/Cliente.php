@@ -52,7 +52,7 @@ class Cliente extends Persona{
     }
 
     public static function obtenerTodos() {
-        $sql = "SELECT persona.id_persona, persona.nombre, persona.apellido, cliente.id_cliente"
+        $sql = "SELECT persona.id_persona, persona.nombre, persona.apellido, cliente.id_cliente "
              . "FROM persona "
              . "INNER JOIN cliente ON cliente.id_persona = persona.id_persona";
 

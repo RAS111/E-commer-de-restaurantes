@@ -1,6 +1,7 @@
 <?php
 
 require_once 'MySQL.php';
+require_once 'Direccion.php';
 
 class Persona {
 	protected $_idPersona;
@@ -12,6 +13,7 @@ class Persona {
     protected $_estado;
 	protected $_idTipoDocumento;
 	
+    public $direccion;
 
     const ACTIVO = 1;
 
@@ -179,6 +181,10 @@ class Persona {
         $this->_estado = $_estado;
 
         return $this;
+    }
+
+    public function setDireccion($direccion) {
+         $this->direccion = Direccion::obtenerPorIdPersona($this->_idPersona);
     }
    
     public function guardar() {

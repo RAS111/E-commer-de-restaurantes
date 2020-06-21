@@ -59,10 +59,6 @@ $listadoClientes = Cliente::obtenerTodos();
 					<a href="modificar.php?id=<?=$cliente->getIdCliente();?>">
 						<img src="../../imagenes/iconos/update.png" title="Modificar cliente">	
 					</a>
-					-
-					<a href="eliminar.php?id=<?=$cliente->getIdCliente();?>">
-						<img src="../../imagenes/iconos/delete.png" title="Eliminar cliente">
-					</a>
 					
 				</td>
 			</tr>

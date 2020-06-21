@@ -98,7 +98,7 @@ class Proveedor extends Persona{
 
     public static function obtenerTodos() {
         $sql = "SELECT persona.id_persona, persona.nombre, persona.apellido, proveedor.id_proveedor,"
-             . "proveedor.razon_social, proveedor.cuil"
+             . "proveedor.razon_social "
              . "FROM persona "
              . "INNER JOIN proveedor ON proveedor.id_persona = persona.id_persona";
 
@@ -119,7 +119,6 @@ class Proveedor extends Persona{
             $proveedor->_idProveedor = $registro['id_proveedor'];
             $proveedor->_idPersona = $registro['id_persona'];
             $proveedor->_razonSocial = $registro['razon_social'];
-            $proveedor->_cuil = $registro['cuil'];
             $listado[] = $proveedor;
         }
         return $listado;
