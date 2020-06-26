@@ -24,6 +24,7 @@ $cliente = Cliente::obtenerPorId($id);
 	<br>
 	<?=$cliente->getFechaNacimiento();?>
 	<br>
-	<!--<?php require_once '../../menu.php';?>-->
+	
+	<?php require_once '../../menu.php';?>
 </body>
 </html>

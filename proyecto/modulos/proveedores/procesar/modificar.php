@@ -26,7 +26,7 @@ $proveedor->setSexo($sexo);
 $proveedor->setFechaNacimiento($fechaNacimiento);
 $proveedor->setIdTipoDocumento($tipoDocumento);
 $proveedor->setNumeroDocumento($numeroDocumento);
-$proveedor->setRazonSocia($razonSocial);
+$proveedor->setRazonSocial($razonSocial);
 $proveedor->setCuil($cuil);
 
 $proveedor->actualizar();

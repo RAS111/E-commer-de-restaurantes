@@ -134,7 +134,7 @@ class Item {
     }
 
     public function __toString() {
-        return $this->nombre . ", " . $this->precio;
+        return $this->_nombre . ", " . $this->_precio;
     }  
 }
 

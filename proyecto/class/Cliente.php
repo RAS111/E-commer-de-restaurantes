@@ -26,7 +26,7 @@ class Cliente extends Persona{
         return $this;
     }
 
-     public static function obtenerPorId($id) {
+    public static function obtenerPorId($id) {
         $sql = "SELECT * FROM cliente INNER JOIN persona ON cliente.id_persona = persona.id_persona WHERE id_cliente =" .$id;
 
         $mysql = new MySQL();

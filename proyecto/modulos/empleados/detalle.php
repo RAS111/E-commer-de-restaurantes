@@ -22,7 +22,7 @@ $empleado = Empleado::obtenerPorId($id);
 	<?= $empleado->getNumeroDocumento(); ?>
 	<br>
 	<?= $empleado->getFechaNacimiento(); ?>
-
-	<!--<?php require_once '../../menu.php';?>-->
+	<br>
+	<?php require_once '../../menu.php';?>
 </body>
 </html>

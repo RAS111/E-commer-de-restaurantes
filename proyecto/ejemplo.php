@@ -13,13 +13,13 @@ require_once 'class/Menu.php';
 require_once 'class/Producto.php';
 require_once 'class/Rubro.php';
 
-$item = new Item("Coca-cola", 120);
+/*$item = new Item("Coca-cola", 120);
 $item->setRubro(1);
 
 $item->guardar();
 
 highlight_string(var_export($item,true));
-
+*/
 
 /*$cliente = new Cliente("Mariano", "Fernandez");
 $cliente->setSexo('Masculino');

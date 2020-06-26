@@ -1,11 +1,13 @@
 <?php
 
 require_once '../../class/Usuario.php';
+require_once '../../class/TipoDocumento.php';
 
 $id = $_GET['id'];
 
 $usuario = Usuario::obtenerPorId($id);
 
+$listadoTipoDocumento = TipoDocumento::obtenerTodos();
 ?>
 
 <!DOCTYPE html>
@@ -41,6 +43,21 @@ $usuario = Usuario::obtenerPorId($id);
 		<label>Tipo Documento: </label>
 		<select name="cboTipoDocumento">
 			<option value="0">Seleccionar</option>
+
+			<?php
+			foreach ($listadoTipoDocumento as $tipoDocumento):
+				$selected = '';
+				if ($usuario->getIdTipoDocumento() == $tipoDocumento->getIdTipoDocumento()) {
+					$selected = "SELECTED";
+				}
+			?>
+
+				<option value="<?php echo $tipoDocumento->getIdTipoDocumento(); ?>" <?php echo $selected; ?>>
+					<?php echo $tipoDocumento; ?>
+				</option>
+
+			<?php endforeach ?>
+
 		</select>
 		<br><br> <!-- Salto de lineas -->
 
@@ -59,6 +76,6 @@ $usuario = Usuario::obtenerPorId($id);
 		 <input type="submit" name="btnActualizar" value="Actualizar">			
 
 	</form>
-	<!--<?php require_once '../../menu.php';?>-->
+	<?php require_once '../../menu.php';?>
 </body>
 </html>

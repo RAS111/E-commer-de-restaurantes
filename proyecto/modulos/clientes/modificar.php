@@ -1,10 +1,12 @@
 <?php
 
 require_once '../../class/Cliente.php';
+require_once '../../class/TipoDocumento.php';
 
 $id = $_GET['id'];
 
 $cliente = Cliente::obtenerPorId($id);
+$listadoTipoDocumento = TipoDocumento::obtenerTodos();
 
 ?>
 
@@ -40,6 +42,21 @@ $cliente = Cliente::obtenerPorId($id);
 		<label>Tipo Documento: </label>
 		<select name="cboTipoDocumento">
 			<option value="0">Seleccionar</option>
+
+			<?php
+			foreach ($listadoTipoDocumento as $tipoDocumento):
+				$selected = '';
+				if ($cliente->getIdTipoDocumento() == $tipoDocumento->getIdTipoDocumento()) {
+					$selected = "SELECTED";
+				}
+			?>
+
+				<option value="<?php echo $tipoDocumento->getIdTipoDocumento(); ?>" <?php echo $selected; ?>>
+					<?php echo $tipoDocumento; ?>
+				</option>
+
+			<?php endforeach ?>
+
 		</select>
 		<br><br> <!-- Salto de lineas -->
 
@@ -50,6 +67,7 @@ $cliente = Cliente::obtenerPorId($id);
 
 		 <input type="submit" name="btnGuardar" value="Actualizar">			
 	</form>
-	<!--<?php require_once '../../menu.php';?>-->
+	<br>
+	<?php require_once '../../menu.php';?>
 </body>
 </html>

@@ -200,7 +200,8 @@ class Persona {
 
     public function actualizar() {
         $sql = "UPDATE Persona SET nombre = '$this->_nombre', apellido = '$this->_apellido', sexo = '$this->_sexo', "
-             . "numero_documento = '$this->_numeroDocumento', fecha_nacimiento = '$this->_fechaNacimiento' "
+             . "numero_documento = '$this->_numeroDocumento', fecha_nacimiento = '$this->_fechaNacimiento', "
+             . "id_tipo_documento = $this->_idTipoDocumento "
              . "WHERE id_persona = $this->_idPersona";
 
         //echo $sql;

@@ -4,7 +4,7 @@ require_once '../../class/Proveedor.php';
 
 $id = $_GET['id'];
 
-$usuario = Proveedor::obtenerPorId($id);
+$proveedor = Proveedor::obtenerPorId($id);
 
 ?>
 
@@ -23,6 +23,6 @@ $usuario = Proveedor::obtenerPorId($id);
 	<br>
 	<?= $proveedor->getFechaNacimiento(); ?>
 	<br>
-	<!--<?php require_once '../../menu.php';?>-->
+	<?php require_once '../../menu.php';?>
 </body>
 </html>

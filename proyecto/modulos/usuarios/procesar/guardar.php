@@ -19,7 +19,7 @@ if (empty(trim($nombre))) {
 
 
 $usuario = new Usuario($nombre, $apellido);
-$usuario->setSexo($sexo)
+$usuario->setSexo($sexo);
 $usuario->setFechaNacimiento($fechaNacimiento);
 $usuario->setIdTipoDocumento($tipoDocumento);
 $usuario->setNumeroDocumento($numeroDocumento);

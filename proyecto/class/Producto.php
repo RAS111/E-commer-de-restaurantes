@@ -109,20 +109,51 @@ class Producto extends Item {
         $mysql->actualizar($sql);
     }
 
-    public static function obtenerPorId() {
+    public static function obtenerPorId($id) {
+        $sql = "SELECT * FROM producto INNER JOIN item ON item.id_item = producto.id_item WHERE id_producto = '$id' ";
+
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $data = $result->fetch_assoc();
+        $producto = self::_generarProducto($data);
+        return $producto;
 
     }
 
-    private function _generarProducto() {
-
+    private function _generarProducto($data) {
+        $producto = new Producto($data['nombre'], $data['precio']);
+        $producto->_idProducto = $data['id_producto'];
+        $producto->_idItem = $data['id_item'];
+        $producto->_rubro = $data['id_rubro'];
+        $producto->_stockActual = $data['stock_actual'];
+        return $producto;
     }
 
     public static function obtenerTodos() {
+        $sql = "SELECT item.id_item, item.nombre, item.precio, producto.stock_actual, producto.id_producto "
+             . "FROM item "
+             . "INNER JOIN producto ON producto.id_item = item.id_item ";
 
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarListadoProductos($datos);
+
+        return $listado;
     }
 
-    private function _generarListadoProductos() {
-        
+    private function _generarListadoProductos($datos) {
+        $listado = array();
+        while ($registro = $datos->fetch_assoc()) {
+            $producto = new Producto($registro['nombre'], $registro['precio']);
+            $producto->_idProducto = $registro['id_producto'];
+            $producto->_idItem = $registro['id_item'];
+            $listado[] = $producto;
+        }
+        return $listado;
     }
 }
 

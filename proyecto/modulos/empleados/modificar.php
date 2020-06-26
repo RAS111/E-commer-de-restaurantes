@@ -1,10 +1,14 @@
 <?php
 
 require_once '../../class/Empleado.php';
+require_once '../../class/TipoDocumento.php';
+
 
 $id = $_GET['id'];
 
 $empleado = Empleado::obtenerPorId($id);
+
+$listadoTipoDocumento = TipoDocumento::obtenerTodos();
 
 ?>
 
@@ -40,6 +44,21 @@ $empleado = Empleado::obtenerPorId($id);
 		<label>Tipo Documento: </label>
 		<select name="cboTipoDocumento">
 			<option value="0">Seleccionar</option>
+
+			<?php
+			foreach ($listadoTipoDocumento as $tipoDocumento):
+				$selected = '';
+				if ($empleado->getIdTipoDocumento() == $tipoDocumento->getIdTipoDocumento()) {
+					$selected = "SELECTED";
+				}
+			?>
+
+				<option value="<?php echo $tipoDocumento->getIdTipoDocumento(); ?>" <?php echo $selected; ?>>
+					<?php echo $tipoDocumento; ?>
+				</option>
+
+			<?php endforeach ?>
+
 		</select>
 		<br><br> <!-- Salto de lineas -->
 
@@ -51,6 +70,7 @@ $empleado = Empleado::obtenerPorId($id);
 		<input type="submit" name="btnGuardar" value="Actualizar">			
 
 	</form>
-	<!--<?php require_once '../../menu.php';?>-->
+	<br>
+	<?php require_once '../../menu.php';?>
 </body>
 </html>

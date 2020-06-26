@@ -1,3 +1,11 @@
+<?php
+
+require_once '../../class/TipoDocumento.php';
+
+$listadoTipoDocumento = TipoDocumento::obtenerTodos();
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +35,16 @@
 
 			<label>Tipo Documento: </label>
 			<select name="cboTipoDocumento">
-			    <option value="0">Seleccionar</option>
+				<option value="0">Seleccionar</option>
+
+				<?php foreach ($listadoTipoDocumento as $tipoDocumento): ?>
+
+					<option value="<?php echo $tipoDocumento->getIdTipoDocumento(); ?>">
+						<?php echo $tipoDocumento; ?>
+					</option>
+
+				<?php endforeach ?>
+
 			</select>
 			<br><br> <!-- Salto de lineas -->
 
@@ -38,6 +55,7 @@
 		    <input type="submit" name="btnGuardar" value="Guardar">			
 
 		</form>
-	<!--<?php require_once '../../menu.php';?>-->
+		<br>
+	<?php require_once '../../menu.php';?>
 </body>
 </html>

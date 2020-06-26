@@ -65,6 +65,7 @@ $listadoEmpleados = Empleado::obtenerTodos();
 		<?php endforeach ?>
 
 	</table>
-	<!--<?php require_once '../../menu.php';?>-->
+	<br>
+	<?php require_once '../../menu.php';?>
 </body>
 </html>

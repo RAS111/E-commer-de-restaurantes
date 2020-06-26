@@ -23,6 +23,6 @@ $usuario = Usuario::obtenerPorId($id);
 	<br>
 	<?=$usuario->getFechaNacimiento();?>
 	<br>
-	<!--<?php require_once '../../menu.php';?>-->
+	<?php require_once '../../menu.php';?>
 </body>
 </html>
