@@ -9,7 +9,6 @@ class Menu extends Item {
 	private $_estado;
 	private $_receta;
 
-
     /**
      * @return mixed
      */
@@ -72,8 +71,8 @@ class Menu extends Item {
 
     public function guardar() {
     	parent::guardar();
-    	$sql = "INSERT INTO Menu (id_menu, id_menu_estado, id_item)"
-    		 . "VALUES (NULL, $this->_estado, $this->_idItem)";
+    	$sql = "INSERT INTO Menu (id_menu, id_menu_estado, id_item) "
+    		 . "VALUES (NULL, $this->_estado, $this->_idItem) ";
 
     	$mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
@@ -83,26 +82,58 @@ class Menu extends Item {
 
     public function actualizar() {
     	parent::actualizar();
-    	$sql = "UPDATE menu WHERE id_menu = $this->_idMenu";
+    	$sql = "UPDATE menu WHERE id_menu = $this->_idMenu ";
 
     	$mysql = new MySQL();
         $mysql->actualizar($sql);
     }
 
-    public static function obtenerPorId() {
+    public static function obtenerPorId($id) {
+        $sql = "SELECT * FROM menu INNER JOIN item ON item.id_item = menu.id_item WHERE id_menu =  '$id' ";
 
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $data = $result->fetch_assoc();
+        $menu = self::_generarMenu($data);
+       
+        return $menu;
     }
 
-    private function _generarMenu() {
-
+    private function _generarMenu($data) {
+        $menu = new Menu($data['nombre'], $data['precio']);
+        $menu->_idMenu = $data['id_menu'];
+        $menu->_idItem = $data['id_item'];
+        $menu->_idRubro = $data['id_rubro'];
+        $menu->_estado = $data['id_menu_estado'];
+        return $menu;
     }
 
     public static function obtenerTodos() {
+        $sql = "SELECT item.id_item, item.nombre, item.precio, menu.id_menu_estado, menu.id_menu "
+             . "FROM item "
+             . "INNER JOIN menu ON menu.id_item = item.id_item ";
 
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarListadoMenus($datos);
+
+        return $listado;
     }
 
-    private function _generarListadoMenus() {
-        
+    private function _generarListadoMenus($datos) {
+        $listado = array();
+        while ($registro = $datos->fetch_assoc()) {
+            $menu = new Menu($registro['nombre'], $registro['precio']);
+            $menu->_idMenu = $registro['id_menu'];
+            $menu->_idItem = $registro['id_item'];
+            $menu->_estado = $registro['id_menu_estado'];
+            $listado[] = $menu;
+        }
+        return $listado;
     }
 }
 

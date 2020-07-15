@@ -3,17 +3,16 @@
 require_once 'MySQL.php';
 
 class Item {
-
 	protected $_idItem;
 	protected $_nombre;
 	protected $_precio;
-	protected $_rubro;
+	protected $_idRubro;
 	protected $_arrImagen;
 
-    public function __construct($nombre, $precio) {
-        $this->_nombre = $nombre;
-        $this->_precio = $precio;
-    }
+	public function __construct($nombre, $precio){
+		$this->_nombre = $nombre;
+		$this->_precio = $precio;
+	}
 
     /**
      * @return mixed
@@ -78,19 +77,19 @@ class Item {
     /**
      * @return mixed
      */
-    public function getRubro()
+    public function getIdRubro()
     {
-        return $this->_rubro;
+        return $this->_idRubro;
     }
 
     /**
-     * @param mixed $_rubro
+     * @param mixed $_idRubro
      *
      * @return self
      */
-    public function setRubro($_rubro)
+    public function setIdRubro($_idRubro)
     {
-        $this->_rubro = $_rubro;
+        $this->_idRubro = $_idRubro;
 
         return $this;
     }
@@ -116,9 +115,9 @@ class Item {
     }
 
     public function guardar() {
-    	$sql = "INSERT INTO item (id_item, nombre, precio, id_rubro)"
-    		 . "VALUES (NULL, '$this->_nombre', $this->_precio, $this->_rubro)";
-        
+    	$sql = "INSERT INTO item (id_item, nombre, precio, id_rubro) "
+    		 . "VALUES (NULL, '$this->_nombre', $this->_precio, $this->_idRubro) ";
+    	
     	$mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
 
@@ -126,16 +125,16 @@ class Item {
     }
 
     public function actualizar() {
-    	$sql = "UPDATE item SET nombre = '$this->_nombre', precio = $this->_precio "
-    		 . "WHERE id_item = $this->_idItem";
-
+    	$sql = "UPDATE item SET nombre = '$this->_nombre', precio = $this->_precio, id_rubro = $this->_idRubro "
+    		 . "WHERE id_item = $this->_idItem ";
     	$mysql = new MySQL();
         $mysql->actualizar($sql);
     }
 
     public function __toString() {
-        return $this->nombre . ", " . $this->precio;
-    }  
+    	return $this->_nombre . "," . $this->_precio;
+    }
+
 }
 
 ?>

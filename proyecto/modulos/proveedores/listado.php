@@ -24,6 +24,7 @@ $listadoProveedor = Proveedor::obtenerTodos();
 </head>
 <body>
 
+	<?php require_once '../../menu.php';?>
 	<h1>Listado de Proveedores</h1>
 	
 	<a href="alta.php">
@@ -44,7 +45,6 @@ $listadoProveedor = Proveedor::obtenerTodos();
 			<th>Nombre</th>
 			<th>Apellido</th>
 			<th>Razon Social</th>
-			<th>Cuil</th>
 			<th>Acciones</th>
 		</tr>
 
@@ -54,7 +54,7 @@ $listadoProveedor = Proveedor::obtenerTodos();
 				<td> <?= $proveedor->getNombre(); ?> </td>
 				<td> <?= $proveedor->getApellido(); ?> </td>
 				<td> <?= $proveedor->getRazonSocial(); ?> </td>
-				<td> <?= $proveedor->getCuil(); ?> </td>
+				
 				<td>
 					<a href="detalle.php?id=<?=$proveedor->getIdProveedor();?>">
 						<img src="../../imagenes/iconos/view.png" title="Ver Proveedor">
@@ -69,6 +69,7 @@ $listadoProveedor = Proveedor::obtenerTodos();
 		<?php endforeach ?>
 
 	</table>
-	<!--<?php require_once '../../menu.php';?>-->
+	<br>
+	
 </body>
 </html>

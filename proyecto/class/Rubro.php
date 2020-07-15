@@ -53,7 +53,6 @@ class Rubro {
 
     public function guardar() {
     	$sql = "INSERT INTO rubro (id_rubro, nombre ) VALUES (NULL, '$this->_nombre')";
-        
     	$mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
 
@@ -74,8 +73,29 @@ class Rubro {
         $mysql->eliminar($sql);
     }
 
+    public static function obtenerTodos() {
+        $sql = "SELECT * FROM rubro";
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarListado($datos);
+        return $listado;
+    }
+
+    private function _generarListado($datos) {
+        $listado = array();
+        while ($registro = $datos->fetch_assoc()) {
+            $rubro = new Rubro($registro['nombre']);
+            $rubro->_idRubro = $registro['id_rubro'];
+            $listado[] = $rubro;
+        }
+        return $listado;
+    }
+
     public function __toString() {
-        return $nombre;
+        return $this->_nombre;
     }
 }
 

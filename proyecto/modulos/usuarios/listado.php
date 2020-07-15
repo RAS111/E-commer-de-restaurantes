@@ -20,10 +20,12 @@ $listadoUsuarios = Usuario::obtenerTodos();
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
 	<title>Listado Usuarios</title>
 </head>
 <body>
 
+	<?php require_once '../../menu.php';?>
 	<h1>Listado de Usuarios</h1>
 	
 	<a href="alta.php">
@@ -67,6 +69,7 @@ $listadoUsuarios = Usuario::obtenerTodos();
 		<?php endforeach ?>
 
 	</table>
-	<!--<?php require_once '../../menu.php';?>-->
+	<br>
+	
 </body>
 </html>
