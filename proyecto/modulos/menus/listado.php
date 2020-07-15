@@ -23,7 +23,7 @@ $listadoMenus = Menu::obtenerTodos();
 	<title>Listado Menus</title>
 </head>
 <body>
-
+	<?php require_once '../../menu.php';?>
 	<h1>Listado de Menus</h1>
 	
 	<a href="alta.php">
@@ -68,6 +68,6 @@ $listadoMenus = Menu::obtenerTodos();
 
 	</table>
 	<br>
-	<?php require_once '../../menu.php';?>
+	
 </body>
 </html>

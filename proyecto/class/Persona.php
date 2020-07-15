@@ -1,7 +1,7 @@
 <?php
 
 require_once 'MySQL.php';
-require_once 'Direccion.php';
+require_once 'Domicilio.php';
 
 class Persona {
 	protected $_idPersona;
@@ -13,7 +13,7 @@ class Persona {
     protected $_estado;
 	protected $_idTipoDocumento;
 	
-    public $direccion;
+    public $domicilio;
 
     const ACTIVO = 1;
 
@@ -183,8 +183,8 @@ class Persona {
         return $this;
     }
 
-    public function setDireccion($direccion) {
-         $this->direccion = Direccion::obtenerPorIdPersona($this->_idPersona);
+    public function setDomicilio() {
+        $this->domicilio = Domicilio::obtenerPorIdPersona($this->_idPersona);
     }
    
     public function guardar() {

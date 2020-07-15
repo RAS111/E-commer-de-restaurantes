@@ -24,6 +24,7 @@ $listadoProveedor = Proveedor::obtenerTodos();
 </head>
 <body>
 
+	<?php require_once '../../menu.php';?>
 	<h1>Listado de Proveedores</h1>
 	
 	<a href="alta.php">
@@ -69,6 +70,6 @@ $listadoProveedor = Proveedor::obtenerTodos();
 
 	</table>
 	<br>
-	<?php require_once '../../menu.php';?>
+	
 </body>
 </html>

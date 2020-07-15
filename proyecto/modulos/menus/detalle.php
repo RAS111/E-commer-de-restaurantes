@@ -15,12 +15,12 @@ $menu = Menu::obtenerPorId($id);
 	<title>Detalle del Menu</title>
 </head>
 <body>
-
+	<?php require_once '../../menu.php';?>
 	<h1>Detalle del Menu</h1>
 	
 	<?=$menu;?>
 	<br>
 	
-	<?php require_once '../../menu.php';?>
+	
 </body>
 </html>

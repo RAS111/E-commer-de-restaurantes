@@ -2,11 +2,11 @@
 
 require_once "../../../class/Producto.php";
 
+$id = $_POST['txtId'];
 $nombre = $_POST['txtNombre'];
 $precio = $_POST['numPrecio'];
-$stockMinimo = $_POST['numStockMinimo'];
 $stockActual = $_POST['numStockActual'];
-$stockMaximo = $_POST['numStockMaximo'];
+$rubro = $_POST['cboRubro'];
 
 if (empty(trim($nombre))) {
 	echo "ERROR NOMBRE VACIO";
@@ -16,15 +16,14 @@ if (empty(trim($nombre))) {
 
 
 //$producto = new Producto($nombre, $precio);
-$producto = Producto::obtenerPorId();
+$producto = Producto::obtenerPorId($id);
 $producto->setNombre($nombre);
 $producto->setPrecio($precio);
-$producto->setStockMinimo($stockMinimo);
 $producto->setStockActual($stockActual);
-$producto->setStockMaximo($stockMaximo);
-
+$producto->setIdRubro($rubro);
 
 $producto->actualizar();
+
 
 header('Location: ../listado.php?mensaje=2');
 

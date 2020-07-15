@@ -1,19 +1,25 @@
 <?php
 
 require_once '../../class/Producto.php';
+require_once '../../class/Rubro.php';
 
 $id = $_GET['id'];
 
 $producto = Producto::obtenerPorId($id);
+
+$listadoRubro = Rubro::obtenerTodos();
 
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
 	<title>Modificar Producto</title>
 </head>
 <body>
+
+	<?php require_once '../../menu.php';?>
 	
 	<h1>Modificar Producto</h1>
 	
@@ -29,27 +35,33 @@ $producto = Producto::obtenerPorId($id);
 		<input type="number" name="numPrecio" value="<?=$producto->getPrecio(); ?>">
 		<br><br>
 
-		<label>Stock Minimo:</label>
-		<input type="number" name="numStockMinimo" value="<?=$producto->getStockMinimo(); ?>">
-		<br><br>
-
 		<label>Stock Actual:</label>
 		<input type="number" name="numStockActual"value="<?=$producto->getStockActual(); ?>">
 		<br><br> <!-- Salto de lineas -->
 
-		<label>Stock Maximo:</label>
-		<input type="number" name="numStockMaximo"value="<?=$producto->getStockMaximo(); ?>">
-		<br><br> <!-- Salto de lineas -->
-
 		<label>Rubro: </label>
-		<select name="cboTipoDocumento">
+		<select name="cboRubro">
 			<option value="0">Seleccionar</option>
+
+			<?php
+			foreach ($listadoRubro as $rubro):
+				$selected = '';
+				if ($producto->getIdRubro() == $rubro->getIdRubro()) {
+					$selected = "SELECTED";
+				}
+			?>
+
+				<option value="<?php echo $rubro->getIdRubro(); ?>" <?php echo $selected; ?>>
+					<?php echo $rubro; ?>
+				</option>
+
+			<?php endforeach ?>
 		</select>
 		<br><br> <!-- Salto de lineas -->
 
 		<input type="submit" name="btnActualizar" value="Actualizar">			
 	</form>
 	<br>
-	<?php require_once '../../menu.php';?>
+	
 </body>
 </html>

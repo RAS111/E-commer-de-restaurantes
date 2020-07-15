@@ -47,6 +47,7 @@ class Cliente extends Persona{
         $cliente->_fechaNacimiento = $data['fecha_nacimiento'];
         $cliente->_idTipoDocumento = $data['id_tipo_documento'];
         $cliente->_numeroDocumento = $data['numero_documento'];
+        $cliente->setDomicilio();
         $cliente->_estado = $data['id_estado'];
         return $cliente;
     }

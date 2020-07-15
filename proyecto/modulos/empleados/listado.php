@@ -24,6 +24,7 @@ $listadoEmpleados = Empleado::obtenerTodos();
 </head>
 <body>
 
+	<?php require_once '../../menu.php';?>
 	<h1>Listado de Empleados</h1>
 
 	<a href="alta.php">
@@ -66,6 +67,6 @@ $listadoEmpleados = Empleado::obtenerTodos();
 
 	</table>
 	<br>
-	<?php require_once '../../menu.php';?>
+	
 </body>
 </html>

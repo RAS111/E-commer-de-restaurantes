@@ -66,11 +66,41 @@ class Modulo {
      *
      * @return self
      */
+    
     public function setDirectorio($_directorio)
     {
         $this->_directorio = $_directorio;
 
         return $this;
+    }
+
+    public function guardar(){
+        $sql = "INSERT INTO modulo (id_modulo, descripcion, directorio) "
+             . "VALUES (NULL, '$this->_descripcion', '$this->_directorio')";
+
+        $mysql = new MySQL();
+        $idInsertado = $mysql->insertar($sql);
+
+        $this->_idModulo = $idInsertado;
+    }
+
+    public function actualizar() {
+        $sql = "UPDATE modulo SET descripcion  = '$this->_descripcion' WHERE id_modulo = $this->_idModulo";
+
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+    }
+
+    public static function obtenerTodos() {
+        $sql = "SELECT * FROM modulo ";
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarListadoModulos($datos);
+
+        return $listado;
     }
 
     public static function obtenerModulosPorIdPerfil($idPerfil) {

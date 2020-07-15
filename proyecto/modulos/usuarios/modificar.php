@@ -5,7 +5,7 @@ require_once '../../class/TipoDocumento.php';
 
 $id = $_GET['id'];
 
-$usuario = Usuario::obtenerPorId($id);
+$user = Usuario::obtenerPorId($id);
 
 $listadoTipoDocumento = TipoDocumento::obtenerTodos();
 ?>
@@ -13,41 +13,55 @@ $listadoTipoDocumento = TipoDocumento::obtenerTodos();
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
 	<title>Modificar Usuario</title>
+	<script src="../../static/js/usuarios/validaciones.js"></script>
 </head>
 <body>
-
+	<?php require_once '../../menu.php';?>
 	<h1>Modificar de Usuarios</h1>
-
 	
-	<form name="frmDatos" method="POST" action="procesar/modificar.php">
+	<?php if (isset($_SESSION['mensaje_error'])) : ?>
 
-		<input type="hidden" name="txtId" value="<?= $usuario->getIdUsuario(); ?>">
+	    <font color="red">
+	       	<?php echo $_SESSION['mensaje_error'] ?>
+	    </font>
+
+        <br><br>
+
+    <?php
+           	unset($_SESSION['mensaje_error']);
+        endif;
+    ?>
+
+	<form name="frmDatos" id="frmDatos" method="POST" action="procesar/modificar.php">
+
+		<input type="hidden" name="txtId" value="<?= $user->getIdUsuario(); ?>">
 
 	    <label>Nombre:</label>
-		<input type="text" name="txtNombre" value="<?= $usuario->getNombre(); ?>">
+		<input type="text" name="txtNombre" id="txtNombre" value="<?= $user->getNombre(); ?>">
 		<br><br> <!-- Este es un comentario -->
 
 		<label>Apellido:</label>
-		<input type="text" name="txtApellido" value="<?= $usuario->getApellido(); ?>">
+		<input type="text" name="txtApellido" id="txtApellido"  value="<?= $user->getApellido(); ?>">
 		<br><br>
 
 		<label>Sexo:</label>
-		<input type="text" name="txtSexo" value="<?= $usuario->getSexo(); ?>">
+		<input type="text" name="txtSexo" id="txtSexo" value="<?= $user->getSexo(); ?>">
 		<br><br>
 
 		<label>Fecha Nacimiento:</label>
-		<input type="date" name="txtFechaNacimiento" value="<?= $usuario->getFechaNacimiento(); ?>">
+		<input type="date" name="txtFechaNacimiento" id="txtFechaNacimiento" value="<?= $user->getFechaNacimiento(); ?>">
 		<br><br> <!-- Salto de lineas -->
 
 		<label>Tipo Documento: </label>
-		<select name="cboTipoDocumento">
+		<select name="cboTipoDocumento" id="cboTipoDocumento">
 			<option value="0">Seleccionar</option>
 
 			<?php
 			foreach ($listadoTipoDocumento as $tipoDocumento):
 				$selected = '';
-				if ($usuario->getIdTipoDocumento() == $tipoDocumento->getIdTipoDocumento()) {
+				if ($user->getIdTipoDocumento() == $tipoDocumento->getIdTipoDocumento()) {
 					$selected = "SELECTED";
 				}
 			?>
@@ -62,20 +76,20 @@ $listadoTipoDocumento = TipoDocumento::obtenerTodos();
 		<br><br> <!-- Salto de lineas -->
 
 		<label>Numero Documento:</label>
-		<input type="text" name="txtNumeroDocumento" value="<?= $usuario->getNumeroDocumento(); ?>">
+		<input type="text" name="txtNumeroDocumento" id="txtNumeroDocumento" value="<?= $user->getNumeroDocumento(); ?>">
 		<br><br> <!-- Salto de lineas -->
 
 		<label>Nombre de usuario:</label>
-		<input type="text" name="txtNombreUsuario" value="<?= $usuario->getUsername(); ?>">
+		<input type="text" name="txtNombreUsuario" id="txtNombreUsuario" value="<?= $user->getUsername(); ?>">
 		<br><br> <!-- Salto de lineas -->
 
 		<label>Contraseña</label>
-		<input type="password" name="txtContraseña" value="<?= $usuario->getPassword(); ?>">
+		<input type="password" name="txtContraseña" id="txtContraseña" value="<?= $user->getPassword(); ?>">
 		<br><br> <!-- Salto de lineas -->
 
-		 <input type="submit" name="btnActualizar" value="Actualizar">			
+		<input type="button" value="Actualizar" onclick="validarDatos();">					
 
 	</form>
-	<?php require_once '../../menu.php';?>
+	
 </body>
 </html>

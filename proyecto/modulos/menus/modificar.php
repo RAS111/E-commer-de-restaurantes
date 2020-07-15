@@ -1,10 +1,13 @@
 <?php
 
 require_once '../../class/Menu.php';
+require_once '../../class/Rubro.php';
 
 $id = $_GET['id'];
 
 $menu = Menu::obtenerPorId($id);
+
+$listadoRubro = Rubro::obtenerTodos();
 
 ?>
 
@@ -14,7 +17,7 @@ $menu = Menu::obtenerPorId($id);
 	<title>Modificar Menu</title>
 </head>
 <body>
-	
+	<?php require_once '../../menu.php';?>
 	<h1>Modificar Menu</h1>
 	
 	<form name="frmDatos" method="POST" action="procesar/guardar.php">
@@ -30,14 +33,28 @@ $menu = Menu::obtenerPorId($id);
 		<br><br>
 
 		<label>Rubro: </label>
-		<select name="cboTipoDocumento">
+		<select name="cboRubro">
 			<option value="0">Seleccionar</option>
+
+			<?php
+			foreach ($listadoRubro as $rubro):
+				$selected = '';
+				if ($menu->getIdRubro() == $rubro->getIdRubro()) {
+					$selected = "SELECTED";
+				}
+			?>
+
+				<option value="<?php echo $rubro->getIdRubro(); ?>" <?php echo $selected; ?>>
+					<?php echo $rubro; ?>
+				</option>
+
+			<?php endforeach ?>
 		</select>
 		<br><br> <!-- Salto de lineas -->
 
 		<input type="submit" name="btnActualizar" value="Actualizar">			
 	</form>
 	<br>
-	<?php require_once '../../menu.php';?>
+	
 </body>
 </html>

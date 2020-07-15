@@ -54,6 +54,48 @@ class Perfil {
         return $this;
     }
 
+    public function getModulos() {
+        return $this->_arrModulos;
+    }
+
+    public function guardar() {
+        $sql = "INSERT INTO perfil (id_perfil, descripcion) VALUES (NULL, '$this->_descripcion')";
+
+        $mysql = new MySQL();
+        $idInsertado = $mysql->insertar($sql);
+
+        $this->_idPerfil = $idInsertado;
+    }
+
+    public function actualizar(){
+        $sql = "UPDATE perfil SET descripcion = '$this->_descripcion' WHERE id_perfil= $this->_idPerfil";
+
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+    }
+
+    public static function obtenerTodos() {
+        $sql = "SELECT * FROM perfil ";
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarListadoPerfil($datos);
+
+        return $listado;
+
+    }
+
+    private function _generarListadoPerfil($datos) {
+        $listado = array();
+        while ($registro = $datos->fetch_assoc()) {
+            $perfil = new Perfil($registro['descripcion']);
+            $perfil->_idPerfil = $registro['id_perfil'];
+            $listado[] = $perfil;
+        }
+        return $listado;
+    }
     public static function obtenerPorId($idPerfil) {
         $sql = "SELECT * FROM perfil WHERE id_perfil =  '$idPerfil' ";
 
@@ -73,9 +115,7 @@ class Perfil {
         return $perfil;
     }
 
-    public function getModulos() {
-    	return $this->_arrModulos;
-    }
+
 
 }
 

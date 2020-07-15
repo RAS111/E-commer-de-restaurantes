@@ -16,6 +16,7 @@ $producto = Producto::obtenerPorId($id);
 </head>
 <body>
 
+	<?php require_once '../../menu.php';?>
 	<h1>Detalle del Producto</h1>
 	
 	<?=$producto;?>
@@ -23,6 +24,6 @@ $producto = Producto::obtenerPorId($id);
 	Stock del producto:
 	<?= $producto->getStockActual(); ?>
 	<br>
-	<?php require_once '../../menu.php';?>
+	
 </body>
 </html>

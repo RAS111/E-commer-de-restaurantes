@@ -20,9 +20,11 @@ $listadoProductos = Producto::obtenerTodos();
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
 	<title>Listado Productos</title>
 </head>
 <body>
+	<?php require_once '../../menu.php';?>
 
 	<h1>Listado de Productos</h1>
 	
@@ -67,6 +69,6 @@ $listadoProductos = Producto::obtenerTodos();
 
 	</table>
 	<br>
-	<?php require_once '../../menu.php';?>
+	
 </body>
 </html>

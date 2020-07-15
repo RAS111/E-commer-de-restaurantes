@@ -12,8 +12,27 @@ require_once 'class/Item.php';
 require_once 'class/Menu.php';
 require_once 'class/Producto.php';
 require_once 'class/Rubro.php';
+require_once 'class/Perfil.php';
+require_once 'class/Modulo.php';
 
-/*$item = new Item("Coca-cola", 120);
+$rubro = new Rubro ('Gaseosas');
+
+$rubro->guardar();
+
+highlight_string(var_export($rubro,true));
+/*$modulo = new Modulo ("ESTADOS", "estados");
+
+$modulo->guardar();
+
+highlight_string(var_export($modulo,true));
+*/
+/*$perfil = new Perfil ("CAJA");
+
+$perfil->guardar();
+
+highlight_string(var_export($perfil,true));
+*/
+/*$item = new Item("Pepsi", 120);
 $item->setRubro(1);
 
 $item->guardar();

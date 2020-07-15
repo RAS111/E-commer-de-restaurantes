@@ -70,7 +70,7 @@ class Proveedor extends Persona{
 
     public static function obtenerPorId($id) {
         $sql = "SELECT * FROM proveedor INNER JOIN persona ON proveedor.id_persona = persona.id_persona "
-             . "WHERE id_proveedor =" .$id;
+             . "WHERE id_proveedor = " .$id ;
 
         $mysql = new MySQL();
         $result = $mysql->consultar($sql);
@@ -139,8 +139,8 @@ class Proveedor extends Persona{
     public function actualizar() {
         parent::actualizar();
 
-        $sql = "UPDATE proveedor SET razon_social = '$this->_razonSocial', cuil = '$this->_cuil'"
-             . "WHERE id_proveedor = $this->_idProveedor";
+        $sql = "UPDATE proveedor SET razon_social = '$this->_razonSocial', cuil = '$this->_cuil' "
+             . "WHERE id_proveedor = $this->_idProveedor ";
 
         $mysql = new MySQL();
         $mysql->actualizar($sql);

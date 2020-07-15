@@ -103,7 +103,7 @@ class Producto extends Item {
 
     public function actualizar() {
     	parent::actualizar();
-    	$sql = "UPDATE producto SET stock_actual = $this->_stockActual WHERE id_producto = $this->_idProducto";
+    	$sql = "UPDATE producto SET stock_actual = $this->_stockActual WHERE id_producto = $this->_idProducto ";
 
     	$mysql = new MySQL();
         $mysql->actualizar($sql);
@@ -126,7 +126,7 @@ class Producto extends Item {
         $producto = new Producto($data['nombre'], $data['precio']);
         $producto->_idProducto = $data['id_producto'];
         $producto->_idItem = $data['id_item'];
-        $producto->_rubro = $data['id_rubro'];
+        $producto->_idRubro = $data['id_rubro'];
         $producto->_stockActual = $data['stock_actual'];
         return $producto;
     }

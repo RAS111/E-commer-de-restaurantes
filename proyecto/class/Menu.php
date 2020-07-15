@@ -71,8 +71,8 @@ class Menu extends Item {
 
     public function guardar() {
     	parent::guardar();
-    	$sql = "INSERT INTO Menu (id_menu, id_menu_estado, id_item)"
-    		 . "VALUES (NULL, $this->_estado, $this->_idItem)";
+    	$sql = "INSERT INTO Menu (id_menu, id_menu_estado, id_item) "
+    		 . "VALUES (NULL, $this->_estado, $this->_idItem) ";
 
     	$mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
@@ -82,7 +82,7 @@ class Menu extends Item {
 
     public function actualizar() {
     	parent::actualizar();
-    	$sql = "UPDATE menu WHERE id_menu = $this->_idMenu";
+    	$sql = "UPDATE menu WHERE id_menu = $this->_idMenu ";
 
     	$mysql = new MySQL();
         $mysql->actualizar($sql);
@@ -97,16 +97,15 @@ class Menu extends Item {
 
         $data = $result->fetch_assoc();
         $menu = self::_generarMenu($data);
+       
         return $menu;
-
-
     }
 
     private function _generarMenu($data) {
         $menu = new Menu($data['nombre'], $data['precio']);
         $menu->_idMenu = $data['id_menu'];
         $menu->_idItem = $data['id_item'];
-        $menu->_rubro = $data['id_rubro'];
+        $menu->_idRubro = $data['id_rubro'];
         $menu->_estado = $data['id_menu_estado'];
         return $menu;
     }

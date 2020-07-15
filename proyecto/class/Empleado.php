@@ -47,6 +47,7 @@ class Empleado extends Persona {
         $empleado->_fechaNacimiento = $data['fecha_nacimiento'];
         $empleado->_idTipoDocumento = $data['id_tipo_documento'];
         $empleado->_numeroDocumento = $data['numero_documento'];
+        $empleado->setDomicilio();
         $empleado->_estado = $data['id_estado'];
         return $empleado;
     }

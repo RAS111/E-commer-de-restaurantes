@@ -3,28 +3,29 @@
 require_once 'MySQL.php';
 
 class barrio {
-	private $idBarrio;
-	private $nombre;
+	private $_idBarrio;
+	private $_nombre;
 
-	public function __construct($nombre) {
-		$this->nombre = $nombre;
-	}
-    /**
+    public function __construct($nombre) {
+        $this->_nombre = $nombre;
+    }
+
+	 /**
      * @return mixed
      */
     public function getIdBarrio()
     {
-        return $this->idBarrio;
+        return $this->_idBarrio;
     }
 
     /**
-     * @param mixed $idBarrio
+     * @param mixed $_idBarrio
      *
      * @return self
      */
-    public function setIdBarrio($idBarrio)
+    public function setIdBarrio($_idBarrio)
     {
-        $this->idBarrio = $idBarrio;
+        $this->_idBarrio = $_idBarrio;
 
         return $this;
     }
@@ -34,40 +35,63 @@ class barrio {
      */
     public function getNombre()
     {
-        return $this->nombre;
+        return $this->_nombre;
     }
 
     /**
-     * @param mixed $nombre
+     * @param mixed $_nombre
      *
      * @return self
      */
-    public function setNombre($nombre)
+    public function setNombre($_nombre)
     {
-        $this->nombre = $nombre;
+        $this->_nombre = $_nombre;
 
         return $this;
     }
 
     public function guardar() {
-    	$sql = "INSERT INTO barrio (id_barrio, nombre) VALUES (NULL, '$this->nombre')";
+    	$sql = "INSERT INTO barrio (id_barrio, nombre) VALUES (NULL, '$this->_nombre') ";
 
     	$mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
 
-        $this->idBarrio = $idInsertado;
-    }
-
-    public function __toString() {
-    	return $this->nombre;
+        $this->_idBarrio = $idInsertado;
     }
 
     public function actualizar() {
-        $sql = "UPDATE barrio SET nombre = '$this_nombre' WHERE id_barrio = $this->_idBarrio";
+        $sql = "UPDATE barrio SET nombre = '$this->_nombre' WHERE id_barrio = $this->_idBarrio ";
 
         $mysql = new MySQL();
-        $mysql->actualizar($sql);
+        $mysql->actualizar();
     }
+
+    public static function obtenerTodos() {
+        $sql = "SELECT * FROM barrio ";
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarListadoBarrio($datos);
+        return $listado;
+    }
+
+    private function _generarListadoBarrio($datos) {
+        $listado = array();
+        while ($registro = $datos->fetch_assoc()) {
+            $barrio = new Barrio($registro['nombre']);
+            $barrio->_idBarrio = $registro['id_barrio'];
+            $listado[] = $barrio;
+        }
+        return $listado;
+    }
+
+    public function __toString() {
+        return $this->_nombre;
+    }
+
+   
 }
 
 ?>

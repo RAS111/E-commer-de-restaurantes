@@ -12,35 +12,51 @@ $listadoTipoDocumento = TipoDocumento::obtenerTodos();
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
 	<title>Modificar Proveedor</title>
+	<script src="../../static/js/proveedores/validaciones.js"></script>
 </head>
 <body>
 
-	<h1>Modificar de Proveedores</h1>
+	<?php require_once '../../menu.php';?>
 
+	<h1>Modificar de Proveedores</h1>
 	
-	<form name="frmDatos" method="POST" action="procesar/modificar.php">
+	<?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+	    <font color="red">
+	       	<?php echo $_SESSION['mensaje_error'] ?>
+	    </font>
+
+        <br><br>
+
+    <?php
+           	unset($_SESSION['mensaje_error']);
+        endif;
+    ?>
+	
+	<form name="frmDatos" id="frmDatos" method="POST" action="procesar/modificar.php">
 
 		<input type="hidden" name="txtId" value="<?= $proveedor->getIdProveedor(); ?>">
 
 	    <label>Nombre:</label>
-		<input type="text" name="txtNombre" value="<?= $proveedor->getNombre(); ?>">
+		<input type="text" name="txtNombre" id="txtNombre" value="<?= $proveedor->getNombre(); ?>">
 		<br><br> <!-- Este es un comentario -->
 
 		<label>Apellido:</label>
-		<input type="text" name="txtApellido" value="<?= $proveedor->getApellido(); ?>">
+		<input type="text" name="txtApellido" id="txtApellido" value="<?= $proveedor->getApellido(); ?>">
 		<br><br>
 
 		<label>Sexo:</label>
-		<input type="text" name="txtSexo" value="<?= $proveedor->getSexo(); ?>">
+		<input type="text" name="txtSexo" id="txtSexo" value="<?= $proveedor->getSexo(); ?>">
 		<br><br>
 
 		<label>Fecha Nacimiento:</label>
-		<input type="date" name="txtFechaNacimiento" value="<?= $proveedor->getFechaNacimiento(); ?>">
+		<input type="date" name="txtFechaNacimiento" id="txtFechaNacimiento" value="<?= $proveedor->getFechaNacimiento(); ?>">
 		<br><br> <!-- Salto de lineas -->
 
 		<label>Tipo Documento: </label>
-		<select name="cboTipoDocumento">
+		<select name="cboTipoDocumento" id="cboTipoDocumento">
 			<option value="0">Seleccionar</option>
 
 			<?php
@@ -61,21 +77,21 @@ $listadoTipoDocumento = TipoDocumento::obtenerTodos();
 		<br><br> <!-- Salto de lineas -->
 
 		<label>Numero Documento:</label>
-		<input type="text" name="txtNumeroDocumento" value="<?= $proveedor->getNumeroDocumento(); ?>">
+		<input type="text" name="txtNumeroDocumento" id="txtNumeroDocumento" value="<?= $proveedor->getNumeroDocumento(); ?>">
 		<br><br> <!-- Salto de lineas -->
 
 		<label>Razon Social:</label>
-		<input type="text" name="txtRazonSocial" value="<?= $proveedor->getRazonSocial(); ?>">
+		<input type="text" name="txtRazonSocial" id="txtRazonSocial" value="<?= $proveedor->getRazonSocial(); ?>">
 		<br><br> <!-- Salto de lineas -->
 
 		<label>Cuil</label>
-		<input type="text" name="txtCuil" value="<?= $proveedor->getCuil(); ?>">
+		<input type="text" name="txtCuil" id="txtCuil" value="<?= $proveedor->getCuil(); ?>">
 		<br><br> <!-- Salto de lineas -->
 
-		 <input type="submit" name="btnActualizar" value="Actualizar">			
+		 <input type="button" name="btnActualizar" value="Actualizar" onclick="validarDatos();">			
 
 	</form>
 	<br>
-	<?php require_once '../../menu.php';?>
+	
 </body>
 </html>
