@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-06-2020 a las 10:51:16
+-- Tiempo de generación: 23-07-2020 a las 23:32:18
 -- Versión del servidor: 10.1.36-MariaDB
 -- Versión de PHP: 5.6.38
 
@@ -33,6 +33,14 @@ CREATE TABLE `barrio` (
   `nombre` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `barrio`
+--
+
+INSERT INTO `barrio` (`id_barrio`, `nombre`) VALUES
+(1, 'Facundo Quiroga'),
+(4, 'abc');
+
 -- --------------------------------------------------------
 
 --
@@ -50,7 +58,12 @@ CREATE TABLE `cliente` (
 
 INSERT INTO `cliente` (`id_cliente`, `id_persona`) VALUES
 (1, 3),
-(2, 4);
+(2, 4),
+(3, 27),
+(4, 34),
+(5, 37),
+(7, 43),
+(8, 44);
 
 -- --------------------------------------------------------
 
@@ -97,22 +110,31 @@ CREATE TABLE `detallepedido` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `direccion`
+-- Estructura de tabla para la tabla `domicilio`
 --
 
-CREATE TABLE `direccion` (
-  `id_direccion` int(11) NOT NULL,
-  `altura` int(11) DEFAULT NULL,
+CREATE TABLE `domicilio` (
+  `id_domicilio` int(11) NOT NULL,
+  `altura` int(11) NOT NULL,
   `piso` int(11) DEFAULT NULL,
   `torre` int(11) DEFAULT NULL,
   `departamento` int(11) DEFAULT NULL,
   `sector` int(11) DEFAULT NULL,
-  `casa` int(11) DEFAULT NULL,
+  `casa` int(11) NOT NULL,
   `manzana` int(11) DEFAULT NULL,
-  `calle` varchar(100) DEFAULT NULL,
-  `id_barrio` int(11) NOT NULL,
+  `calle` varchar(100) NOT NULL,
+  `id_barrio` int(11) DEFAULT NULL,
   `id_persona` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `domicilio`
+--
+
+INSERT INTO `domicilio` (`id_domicilio`, `altura`, `piso`, `torre`, `departamento`, `sector`, `casa`, `manzana`, `calle`, `id_barrio`, `id_persona`) VALUES
+(16, 1, 0, 0, 0, 0, 0, 0, 'Oliva', 1, 4),
+(18, 1, 0, 0, 0, 0, 0, 0, 'a', 1, 27),
+(19, 200, 0, 0, 0, 0, 5, 0, 'corrientes', 1, 3);
 
 -- --------------------------------------------------------
 
@@ -133,7 +155,10 @@ INSERT INTO `empleado` (`id_empleado`, `id_persona`) VALUES
 (1, 5),
 (12, 23),
 (14, 25),
-(15, 26);
+(15, 26),
+(16, 28),
+(18, 36),
+(19, 42);
 
 -- --------------------------------------------------------
 
@@ -160,6 +185,14 @@ CREATE TABLE `formapago` (
   `descripcion` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `formapago`
+--
+
+INSERT INTO `formapago` (`id_forma_pago`, `descripcion`) VALUES
+(1, 'Efectivo'),
+(2, 'Tarjeta');
+
 -- --------------------------------------------------------
 
 --
@@ -182,8 +215,24 @@ CREATE TABLE `item` (
   `id_item` int(11) NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `precio` float NOT NULL,
-  `id_rubro` int(11) NOT NULL
+  `id_rubro` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `item`
+--
+
+INSERT INTO `item` (`id_item`, `nombre`, `precio`, `id_rubro`) VALUES
+(1, 'Coca-Cola', 100, 2),
+(2, 'Pepsi', 80, 2),
+(3, 'aaa', 1, 2),
+(4, 'aba', 1, 1),
+(5, 'Coca-Cola', 100, 1),
+(6, 'a', 1, 1),
+(7, 'a', 1, 2),
+(8, 'sprite', 123, 2),
+(9, 'hola', 100, 2),
+(14, 'Hamburguesa', 100, 5);
 
 -- --------------------------------------------------------
 
@@ -197,6 +246,15 @@ CREATE TABLE `menu` (
   `id_item` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `menu`
+--
+
+INSERT INTO `menu` (`id_menu`, `id_menu_estado`, `id_item`) VALUES
+(1, 1, 1),
+(2, 1, 8),
+(8, 1, 14);
+
 -- --------------------------------------------------------
 
 --
@@ -208,6 +266,13 @@ CREATE TABLE `menuestado` (
   `descripcion` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `menuestado`
+--
+
+INSERT INTO `menuestado` (`id_menu_estado`, `descripcion`) VALUES
+(1, 'Disponible');
+
 -- --------------------------------------------------------
 
 --
@@ -216,8 +281,25 @@ CREATE TABLE `menuestado` (
 
 CREATE TABLE `modulo` (
   `id_modulo` int(11) NOT NULL,
-  `nombre` varchar(20) NOT NULL
+  `descripcion` varchar(20) NOT NULL,
+  `directorio` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `modulo`
+--
+
+INSERT INTO `modulo` (`id_modulo`, `descripcion`, `directorio`) VALUES
+(1, 'Empleados', 'empleados'),
+(2, 'Usuarios', 'usuarios'),
+(3, 'Clientes', 'clientes'),
+(4, 'Ventas', 'ventas'),
+(5, 'Compras', 'compras'),
+(6, 'Seguridad', 'seguridad'),
+(7, 'Estadisticas', 'estadisticas'),
+(8, 'Menus', 'menus'),
+(9, 'Productos', 'productos'),
+(10, 'Proveedores', 'proveedores');
 
 -- --------------------------------------------------------
 
@@ -255,8 +337,19 @@ CREATE TABLE `pedidoestado` (
 
 CREATE TABLE `perfil` (
   `id_perfil` int(11) NOT NULL,
-  `nombre` varchar(20) NOT NULL
+  `descripcion` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `perfil`
+--
+
+INSERT INTO `perfil` (`id_perfil`, `descripcion`) VALUES
+(1, 'ADMINISTRADOR'),
+(2, 'VENDEDOR'),
+(3, 'COMPRADOR'),
+(7, 'TEST'),
+(8, 'probando');
 
 -- --------------------------------------------------------
 
@@ -269,6 +362,31 @@ CREATE TABLE `perfil_modulo` (
   `id_modulo` int(11) NOT NULL,
   `id_perfil` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `perfil_modulo`
+--
+
+INSERT INTO `perfil_modulo` (`id_perfil_modulo`, `id_modulo`, `id_perfil`) VALUES
+(1, 1, 1),
+(2, 2, 1),
+(3, 3, 1),
+(4, 4, 1),
+(5, 5, 1),
+(6, 6, 1),
+(7, 7, 1),
+(8, 3, 2),
+(9, 4, 2),
+(10, 5, 2),
+(11, 8, 1),
+(12, 9, 1),
+(13, 10, 1),
+(22, 1, 7),
+(23, 2, 7),
+(24, 3, 7),
+(25, 8, 8),
+(26, 9, 8),
+(27, 7, 8);
 
 -- --------------------------------------------------------
 
@@ -294,9 +412,9 @@ CREATE TABLE `persona` (
 INSERT INTO `persona` (`id_persona`, `nombre`, `apellido`, `sexo`, `numero_documento`, `fecha_nacimiento`, `id_tipo_documento`, `id_estado`) VALUES
 (1, 'Carlos', 'Mendez', 'Masculino', 2132132, '2020-06-01', 1, 1),
 (2, 'Mariano', 'Mendez', 'Masculino', 2222, '2020-06-02', 1, 1),
-(3, 'Mario', 'Perez', 'Masculino', 22223, '2020-06-02', 1, 1),
+(3, 'Mariano', 'Perez', 'Masculino', 222234, '2020-06-02', 2, 1),
 (4, 'Mariano', 'Rodriguez', 'Masculino', 22223, '2020-06-03', 1, 1),
-(5, 'Mariano', 'Rodriguez', 'Rodriguez', 222234, '2020-06-03', 1, 1),
+(5, 'Mario', 'Rodriguez', 'Masculino', 222234, '2020-06-03', 1, 1),
 (6, 'Moria', 'Casas', 'Femenino', 222234, '2020-06-01', 1, 1),
 (7, 'Moria', 'Casas', 'Femenino', 222234, '2020-06-01', 1, 1),
 (8, 'Moria', 'Casas', 'Femenino', 222234, '2020-06-01', 1, 1),
@@ -306,8 +424,24 @@ INSERT INTO `persona` (`id_persona`, `nombre`, `apellido`, `sexo`, `numero_docum
 (16, 'Moria', 'Casan', 'Femenino', 22224, '2020-06-02', 1, 1),
 (17, 'Carla', 'Casan', 'Femenino', 22224, '2020-06-02', 1, 1),
 (23, 'Carla', 'Martinez', 'Femenino', 22234, '2020-06-03', 1, 1),
-(25, 'Carla', 'Martinez', 'Femenino', 0, '2020-06-03', NULL, 1),
-(26, 'Carla', 'Martinez', 'Femenino', 0, '2020-06-03', NULL, 1);
+(25, 'Carla', 'Martinez', 'Femenino', 123, '2020-06-03', NULL, 1),
+(26, 'Carla', 'Martinez', 'Femenino', 0, '2020-06-03', NULL, 1),
+(27, 'Mariano', 'Hermoza', 'Masculino', 22222, '2020-06-04', 1, 1),
+(28, 'Carla', 'Perez', 'Femenino', 22234, '2020-06-03', 1, 1),
+(30, 'Carmen', 'Martinez', '', 22233, '2020-06-05', 1, 1),
+(31, 'Maria', 'Hernandez', '', 22233, '2020-06-05', 1, 1),
+(32, 'Carlos', 'Morinigo', 'Masculino', 33333, '2020-06-06', NULL, 1),
+(33, 'Martin', 'Morinigo', 'Masculino', 33333, '2020-06-06', 1, 1),
+(34, 'Mariano', 'Fernandez', 'Masculino', 22222, '2020-06-04', 1, 1),
+(36, 'Carla', 'Monigico', 'Femenino', 222345, '2020-06-03', 1, 1),
+(37, 'Jorge', 'Barrios', '', 12345678, '2020-06-17', 1, 1),
+(38, 'Mariano', 'Garcia', '', 123456, '2020-06-17', 1, 1),
+(39, 'hola', 'dasdasdas', '', 2147483647, '0000-00-00', 1, 1),
+(40, 'Juan', 'Perez', '', 312312312, '0000-00-00', 1, 1),
+(41, 'dasdas', 'dasdasdsa', '0', 2147483647, '0000-00-00', 1, 1),
+(42, 'dasdas', 'dasdasdas', '', 312321312, '0000-00-00', 1, 1),
+(43, 'Juan', 'Carlos', 'M', 22222222, '2020-07-15', 1, 1),
+(44, 'Juana', 'Perez', 'M', 33333333, '2020-07-08', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -340,6 +474,13 @@ CREATE TABLE `persona_contacto` (
   `id_persona` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `persona_contacto`
+--
+
+INSERT INTO `persona_contacto` (`id_contacto`, `valor`, `id_tipo_contacto`, `id_persona`) VALUES
+(1, '123321654', 1, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -353,6 +494,15 @@ CREATE TABLE `producto` (
   `stock_maximo` int(11) NOT NULL,
   `id_item` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `producto`
+--
+
+INSERT INTO `producto` (`id_producto`, `stock_minimo`, `stock_actual`, `stock_maximo`, `id_item`) VALUES
+(2, 1, 12, 1, 2),
+(3, 1, 1, 1, 3),
+(4, 1, 1, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -372,7 +522,9 @@ CREATE TABLE `proveedor` (
 --
 
 INSERT INTO `proveedor` (`id_proveedor`, `razon_social`, `cuil`, `id_persona`) VALUES
-(1, 'aaaa', '12-3', 17);
+(3, 'Coca-Cola', '11111111111', 33),
+(4, 'dasdasdas', '312341212412', 39),
+(5, 'hoola', '3123123123123', 40);
 
 -- --------------------------------------------------------
 
@@ -385,6 +537,13 @@ CREATE TABLE `receta` (
   `nombre` varchar(20) NOT NULL,
   `id_menu` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `receta`
+--
+
+INSERT INTO `receta` (`id_receta`, `nombre`, `id_menu`) VALUES
+(1, 'Hamburguesa', 8);
 
 -- --------------------------------------------------------
 
@@ -399,6 +558,13 @@ CREATE TABLE `receta_producto` (
   `id_receta` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `receta_producto`
+--
+
+INSERT INTO `receta_producto` (`id_receta_producto`, `cantidad`, `id_producto`, `id_receta`) VALUES
+(1, 10, 2, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -410,6 +576,15 @@ CREATE TABLE `rubro` (
   `nombre` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `rubro`
+--
+
+INSERT INTO `rubro` (`id_rubro`, `nombre`) VALUES
+(1, 'Pastas'),
+(2, 'Gaseosas'),
+(5, 'ab');
+
 -- --------------------------------------------------------
 
 --
@@ -420,6 +595,15 @@ CREATE TABLE `tipocontacto` (
   `id_tipo_contacto` int(11) NOT NULL,
   `descripcion` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tipocontacto`
+--
+
+INSERT INTO `tipocontacto` (`id_tipo_contacto`, `descripcion`) VALUES
+(1, 'Celular'),
+(2, 'Email'),
+(3, 'Telefono fijo');
 
 -- --------------------------------------------------------
 
@@ -437,7 +621,8 @@ CREATE TABLE `tipodocumento` (
 --
 
 INSERT INTO `tipodocumento` (`id_tipo_documento`, `descripcion`) VALUES
-(1, 'DNI');
+(1, 'DNI'),
+(2, 'Pasaporte');
 
 -- --------------------------------------------------------
 
@@ -452,6 +637,15 @@ CREATE TABLE `usuario` (
   `id_perfil` int(11) DEFAULT NULL,
   `id_persona` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id_usuario`, `username`, `password`, `id_perfil`, `id_persona`) VALUES
+(3, 'carmen2', '12345', 1, 31),
+(4, 'pepe', '12345', 2, 30),
+(5, 'mariano2', '12345', NULL, 38);
 
 --
 -- Índices para tablas volcadas
@@ -494,12 +688,12 @@ ALTER TABLE `detallepedido`
   ADD KEY `id_item` (`id_item`);
 
 --
--- Indices de la tabla `direccion`
+-- Indices de la tabla `domicilio`
 --
-ALTER TABLE `direccion`
-  ADD PRIMARY KEY (`id_direccion`),
-  ADD KEY `id_barrio` (`id_barrio`),
-  ADD KEY `id_persona` (`id_persona`);
+ALTER TABLE `domicilio`
+  ADD PRIMARY KEY (`id_domicilio`),
+  ADD KEY `id_persona` (`id_persona`),
+  ADD KEY `id_barrio` (`id_barrio`);
 
 --
 -- Indices de la tabla `empleado`
@@ -540,7 +734,8 @@ ALTER TABLE `item`
 --
 ALTER TABLE `menu`
   ADD PRIMARY KEY (`id_menu`),
-  ADD KEY `id_menu_estado` (`id_menu_estado`);
+  ADD KEY `id_menu_estado` (`id_menu_estado`),
+  ADD KEY `id_item` (`id_item`);
 
 --
 -- Indices de la tabla `menuestado`
@@ -670,13 +865,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `barrio`
 --
 ALTER TABLE `barrio`
-  MODIFY `id_barrio` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_barrio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `compra`
@@ -697,16 +892,16 @@ ALTER TABLE `detallepedido`
   MODIFY `id_detalle_pedido` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `direccion`
+-- AUTO_INCREMENT de la tabla `domicilio`
 --
-ALTER TABLE `direccion`
-  MODIFY `id_direccion` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `domicilio`
+  MODIFY `id_domicilio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `empleado`
 --
 ALTER TABLE `empleado`
-  MODIFY `id_empleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_empleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `factura`
@@ -718,7 +913,7 @@ ALTER TABLE `factura`
 -- AUTO_INCREMENT de la tabla `formapago`
 --
 ALTER TABLE `formapago`
-  MODIFY `id_forma_pago` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_forma_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `imagen`
@@ -730,25 +925,25 @@ ALTER TABLE `imagen`
 -- AUTO_INCREMENT de la tabla `item`
 --
 ALTER TABLE `item`
-  MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `menuestado`
 --
 ALTER TABLE `menuestado`
-  MODIFY `id_menu_estado` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_menu_estado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `modulo`
 --
 ALTER TABLE `modulo`
-  MODIFY `id_modulo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_modulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `pedido`
@@ -766,19 +961,19 @@ ALTER TABLE `pedidoestado`
 -- AUTO_INCREMENT de la tabla `perfil`
 --
 ALTER TABLE `perfil`
-  MODIFY `id_perfil` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_perfil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `perfil_modulo`
 --
 ALTER TABLE `perfil_modulo`
-  MODIFY `id_perfil_modulo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_perfil_modulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT de la tabla `personaestado`
@@ -790,55 +985,55 @@ ALTER TABLE `personaestado`
 -- AUTO_INCREMENT de la tabla `persona_contacto`
 --
 ALTER TABLE `persona_contacto`
-  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
 --
 ALTER TABLE `proveedor`
-  MODIFY `id_proveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_proveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `receta`
 --
 ALTER TABLE `receta`
-  MODIFY `id_receta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_receta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `receta_producto`
 --
 ALTER TABLE `receta_producto`
-  MODIFY `id_receta_producto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_receta_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `rubro`
 --
 ALTER TABLE `rubro`
-  MODIFY `id_rubro` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_rubro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `tipocontacto`
 --
 ALTER TABLE `tipocontacto`
-  MODIFY `id_tipo_contacto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_tipo_contacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tipodocumento`
 --
 ALTER TABLE `tipodocumento`
-  MODIFY `id_tipo_documento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_tipo_documento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas
@@ -872,11 +1067,11 @@ ALTER TABLE `detallepedido`
   ADD CONSTRAINT `detallepedido_ibfk_1` FOREIGN KEY (`id_item`) REFERENCES `item` (`id_item`);
 
 --
--- Filtros para la tabla `direccion`
+-- Filtros para la tabla `domicilio`
 --
-ALTER TABLE `direccion`
-  ADD CONSTRAINT `direccion_ibfk_1` FOREIGN KEY (`id_barrio`) REFERENCES `barrio` (`id_barrio`),
-  ADD CONSTRAINT `direccion_ibfk_2` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`);
+ALTER TABLE `domicilio`
+  ADD CONSTRAINT `domicilio_ibfk_1` FOREIGN KEY (`id_barrio`) REFERENCES `barrio` (`id_barrio`),
+  ADD CONSTRAINT `domicilio_ibfk_2` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`);
 
 --
 -- Filtros para la tabla `empleado`
@@ -906,7 +1101,8 @@ ALTER TABLE `item`
 -- Filtros para la tabla `menu`
 --
 ALTER TABLE `menu`
-  ADD CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`id_menu_estado`) REFERENCES `menuestado` (`id_menu_estado`);
+  ADD CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`id_menu_estado`) REFERENCES `menuestado` (`id_menu_estado`),
+  ADD CONSTRAINT `menu_ibfk_2` FOREIGN KEY (`id_item`) REFERENCES `item` (`id_item`);
 
 --
 -- Filtros para la tabla `pedido`
