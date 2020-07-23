@@ -70,7 +70,7 @@ $cliente = Cliente::obtenerPorId($id);
 					<?php foreach ($cliente->arrContactos as $contacto) : ?>
 
 						<?= $contacto; ?>
-						<a href="/E-commerce-de-restaurantes/proyecto/modulos/contactos/baja.php?idContacto=<?php echo $contacto->getIdContacto(); ?>">
+						<a href="/E-commerce-de-restaurantes/proyecto/modulos/contactos/procesar/eliminar.php?id=<?php echo $contacto->getIdContacto(); ?>">
 						    Eliminar
 						</a>
 

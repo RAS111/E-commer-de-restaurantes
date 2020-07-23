@@ -6,8 +6,7 @@ $id = $_GET['id'];
 
 $contacto = Contacto::obtenerPorId($id);
 
-highlight_string($contacto, true);
-exit;
+
 
 ?>
 <!DOCTYPE html>

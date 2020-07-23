@@ -109,6 +109,25 @@ class Contacto {
         $mysql->eliminar($sql);
     }
 
+    public static function obtenerPorId($id) {
+        $sql = "SELECT * FROM persona_contacto WHERE id_contacto = '$id' " ;
+
+    
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $data = $result->fetch_assoc();
+        $contacto = self::_generarContacto($data);
+        return $contacto;
+    }
+
+    private function _generarContacto($data) {
+        $contacto = new Contacto();
+        $contacto->_idContacto = $data['id_contacto'];
+        $contacto->_valor = $data['valor'];
+        return $contacto;
+    }
     public static function obtenerPorIdPersona($idPersona) {
         $sql = "SELECT persona_contacto.id_contacto, persona_contacto.id_persona, "
              . "persona_contacto.id_tipo_contacto, persona_contacto.valor, "

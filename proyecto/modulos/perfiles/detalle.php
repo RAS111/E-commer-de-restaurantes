@@ -8,7 +8,7 @@ $id = $_GET['id'];
 
 $perfil = Perfil::obtenerPorId($id);
 
-$listadoModulos = Modulo::obtenerTodos();
+$listadoModulos = Modulo::obtenerModulosPorIdPerfil($id);
 
 
 ?>
@@ -29,7 +29,7 @@ $listadoModulos = Modulo::obtenerTodos();
 	<div class="contenedor">
 		<h1>Detalle del Perfil</h1>
 
-		<table >
+		<table border="1">
 			<th>perfil</th>
 			<th>modulo</th>
 			
@@ -38,7 +38,10 @@ $listadoModulos = Modulo::obtenerTodos();
 			<tr>
 				
 				<td><?=$perfil->getIdPerfil();?></td>
-				<td><?=$perfil->getModulos() == $listadoModulos?></td>
+				<?php foreach ($listadoModulos as $modulos): ?>
+					<td><?=$modulos->obtenerModulosPorIdPerfil($id) == $listadoModulos;?></td>
+				<?php endforeach ?>
+
 			 		
 				
 

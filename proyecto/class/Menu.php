@@ -9,6 +9,12 @@ class Menu extends Item {
 	private $_estado;
 	private $_receta;
 
+    const DISPONIBLE = 1;
+    public function __construct($nombre, $precio) {
+        parent::__construct($nombre, $precio);
+        $this->_estado = self::DISPONIBLE;
+    }
+
     /**
      * @return mixed
      */
@@ -74,6 +80,7 @@ class Menu extends Item {
     	$sql = "INSERT INTO Menu (id_menu, id_menu_estado, id_item) "
     		 . "VALUES (NULL, $this->_estado, $this->_idItem) ";
 
+
     	$mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
 
@@ -83,6 +90,7 @@ class Menu extends Item {
     public function actualizar() {
     	parent::actualizar();
     	$sql = "UPDATE menu WHERE id_menu = $this->_idMenu ";
+
 
     	$mysql = new MySQL();
         $mysql->actualizar($sql);

@@ -96,8 +96,9 @@ class Perfil {
         }
         return $listado;
     }
-    public static function obtenerPorId($idPerfil) {
-        $sql = "SELECT * FROM perfil WHERE id_perfil =  '$idPerfil' ";
+    public static function obtenerPorId($id) {
+        $sql = "SELECT * FROM perfil WHERE id_perfil =  '$id' ";
+
 
         $mysql = new MySQL();
         $result = $mysql->consultar($sql);

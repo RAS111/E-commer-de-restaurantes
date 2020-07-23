@@ -17,13 +17,14 @@ if (empty(trim($nombre))) {
 
 
 
-$menu = Menu::obtenerPorId();
+$menu = Menu::obtenerPorId($id);
 $menu->setNombre($nombre);
 $menu->setPrecio($precio);
 $menu->setIdRubro($rubro);
 
 
 $menu->actualizar();
+
 
 header('Location: ../listado.php?mensaje=2');
 

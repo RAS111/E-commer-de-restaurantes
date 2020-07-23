@@ -20,7 +20,7 @@ $listadoRubro = Rubro::obtenerTodos();
 	<?php require_once '../../menu.php';?>
 	<h1>Modificar Menu</h1>
 	
-	<form name="frmDatos" method="POST" action="procesar/guardar.php">
+	<form name="frmDatos" method="POST" action="procesar/modificar.php">
 
 		<input type="hidden" name="txtId" value="<?=$menu->getIdMenu(); ?>">
 

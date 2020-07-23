@@ -1,13 +1,13 @@
 <?php
 
 require_once 'MySQL.php';
+require_once 'Menu.php';
 
 class Receta {
 
 	private $_idReceta;
 	private $_nombre;
-	private $_cantidad;
-	private $_arrProductos;
+    private $_idMenu;
 	
     /**
      * @return mixed
@@ -49,50 +49,32 @@ class Receta {
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCantidad()
-    {
-        return $this->_cantidad;
-    }
-
-    /**
-     * @param mixed $_cantidad
-     *
-     * @return self
-     */
-    public function setCantidad($_cantidad)
-    {
-        $this->_cantidad = $_cantidad;
-
-        return $this;
-    }
 
     /**
      * @return mixed
      */
-    public function getArrProductos()
+    public function getIdMenu()
     {
-        return $this->_arrProductos;
+        return $this->_idMenu;
     }
 
     /**
-     * @param mixed $_arrProductos
+     * @param mixed $_idMenu
      *
      * @return self
      */
-    public function setArrProductos($_arrProductos)
+    public function setIdMenu($_idMenu)
     {
-        $this->_arrProductos = $_arrProductos;
+        $this->_idMenu = $_idMenu;
 
         return $this;
-    }
+    }    
     
     public function guardar() {
-        $sql = "INSERT INTO receta_producto (id_receta_producto, nombre, cantidad, id_producto)"
-             . "VALUES (NULL, '$this->_nombre', $this->_cantidad, $this->_arrProductos)";
+        $sql = "INSERT INTO receta_producto (id_receta_producto, nombre id_menu)"
+             . "VALUES (NULL, '$this->_nombre', $this->_idMenu )";
 
+        
         $mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
 
@@ -100,19 +82,34 @@ class Receta {
     }
 
     public function actualizar() {
-        $sql = "UPDATE receta_producto SET nombre = '$this->nombre', cantidad = $this->_cantidad "
+        $sql = "UPDATE receta_producto SET nombre = '$this->nombre' "
              . "WHERE id_receta_producto = $this->_idReceta";
 
         $mysql = new MySQL();
         $mysql->actualizar($sql);
     }
 
-    public static function obtenerPorId() {
+    public static function obtenerPorIdMenu($idMenu) {
+        $sql = "SELECT * FROM receta_producto INNER JOIN receta ON receta.id_receta = receta_producto.id_receta WHERE id_menu = $idMenu ";
 
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarListadoReceta($datos);
+        return $listado;
     }
 
-    private function _generarReceta() {
-
+    private function _generarListadoReceta($datos) {
+        $listado = array();
+        while ($registro = $datos->fetch_assoc()) {
+            $receta = new Receta();
+            $receta->_idReceta = $registro['id_receta'];
+            $receta->_nombre = $registro['nombre'];
+            $receta->_idMenu = $registro['id_menu'];      
+            $listado[] = $receta;
+        }
+        return $listado;
     }
 
     public static function obtenerTodos() {
@@ -122,6 +119,8 @@ class Receta {
     private function _generarListadoRecetas() {
 
     }
+
+
 }
 
 ?>

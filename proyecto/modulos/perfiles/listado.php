@@ -15,7 +15,6 @@ if(isset($_GET['mensaje'])) {
 }
 
 $listadoPerfil = Perfil::obtenerTodos();
-$listadoModulos = Modulo::obtenerTodos();
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +45,7 @@ $listadoModulos = Modulo::obtenerTodos();
 		<tr>
 			<th>Perfil</th>
 			<th>Descripcion</th>
-			<th>Modulo</th>
+			
 			<th>Accion</th>
 		</tr>
 
@@ -55,7 +54,6 @@ $listadoModulos = Modulo::obtenerTodos();
 			<tr>
 				<td> <?= $perfil->getIdPerfil(); ?> </td>
 				<td> <?= $perfil->getDescripcion(); ?> </td>
-				<td> <?= $perfil->getModulos(); ?> </td>
 				<td>
 					<a href="detalle.php?id=<?=$perfil->getIdPerfil();?>">
 						<img src="../../imagenes/iconos/view.png" title="Ver Perfil">
