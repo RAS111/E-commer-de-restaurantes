@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-07-2020 a las 23:32:18
+-- Tiempo de generación: 03-08-2020 a las 01:04:17
 -- Versión del servidor: 10.1.36-MariaDB
 -- Versión de PHP: 5.6.38
 
@@ -39,7 +39,7 @@ CREATE TABLE `barrio` (
 
 INSERT INTO `barrio` (`id_barrio`, `nombre`) VALUES
 (1, 'Facundo Quiroga'),
-(4, 'abc');
+(4, 'Fachini');
 
 -- --------------------------------------------------------
 
@@ -133,8 +133,19 @@ CREATE TABLE `domicilio` (
 
 INSERT INTO `domicilio` (`id_domicilio`, `altura`, `piso`, `torre`, `departamento`, `sector`, `casa`, `manzana`, `calle`, `id_barrio`, `id_persona`) VALUES
 (16, 1, 0, 0, 0, 0, 0, 0, 'Oliva', 1, 4),
-(18, 1, 0, 0, 0, 0, 0, 0, 'a', 1, 27),
-(19, 200, 0, 0, 0, 0, 5, 0, 'corrientes', 1, 3);
+(18, 1, 0, 0, 0, 0, 0, 0, 'hola', 1, 27),
+(19, 200, 0, 0, 0, 0, 5, 0, 'corrientes', 1, 3),
+(20, 123, 0, 0, 0, 0, 1, 5, 'hola', 1, 5),
+(21, 123, 0, 0, 0, 0, 5, 1, 'ahora', 1, 23),
+(22, 312312, 0, 0, 0, 0, 34, 1, 'dasdas', 1, 25),
+(23, 1, 0, 0, 0, 0, 1, 1, 'dasdas', 4, 26),
+(24, 1, 0, 0, 0, 0, 1, 1, 'dasdas', 1, 26),
+(25, 1, 0, 0, 0, 0, 1, 1, 'dasdas', 1, 26),
+(26, 1, 0, 0, 0, 0, 1, 1, 'dasdas', 1, 26),
+(27, 1, 0, 0, 0, 0, 1, 1, 'dasdsa', 1, 28),
+(28, 1, 0, 0, 0, 0, 1, 1, 'av. 25 de mayo', 1, 44),
+(29, 1, 0, 0, 0, 0, 1, 1, 'prueba', 4, 33),
+(30, 1, 0, 0, 0, 0, 1, 1, 'probando', 1, 31);
 
 -- --------------------------------------------------------
 
@@ -182,7 +193,7 @@ CREATE TABLE `factura` (
 
 CREATE TABLE `formapago` (
   `id_forma_pago` int(11) NOT NULL,
-  `descripcion` varchar(20) NOT NULL
+  `descripcion` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -191,7 +202,8 @@ CREATE TABLE `formapago` (
 
 INSERT INTO `formapago` (`id_forma_pago`, `descripcion`) VALUES
 (1, 'Efectivo'),
-(2, 'Tarjeta');
+(2, 'Tarjeta'),
+(3, 'Trasnferencia Bancaria');
 
 -- --------------------------------------------------------
 
@@ -232,7 +244,8 @@ INSERT INTO `item` (`id_item`, `nombre`, `precio`, `id_rubro`) VALUES
 (7, 'a', 1, 2),
 (8, 'sprite', 123, 2),
 (9, 'hola', 100, 2),
-(14, 'Hamburguesa', 100, 5);
+(14, 'Hamburguesa', 100, 5),
+(15, 'Ravioles', 150, 1);
 
 -- --------------------------------------------------------
 
@@ -253,7 +266,8 @@ CREATE TABLE `menu` (
 INSERT INTO `menu` (`id_menu`, `id_menu_estado`, `id_item`) VALUES
 (1, 1, 1),
 (2, 1, 8),
-(8, 1, 14);
+(8, 1, 14),
+(9, 1, 15);
 
 -- --------------------------------------------------------
 
@@ -299,7 +313,12 @@ INSERT INTO `modulo` (`id_modulo`, `descripcion`, `directorio`) VALUES
 (7, 'Estadisticas', 'estadisticas'),
 (8, 'Menus', 'menus'),
 (9, 'Productos', 'productos'),
-(10, 'Proveedores', 'proveedores');
+(10, 'Proveedores', 'proveedores'),
+(11, 'Perfiles', 'perfiles'),
+(12, 'Modulos', 'modulos'),
+(13, 'Barrios', 'barrios'),
+(14, 'Rubros', 'rubros'),
+(15, 'Formapagos', 'formapagos');
 
 -- --------------------------------------------------------
 
@@ -386,7 +405,12 @@ INSERT INTO `perfil_modulo` (`id_perfil_modulo`, `id_modulo`, `id_perfil`) VALUE
 (24, 3, 7),
 (25, 8, 8),
 (26, 9, 8),
-(27, 7, 8);
+(27, 7, 8),
+(28, 11, 1),
+(29, 12, 1),
+(30, 13, 1),
+(31, 14, 1),
+(32, 15, 1);
 
 -- --------------------------------------------------------
 
@@ -479,7 +503,9 @@ CREATE TABLE `persona_contacto` (
 --
 
 INSERT INTO `persona_contacto` (`id_contacto`, `valor`, `id_tipo_contacto`, `id_persona`) VALUES
-(1, '123321654', 1, 3);
+(1, '123321654', 1, 3),
+(3, '123', 1, 31),
+(4, '1234', 3, 33);
 
 -- --------------------------------------------------------
 
@@ -583,7 +609,7 @@ CREATE TABLE `rubro` (
 INSERT INTO `rubro` (`id_rubro`, `nombre`) VALUES
 (1, 'Pastas'),
 (2, 'Gaseosas'),
-(5, 'ab');
+(5, 'Minutas');
 
 -- --------------------------------------------------------
 
@@ -895,7 +921,7 @@ ALTER TABLE `detallepedido`
 -- AUTO_INCREMENT de la tabla `domicilio`
 --
 ALTER TABLE `domicilio`
-  MODIFY `id_domicilio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_domicilio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT de la tabla `empleado`
@@ -913,7 +939,7 @@ ALTER TABLE `factura`
 -- AUTO_INCREMENT de la tabla `formapago`
 --
 ALTER TABLE `formapago`
-  MODIFY `id_forma_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_forma_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `imagen`
@@ -925,13 +951,13 @@ ALTER TABLE `imagen`
 -- AUTO_INCREMENT de la tabla `item`
 --
 ALTER TABLE `item`
-  MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `menuestado`
@@ -943,7 +969,7 @@ ALTER TABLE `menuestado`
 -- AUTO_INCREMENT de la tabla `modulo`
 --
 ALTER TABLE `modulo`
-  MODIFY `id_modulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_modulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `pedido`
@@ -967,7 +993,7 @@ ALTER TABLE `perfil`
 -- AUTO_INCREMENT de la tabla `perfil_modulo`
 --
 ALTER TABLE `perfil_modulo`
-  MODIFY `id_perfil_modulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_perfil_modulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`
@@ -985,7 +1011,7 @@ ALTER TABLE `personaestado`
 -- AUTO_INCREMENT de la tabla `persona_contacto`
 --
 ALTER TABLE `persona_contacto`
-  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
