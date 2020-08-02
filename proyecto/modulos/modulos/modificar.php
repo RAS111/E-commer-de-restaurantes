@@ -1,6 +1,6 @@
 <?php
 
-require_once '../../class/Modulo.php'
+require_once '../../class/Modulo.php';
 
 $id = $_GET['id'];
 
@@ -17,7 +17,7 @@ $modulo = Modulo::obtenerPorId($id);
 <body>
 
 	<h1>Modificar de Perfiles</h1>
-	<form name="frmDatos" method="POST" action="procesar/guardar.php">
+	<form name="frmDatos" method="POST" action="procesar/Modificar.php">
 
 		<input type="hidden" name="txtId" value="<?=$modulo->getIdModulo(); ?>">
 
@@ -29,7 +29,7 @@ $modulo = Modulo::obtenerPorId($id);
 		<input type="text" name="txtDirectorio" value="<?=$modulo->getDirectorio(); ?>">
 		<br><br> <!-- Este es un comentario -->
 
-	    <input type="submit" name="btnGuardar" value="Guardar">			
+	    <input type="submit" name="btnGuardar" value="Actualizar">			
 
 	</form>
 

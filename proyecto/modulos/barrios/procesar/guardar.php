@@ -8,4 +8,7 @@ $barrio = new Barrio($nombre);
 
 $barrio->guardar();
 
+
+header("Location:../listado.php?mensaje=1");
+
 ?>

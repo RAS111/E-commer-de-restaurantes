@@ -92,6 +92,8 @@ class Proveedor extends Persona{
         $proveedor->_fechaNacimiento = $data['fecha_nacimiento'];
         $proveedor->_idTipoDocumento = $data['id_tipo_documento'];
         $proveedor->_numeroDocumento = $data['numero_documento'];
+        $proveedor->setDomicilio();
+        $proveedor->setContactos();
         $proveedor->_estado = $data['id_estado'];
         return $proveedor;
     }

@@ -58,7 +58,7 @@ $cliente = Cliente::obtenerPorId($id);
 				<?php else:?>
 
 					<?= $cliente->domicilio; ?>
-					<a href="/E-commerce-de-restaurantes/proyecto/modulos/domicilios/modificar.php?idDomicilio=<?php echo $cliente->domicilio->getIdDomicilio(); ?>&idPersona=<?php echo $cliente->getIdPersona();?>&idCliente=<?php echo $cliente->getIdCLiente();?>">
+					<a href="/E-commerce-de-restaurantes/proyecto/modulos/domicilios/modificar.php?idDomicilio=<?php echo $cliente->domicilio->getIdDomicilio(); ?>&idPersona=<?php echo $cliente->getIdPersona();?>&idLlamada=<?php echo $cliente->getIdCLiente();?> &modulo=clientes">
 					    Modificar Domicilio
 					</a>
 
@@ -70,7 +70,7 @@ $cliente = Cliente::obtenerPorId($id);
 					<?php foreach ($cliente->arrContactos as $contacto) : ?>
 
 						<?= $contacto; ?>
-						<a href="/E-commerce-de-restaurantes/proyecto/modulos/contactos/procesar/eliminar.php?id=<?php echo $contacto->getIdContacto(); ?>">
+						<a href="/E-commerce-de-restaurantes/proyecto/modulos/contactos/procesar/eliminar.php?id=<?php echo $contacto->getIdContacto(); ?>&idPersona=<?php echo $cliente->getIdPersona();?>&idLlamada=<?php echo $cliente->getIdCLiente(); ?> &modulo=clientes">
 						    Eliminar
 						</a>
 

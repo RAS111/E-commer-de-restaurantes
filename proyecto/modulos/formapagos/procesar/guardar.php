@@ -8,4 +8,6 @@ $formaPago = new FormaPago($descripcion);
 
 $formaPago->guardar();
 
+header("Location:../listado.php?mensaje=1");
+
 ?>

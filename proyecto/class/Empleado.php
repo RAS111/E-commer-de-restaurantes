@@ -48,6 +48,7 @@ class Empleado extends Persona {
         $empleado->_idTipoDocumento = $data['id_tipo_documento'];
         $empleado->_numeroDocumento = $data['numero_documento'];
         $empleado->setDomicilio();
+        $empleado->setContactos();
         $empleado->_estado = $data['id_estado'];
         return $empleado;
     }

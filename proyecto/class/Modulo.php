@@ -85,10 +85,28 @@ class Modulo {
     }
 
     public function actualizar() {
-        $sql = "UPDATE modulo SET descripcion  = '$this->_descripcion' WHERE id_modulo = $this->_idModulo";
+        $sql = "UPDATE modulo SET descripcion  = '$this->_descripcion', directorio = '$this->_directorio' WHERE id_modulo = $this->_idModulo";
 
         $mysql = new MySQL();
         $mysql->actualizar($sql);
+    }
+
+    public static function obtenerPorId($id) {
+        $sql = "SELECT * FROM modulo WHERE id_modulo = '$id' " ;
+    
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $data = $result->fetch_assoc();
+        $modulo = self::_generarModulo($data);
+        return $modulo;
+    }
+
+    private function _generarModulo($data) {
+        $modulo = new Modulo($data['descripcion'], $data['directorio']);
+        $modulo->_idModulo = $data['id_modulo'];
+        return $modulo;
     }
 
     public static function obtenerTodos() {

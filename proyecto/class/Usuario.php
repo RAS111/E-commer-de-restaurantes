@@ -112,6 +112,8 @@ class Usuario extends Persona{
         $usuario->_fechaNacimiento = $data['fecha_nacimiento'];
         $usuario->_tipoDocumento = $data['id_tipo_documento'];
         $usuario->_numeroDocumento = $data['numero_documento'];
+        $usuario->setDomicilio();
+        $usuario->setContactos();
         $usuario->_idPerfil = $data['id_perfil'];
         $usuario->_estado = $data['id_estado'];
         return $usuario;

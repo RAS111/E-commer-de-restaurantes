@@ -10,4 +10,6 @@ $barrio->setNombre($nombre);
 
 $barrio->actualizar();
 
+
+header("Location:../listado.php?mensaje=2");
 ?>

@@ -128,6 +128,7 @@ class Contacto {
         $contacto->_valor = $data['valor'];
         return $contacto;
     }
+    
     public static function obtenerPorIdPersona($idPersona) {
         $sql = "SELECT persona_contacto.id_contacto, persona_contacto.id_persona, "
              . "persona_contacto.id_tipo_contacto, persona_contacto.valor, "

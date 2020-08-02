@@ -5,8 +5,10 @@ require_once "../../../class/Domicilio.php";
 session_start();
 
 $idPersona = $_POST['txtIdPersona'];
-$idDomicilio = $_POST['txtIdDomicilio'];
-$idCliente = $_POST['txtIdCliente'];
+$idLlamada = $_POST['txtIdLlamada'];
+$modulo = $_POST['txtModulo'];
+$domicilio = $_POST['txtIdDomicilio'];
+
 $calle = $_POST['txtCalle'];
 $altura = $_POST['txtAltura'];
 $barrio = $_POST['cboBarrio'];
@@ -61,13 +63,13 @@ $domicilio->setTorre($torre);
 $domicilio->setSector($sector);
 
 
-$domicilio->actualizar($idDomicilio);
+$domicilio->actualizar($domicilio);
 
 // redireccionar
 
 
 
-header("location: /E-commerce-de-restaurantes/proyecto/modulos/clientes/detalle.php?id=$idCliente");
+header("location: /E-commerce-de-restaurantes/proyecto/modulos/$modulo/detalle.php?id=$idLlamada");
 
 
 ?>

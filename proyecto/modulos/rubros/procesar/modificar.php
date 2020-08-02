@@ -10,4 +10,7 @@ $rubro->setNombre($nombre);
 
 $rubro->actualizar();
 
+
+header("Location: ../listado.php?mensaje=2");
+
 ?>

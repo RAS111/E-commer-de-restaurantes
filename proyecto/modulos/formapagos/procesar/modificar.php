@@ -10,4 +10,6 @@ $formaPago->setDescripcion($descripcion);
 
 $formaPago->actualizar();
 
+header("Location:../listado.php?mensaje=2");
+
 ?>

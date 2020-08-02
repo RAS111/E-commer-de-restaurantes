@@ -8,4 +8,6 @@ $rubro = new Rubro($nombre);
 
 $rubro->guardar();
 
+header("Location: ../listado.php?mensaje=1");
+
 ?>
