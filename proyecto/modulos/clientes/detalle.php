@@ -19,21 +19,25 @@ $cliente = Cliente::obtenerPorId($id);
 	<!--<link rel="stylesheet" type="text/css" href="../../static/css/style3.css">-->
 </head>
 <body>
-	<header>
+	
 	<?php require_once '../../menu.php';?>
-	</header>
-	<br>
+	
 
 	<div class="contenedor">
 		<h1>Detalle del Cliente</h1>
 
-		<table >
+		<table border="1">
 			<th>Nombre</th>
 			<th>Numero de Documento</th>
 			<th>Fecha de nacimiento</th>
 			
 			<th>Tipo de documento</th>
 			<th>Domicilio</th>
+			<th>Contacto
+				<a href="/E-commerce-de-restaurantes/proyecto/modulos/contactos/alta.php?idPersona=<?php echo $cliente->getIdPersona(); ?>&idLlamada=<?php echo $cliente->getIdCliente(); ?>&modulo=clientes">
+			        Agregar Contacto
+				</a>
+			</th>
 			
 			<tr>
 				<td><?=$cliente;?></td>
@@ -53,12 +57,24 @@ $cliente = Cliente::obtenerPorId($id);
 
 				<?php else:?>
 
-					<?php echo $cliente->domicilio; ?>
-					<a href="/E-commerce-de-restaurantes/proyecto/modulos/domicilios/modificar.php?idDomicilio=<?php echo $cliente->domicilio->getIdDomicilio(); ?>&idPersona=<?php echo $cliente->getIdPersona();?>&idCliente=<?php echo $cliente->getIdCLiente();?>">
+					<?= $cliente->domicilio; ?>
+					<a href="/E-commerce-de-restaurantes/proyecto/modulos/domicilios/modificar.php?idDomicilio=<?php echo $cliente->domicilio->getIdDomicilio(); ?>&idPersona=<?php echo $cliente->getIdPersona();?>&idLlamada=<?php echo $cliente->getIdCLiente();?> &modulo=clientes">
 					    Modificar Domicilio
 					</a>
 
 				<?php endif ?>
+				</td>
+
+				<td>
+					
+					<?php foreach ($cliente->arrContactos as $contacto) : ?>
+
+						<?= $contacto; ?>
+						<a href="/E-commerce-de-restaurantes/proyecto/modulos/contactos/procesar/eliminar.php?id=<?php echo $contacto->getIdContacto(); ?>&idPersona=<?php echo $cliente->getIdPersona();?>&idLlamada=<?php echo $cliente->getIdCLiente(); ?> &modulo=clientes">
+						    Eliminar
+						</a>
+
+					<?php endforeach ?>
 				</td>
 			</tr>
 		</table>

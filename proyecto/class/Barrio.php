@@ -63,7 +63,7 @@ class barrio {
         $sql = "UPDATE barrio SET nombre = '$this->_nombre' WHERE id_barrio = $this->_idBarrio ";
 
         $mysql = new MySQL();
-        $mysql->actualizar();
+        $mysql->actualizar($sql);
     }
 
     public static function obtenerTodos() {
@@ -85,6 +85,27 @@ class barrio {
             $listado[] = $barrio;
         }
         return $listado;
+    }
+
+
+    public static function obtenerPorId($id) {
+        $sql = "SELECT * FROM barrio WHERE id_barrio = $id ";
+
+
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $data = $result->fetch_assoc();
+        $barrio = self::_generarBarrio($data);
+        return $barrio;
+
+    }
+
+    private function _generarBarrio($data) {
+        $barrio = new Barrio($data['nombre']);
+        $barrio->_idBarrio = $data['id_barrio'];
+        return $barrio;
     }
 
     public function __toString() {

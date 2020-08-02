@@ -94,6 +94,24 @@ class Rubro {
         return $listado;
     }
 
+    public static function obtenerPorId($id) {
+        $sql = "SELECT * FROM rubro WHERE id_rubro = '$id' ";
+
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $data = $result->fetch_assoc();
+        $rubro = self::_generarRubro($data);
+        return $rubro;
+    }
+
+    private function _generarRubro($data) {
+        $rubro = new Rubro($data['nombre']);
+        $rubro->_idRubro = $data['id_rubro'];
+        return $rubro;
+    }
+
     public function __toString() {
         return $this->_nombre;
     }

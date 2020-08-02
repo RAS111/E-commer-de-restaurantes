@@ -8,7 +8,9 @@ $id = $_GET['id'];
 
 $perfil = Perfil::obtenerPorId($id);
 
+
 $listadoModulos = Modulo::obtenerTodos();
+
 
 
 ?>
@@ -27,8 +29,9 @@ $listadoModulos = Modulo::obtenerTodos();
 		<input type="hidden" name="txtId" value="<?=$perfil->getIdPerfil(); ?>">
 
 	    <label>Descripcion:</label>
-		<input type="text" name="txtNombre" value="<?=$perfil->getDescripcion(); ?>">
+		<input type="text" name="txtDescripcion" value="<?=$perfil->getDescripcion(); ?>">
 		<br><br> <!-- Este es un comentario -->
+
 
 		<select name="cboModulos[]" multiple style="width: 155px; height: 170px;">
 
@@ -44,10 +47,10 @@ $listadoModulos = Modulo::obtenerTodos();
 		    	</option>
 
 		    <?php endforeach ?>
-
+			
 		</select>
 		<br><br>
-
+		
 		 <input type="submit" name="btnGuardar" value="Actualizar">			
 	</form>
 	<br>

@@ -2,15 +2,16 @@
 
 require_once 'MySQL.php';
 
-class Contacto {
-	private $_idContacto;
-	private $_descripcion;
-	private $_valor;
 
-    public function __construct($descripcion, $valor) {
-        $this->_descripcion = $descripcion;
-        $this->_valor = $valor;
-    }
+class Contacto {
+
+    private $_idContacto;
+    private $_idPersona;
+    private $_idTipoContacto;
+    private $_valor;
+
+    private $_descripcion;
+
     /**
      * @return mixed
      */
@@ -19,7 +20,7 @@ class Contacto {
         return $this->_idContacto;
     }
 
-   /**
+    /**
      * @param mixed $_idContacto
      *
      * @return self
@@ -34,19 +35,39 @@ class Contacto {
     /**
      * @return mixed
      */
-    public function getDescripcion()
+    public function getIdPersona()
     {
-        return $this->_descripcion;
+        return $this->_idPersona;
     }
 
     /**
-     * @param mixed $_descripcion
+     * @param mixed $_idPersona
      *
      * @return self
      */
-    public function setDescripcion($_descripcion)
+    public function setIdPersona($_idPersona)
     {
-        $this->_descripcion = $_descripcion;
+        $this->_idPersona = $_idPersona;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdTipoContacto()
+    {
+        return $this->_idTipoContacto;
+    }
+
+    /**
+     * @param mixed $_idTipoContacto
+     *
+     * @return self
+     */
+    public function setIdTipoContacto($_idTipoContacto)
+    {
+        $this->_idTipoContacto = $_idTipoContacto;
 
         return $this;
     }
@@ -72,8 +93,7 @@ class Contacto {
     }
 
     public function guardar() {
-        $sql = "INSERT INTO persona_contacto (id_contacto, descripcion, id_tipo_contacto, id_persona)"
-              ."VALUES (NULL, '$this->_descripcion', '$this->_valor', $this->_idPersona)";
+        $sql = "INSERT INTO persona_contacto (id_contacto, valor, id_tipo_contacto, id_persona) VALUES (NULL, '$this->_valor', '$this->_idTipoContacto', '$this->_idPersona') ";
 
         $mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
@@ -81,25 +101,68 @@ class Contacto {
         $this->_idContacto = $idInsertado;
     }
 
-    public function actualizar() {
-        $sql = "UPDATE persona_contacto SET descripcion = '$this->_descripcion', id_tipo_contacto = '$this->_valor'"
-               ."WHERE id_contacto = $this->_idContacto ";
-
-        $mysql = new MySQL();
-        $mysql->actualizar($sql);
-    }
-
     public function eliminar() {
-    	$sql = "DELETE FROM persona_contacto WHERE id_contacto = $this->_idContacto";
+        $sql = "DELETE FROM persona_contacto WHERE id_contacto = $this->_idContacto " ;
+
 
         $mysql = new MySQL();
         $mysql->eliminar($sql);
     }
 
-    public function __toString() {
-        return $this->_descripcion. "," . $this->_valor;
+    public static function obtenerPorId($id) {
+        $sql = "SELECT * FROM persona_contacto WHERE id_contacto = '$id' " ;
+
+    
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $data = $result->fetch_assoc();
+        $contacto = self::_generarContacto($data);
+        return $contacto;
     }
- 
+
+    private function _generarContacto($data) {
+        $contacto = new Contacto();
+        $contacto->_idContacto = $data['id_contacto'];
+        $contacto->_valor = $data['valor'];
+        return $contacto;
+    }
+    
+    public static function obtenerPorIdPersona($idPersona) {
+        $sql = "SELECT persona_contacto.id_contacto, persona_contacto.id_persona, "
+             . "persona_contacto.id_tipo_contacto, persona_contacto.valor, "
+             . "tipocontacto.descripcion "
+             . "FROM persona_contacto "
+             . "INNER JOIN tipocontacto on tipocontacto.id_tipo_contacto = persona_contacto.id_tipo_contacto "
+             . "WHERE persona_contacto.id_persona = $idPersona " ;
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarListadoContactos($datos);
+        return $listado;        
+    }
+
+    private function _generarListadoContactos($datos) {
+        $listado = array();
+        while ($registro = $datos->fetch_assoc()) {
+            $contacto = new Contacto();
+            $contacto->_idContacto = $registro['id_contacto'];
+            $contacto->_idPersona = $registro['id_persona'];
+            $contacto->_idTipoContacto = $registro['id_tipo_contacto'];
+            $contacto->_valor = $registro['valor'];
+            $contacto->_descripcion = $registro['descripcion'];
+            $listado[] = $contacto;
+        }
+        return $listado;
+    }
+
+    public function __toString() {
+        return $this->_valor .  " - " .  $this->_descripcion;
+    }
 }
+
 
 ?>

@@ -1,16 +1,18 @@
 <?php
+require_once "../../../class/Modulo.php";
 
-require_once 'Modulo.php';
-
+$id = $_POST['txtId'];
 $descripcion = $_POST['txtDescripcion'];
 $directorio = $_POST['txtDirectorio'];
 
-$modulo->obtenerPorId();
+$modulo = Modulo::obtenerPorId($id);
 $modulo->setDescripcion($descripcion);
+$modulo->setDirectorio($directorio);
 
 
 $modulo->actualizar();
 
-header("location:");
+
+header("location:../listado.php");
 
 ?>
