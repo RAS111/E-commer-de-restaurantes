@@ -30,19 +30,28 @@ $listadoModulos = Modulo::obtenerModulosPorIdPerfil($id);
 		<h1>Detalle del Perfil</h1>
 
 		<table border="1">
-			<th>perfil</th>
-			<th>modulo</th>
+			<th>Perfil</th>
+			<th>Modulos</th>
 			
 
 			
 			<tr>
 				
 				<td><?=$perfil->getIdPerfil();?></td>
-				<?php foreach ($listadoModulos as $modulos): ?>
-					<td><?=$modulos->obtenerModulosPorIdPerfil($id) == $listadoModulos;?></td>
-				<?php endforeach ?>
+				<td>
+					<?php foreach ($listadoModulos as $modulo): ?>
+						<?php 
 
-			 		
+				 		$idModulo = $modulo->getIdModulo();
+
+			         	if ($perfil->tieneModulo($idModulo)) {
+			         		echo "$modulo -";
+			         	} 
+
+			         	?>
+					<?php endforeach ?>
+				</td>
+			 	
 				
 
 			</tr>
