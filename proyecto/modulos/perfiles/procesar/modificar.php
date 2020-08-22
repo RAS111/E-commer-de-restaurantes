@@ -3,27 +3,32 @@
 require_once '../../../class/Perfil.php';
 require_once '../../../class/PerfilModulo.php';
 
-$id = $_POST['txtId'];
+$idPerfil = $_POST['txtIdPerfil'];
 $descripcion = $_POST['txtDescripcion'];
 $listaModulos = $_POST['cboModulos'];
 
-//$perfil = new Perfil($descripcion);
-$perfil = Perfil::obtenerPorId($id);
+//highlight_string(var_export($modulos, true));
+//exit;
+
+
+$perfil = Perfil::obtenerPorId($idPerfil);
 $perfil->setDescripcion($descripcion);
 $perfil->actualizar();
 
-/* TODAVIA NO SESI ES ASI, DEJALO COMO COMENTARIO MIENTRAS
+
+$perfil->eliminarModulos();
+
 foreach ($listaModulos as $modulo_id) {
-	$perfilModulo =  PerfilModulo::obtenerPorIdPerfil($id);
+	$perfilModulo = new PerfilModulo();
 	$perfilModulo->setIdPerfil($perfil->getIdPerfil());
 	$perfilModulo->setIdModulo($modulo_id);
-	$perfilModulo->actualizar();
+	$perfilModulo->guardar();
 }
 
-highlight_string(var_export($perfilModulo,true));
-exit;
-*/
-//header("location:");
+
+//highlight_string(var_export($perfil, true));
+
+header('Location: ../listado.php?mensaje=2');
 
 ?>
 

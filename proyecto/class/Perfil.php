@@ -74,6 +74,12 @@ class Perfil {
         $mysql->actualizar($sql);
     }
 
+     public function eliminarModulos() {
+        $sql = "DELETE FROM perfil_modulo WHERE id_perfil = $this->_idPerfil";
+        $mysql = new MySQL();
+        $mysql->eliminar($sql);
+    }
+
     public static function obtenerTodos() {
         $sql = "SELECT * FROM perfil ";
 
@@ -116,6 +122,25 @@ class Perfil {
         return $perfil;
     }
 
+    public function tieneModulo($idModulo) {
+        $sql = "SELECT * FROM perfil_modulo "
+             . "WHERE id_modulo = $idModulo "
+             . "AND id_perfil = $this->_idPerfil";
+
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        /*
+        if ($result->num_rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
+        */
+
+        return $result->num_rows > 0;
+    }
 
 
 }
