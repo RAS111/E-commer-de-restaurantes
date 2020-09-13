@@ -7,17 +7,32 @@ session_start();
 $id = $_POST['txtId'];
 $nombre = $_POST['txtNombre'];
 $apellido = $_POST['txtApellido'];
-$sexo = $_POST['txtSexo'];
+$sexo = $_POST['cboSexo'];
 $fechaNacimiento = $_POST['txtFechaNacimiento'];
 $tipoDocumento = $_POST['cboTipoDocumento'];
 $numeroDocumento = $_POST['txtNumeroDocumento'];
 $username = $_POST['txtNombreUsuario'];
 $password = $_POST['txtContraseña'];
+$perfil = $_POST['cboPerfil'];
+$imagen = $_FILES['fileImagen'];
 
+//SUBIR IMAGEN
+
+$extension = pathinfo($imagen['name'], PATHINFO_EXTENSION);
+
+$nombreSinEspacios = str_replace(" ", "_", $imagen['name']);
+
+$fechaHora = date("dmYHis");
+
+$nombreImagen = $fechaHora . "_" . $nombreSinEspacios;
+
+$rutaImagen = "../../../imagenes/" . $nombreImagen;
+
+move_uploaded_file($imagen['tmp_name'], $rutaImagen);
 
 //VALIDACIONES
 
-if (empty(trim($nombre))) {
+/*if (empty(trim($nombre))) {
 	$_SESSION['mensaje_error'] = "el nombre no debe estar vacio";
 	header('Location: ../modificar.php?id=$id');
 	exit;
@@ -72,7 +87,7 @@ if (empty(trim($password))) {
 	header('Location: ../modificar.php?id=$id');
 	exit;
 }
-
+*/
 // MODIFICAR USUARIO
 
 $usuario = Usuario::obtenerPorId($id);
@@ -84,7 +99,8 @@ $usuario->setIdTipoDocumento($tipoDocumento);
 $usuario->setNumeroDocumento($numeroDocumento);
 $usuario->setUsername($username);
 $usuario->setPassword($password);
-
+$usuario->setIdPerfil($perfil);
+$usuario->setImagenPerfil($nombreImagen);
 $usuario->actualizar();
 
 // REDIRECCION

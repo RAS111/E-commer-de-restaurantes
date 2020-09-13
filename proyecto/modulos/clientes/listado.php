@@ -19,36 +19,25 @@ $listadoClientes = Cliente::obtenerTodos();
 
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<title>Listado Clientes</title>
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="../../static/css/style4.css">
-	<script src="../../static/js/listado.js"></script>
-</head>
+	<?php
+		include_once('../../head.php');
+	?>
 <body>
 
-	<header>
 	<?php require_once '../../menu.php';?>
-	</header>
-	<div class="container">
-		<div class="table-wrapper">
-			<div class="table-title">
-				<div class="row">
-					<div class="col-sm-6">
-						<h1>Listado de Clientes</h1>
+	<?php require_once "../../header.php"; ?>
+	<?php require_once "../../sidebar.php"; ?>
+	<div class="main-container">
+		<div class="pd-ltr-20 xs-pd-20-10">
+			<div class="min-height-200px">
+				<!-- Simple Datatable start -->
+				<div class="card-box mb-30">
+					<div class="pd-20">
+						<h4 class="text-blue h4">Listado de Clientes</h4>
 					</div>
-					<div class="col-sm6">
-						<a href="/E-commerce-de-restaurantes/proyecto/modulos/clientes/alta.php" class="btn btn-success" data-toggle="modal">
-							<i  class="material-icons"> &#xE147;</i> <span> Agregar Cliente</span>
-							<!--<img src="../../imagenes/iconos/add.png" title="Agregar cliente">-->
-						</a>
-						<!--<a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i><span>Eliminar Cliente</span></a>-->
+					<div class="pb-20">
+						<a class="dropdown-item" href="alta.php" title="Agregar Cliente"><i class="dw dw-add-user"></i></a>
+						
 						<?php if($mensaje == CLIENTE_GUARDADO):?>
 							<h3>Cliente Guardado</h3>
 							<br>
@@ -56,61 +45,59 @@ $listadoClientes = Cliente::obtenerTodos();
 							<h3>Cliente Modificado</h3>
 							<br>
 						<?php  endif;?>
+						<table class="data-table table stripe hover nowrap">
+							<thead>
+								<tr>
+									<th class="table-plus datatable-nosort">ID</th>
+									<th>Nombre</th>
+									<th>Apellido</th>
+									<th class="datatable-nosort">Action</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<?php foreach ($listadoClientes as $cliente): ?>
+								<tr>
+									<td> <?= $cliente->getIdCliente(); ?> </td>
+									<td> <?= $cliente->getNombre(); ?> </td>
+									<td> <?= $cliente->getApellido(); ?> </td>
+									<td>
+										<div class="dropdown">
+											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+												<i class="dw dw-more"></i>
+											</a>
+										<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+											<a class="dropdown-item" href="detalle.php?id=<?=$cliente->getIdCliente();?>"><i class="dw dw-eye"></i> View</a>
+											<a class="dropdown-item" href="modificar.php?id=<?=$cliente->getIdCliente();?>"><i class="dw dw-edit2"></i> Modificar</a>	
+										</div>
+
+		
+									</td>
+								</tr>
+								<?php endforeach ?>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
-				<table class="table table-striped table-hover"">
-					<thead>
-						<tr>
-							<!--<th>
-								<span class="custom-checkbox">
-									<input type="checkbox" name="" id="selectAll">
-									<label for="selectAll"></label>
-								</span>
-							</th>-->
-							<th>Nombre</th>
-							<th>Apellido</th>
-							<th>Acciones</th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php foreach ($listadoClientes as $cliente): ?>
-						<tr>
-							<!--<td>
-								<span class="custom-checkbox">
-									<input type="checkbox" name="option[]" id="checkbox1" value="1"> 
-									<label for="checkbox1"></label>
-								</span>
-							</td>-->
-						</tr>
-						<tr>
-							<td> <?= $cliente->getNombre(); ?> </td>
-							<td> <?= $cliente->getApellido(); ?> </td>
-							<!--<td>
-								<a href="detalle.php?id=<?=$cliente->getIdCliente();?>">
-									<img src="../../imagenes/iconos/view.png" title="Ver cliente">
-								</a>
-								-
-								<a href="">
-									<img src="../../imagenes/iconos/update.png" title="Modificar cliente">	
-								</a>
-											
-							</td>-->
-							<td>
-								<a href="detalle.php?id=<?=$cliente->getIdCliente();?>">
-									<img src="../../imagenes/iconos/view.png" title="Ver cliente">
-								</a>
-                            	<a href="modificar.php?id=<?=$cliente->getIdCliente();?>" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Modificar">&#xE254;</i></a>
-                           
-                        	</td>
-						</tr>
-						<?php endforeach ?>
-					</tbody>
-					
-				</table>
-			</div>		
 		</div>
 	</div>
-	
+	<?php 
+		include_once('../../file_js.php');
+	?>
+	<script src="src/plugins/datatables/js/jquery.dataTables.min.js"></script>
+	<script src="src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
+	<script src="src/plugins/datatables/js/dataTables.responsive.min.js"></script>
+	<script src="src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
+	<!-- buttons for Export datatable -->
+	<script src="src/plugins/datatables/js/dataTables.buttons.min.js"></script>
+	<script src="src/plugins/datatables/js/buttons.bootstrap4.min.js"></script>
+	<script src="src/plugins/datatables/js/buttons.print.min.js"></script>
+	<script src="src/plugins/datatables/js/buttons.html5.min.js"></script>
+	<script src="src/plugins/datatables/js/buttons.flash.min.js"></script>
+	<script src="src/plugins/datatables/js/pdfmake.min.js"></script>
+	<script src="src/plugins/datatables/js/vfs_fonts.js"></script>
+	<!-- Datatable Setting js -->
+	<script src="vendors/scripts/datatable-setting.js"></script>
 </body>
 </html>

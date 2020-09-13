@@ -21,8 +21,6 @@ $menu = Menu::obtenerPorId($id);
 $menu->setNombre($nombre);
 $menu->setPrecio($precio);
 $menu->setIdRubro($rubro);
-
-
 $menu->actualizar();
 
 

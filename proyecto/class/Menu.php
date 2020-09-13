@@ -7,7 +7,6 @@ class Menu extends Item {
 
 	private $_idMenu;
 	private $_estado;
-	private $_receta;
 
     const DISPONIBLE = 1;
     public function __construct($nombre, $precio) {
@@ -55,26 +54,6 @@ class Menu extends Item {
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getReceta()
-    {
-        return $this->_receta;
-    }
-
-    /**
-     * @param mixed $_receta
-     *
-     * @return self
-     */
-    public function setReceta($_receta)
-    {
-        $this->_receta = $_receta;
-
-        return $this;
-    }
-
     public function guardar() {
     	parent::guardar();
     	$sql = "INSERT INTO Menu (id_menu, id_menu_estado, id_item) "
@@ -90,7 +69,7 @@ class Menu extends Item {
     public function actualizar() {
     	parent::actualizar();
     	$sql = "UPDATE menu WHERE id_menu = $this->_idMenu ";
-
+       
 
     	$mysql = new MySQL();
         $mysql->actualizar($sql);
@@ -142,6 +121,10 @@ class Menu extends Item {
             $listado[] = $menu;
         }
         return $listado;
+    }
+
+    public function __toString() {
+        return $this->_nombre;
     }
 }
 

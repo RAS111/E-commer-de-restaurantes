@@ -10,6 +10,7 @@ class Usuario extends Persona{
 	private $_password;
 	private $_idPerfil;
     private $_estaLogueado;
+    private $_imagenPerfil;
 
     /**
      * @return mixed
@@ -115,6 +116,7 @@ class Usuario extends Persona{
         $usuario->setDomicilio();
         $usuario->setContactos();
         $usuario->_idPerfil = $data['id_perfil'];
+        $usuario->_imagenPerfil = $data['imagen_perfil'];
         $usuario->_estado = $data['id_estado'];
         return $usuario;
     }
@@ -165,7 +167,8 @@ class Usuario extends Persona{
             $usuario->_username = $registro['username'];
             $usuario->_idPerfil = $registro['id_perfil'];
             $usuario->_estaLogueado = true;
-
+             $usuario->_imagenPerfil = $registro['imagen_perfil'];
+            //cargar foto, sexo, y el tipo documento
             $usuario->perfil = Perfil::obtenerPorId($usuario->_idPerfil);
         } else {
             $usuario = new Usuario('', '');
@@ -182,8 +185,9 @@ class Usuario extends Persona{
     public function guardar() {
         parent::guardar();
 
-        $sql = "INSERT INTO usuario (id_usuario, id_persona, username, password) "
-            . "VALUES (NULL, $this->_idPersona,'$this->_username', '$this->_password')";
+        $sql = "INSERT INTO usuario (id_usuario, id_persona, username, password, id_perfil, imagen_perfil) "
+            . "VALUES (NULL, $this->_idPersona,'$this->_username', '$this->_password', $this->_idPerfil, '$this->_imagenPerfil')";
+       
 
         $mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
@@ -194,9 +198,10 @@ class Usuario extends Persona{
     public function actualizar() {
         parent::actualizar();
 
-        $sql = "UPDATE usuario SET username = '$this->_username', password = '$this->_password' " 
+        $sql = "UPDATE usuario SET username = '$this->_username', password = '$this->_password', id_perfil = $this->_idPerfil, imagen_perfil = '$this->_imagenPerfil' " 
                 ."WHERE id_usuario = $this->_idUsuario";
-                
+
+
         $mysql = new MySQL();
         $mysql->actualizar($sql);
 
@@ -204,6 +209,26 @@ class Usuario extends Persona{
 
 
     
+
+    /**
+     * @return mixed
+     */
+    public function getImagenPerfil()
+    {
+        return $this->_imagenPerfil;
+    }
+
+    /**
+     * @param mixed $_imagenPerfil
+     *
+     * @return self
+     */
+    public function setImagenPerfil($_imagenPerfil)
+    {
+        $this->_imagenPerfil = $_imagenPerfil;
+
+        return $this;
+    }
 }
 
 ?>

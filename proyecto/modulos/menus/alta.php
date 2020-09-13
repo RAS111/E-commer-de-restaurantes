@@ -8,39 +8,65 @@ $listadoRubro = Rubro::obtenerTodos();
 
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<title>Nuevo Menu</title>
-</head>
+	<?php include_once('../../head.php'); ?>
 <body>
 	<?php require_once '../../menu.php';?>
-	<h1>Registar Menu</h1>
-	
-	<form name="frmDatos" method="POST" action="procesar/guardar.php">
+	<?php require_once "../../header.php"; ?>
+	<?php require_once "../../sidebar.php"; ?>
+	<div class="main-container">
+		<div class="pd-ltr-20 xs-pd-20-10">
+			<div class="min-height-200px">
+				<div class="pd-20 card-box mb-30">
+					<div class="clearfix">
+						<h4 class="text-black h4">Registrar Menu</h4>
+					</div>
+					<div class="wizard-content">
+						<form class="tab-wizard wizard-circle wizard" name="frmDatos" id="frmDatos" method="POST" action="procesar/guardar.php">
+							<section>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Nombre</label>
+											<input type="text" name="txtNombre" id="txtNombre"  class="form-control">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Precio</label>
+											<input type="text" name="numPrecio" class="form-control">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Rubro </label>
+											<select name="cboRubro" class="custom-select form-control">
+												<option value="0">Seleccionar</option>
+												<?php foreach ($listadoRubro as $rubro): ?>
 
-	    <label>Nombre:</label>
-		<input type="text" name="txtNombre">
-		<br><br> <!-- Este es un comentario -->
-
-		<label>Precio:</label>
-		<input type="number" name="numPrecio">
-		<br><br>
-
-		<label>Rubro: </label>
-		<select name="cboRubro">
-			<option value="0">Seleccionar</option>
-			<?php foreach ($listadoRubro as $rubro): ?>
-
-				<option value="<?php echo $rubro->getIdRubro(); ?>">
-					<?php echo $rubro; ?>
-				</option>
-
-			<?php endforeach ?>
-		</select>
-		<br><br> <!-- Salto de lineas -->
-
-		<input type="submit" name="btnGuardar" value="Guardar">			
-	</form>
-	
+													<option value="<?php echo $rubro->getIdRubro(); ?>">
+														<?php echo $rubro; ?>
+													</option>
+												<?php endforeach ?>
+											</select>
+										</div>
+									</div>
+								</div>
+							</section>	
+							<input type="submit" class="btn btn-success" value="Guardar" onclick="validarDatos();">		
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--JS-->
+	<script src="../../static/vendors/scripts/core.js"></script>
+	<script src="../../static/vendors/scripts/script.min.js"></script>
+	<script src="../../static/vendors/scripts/process.js"></script>
+	<script src="../../static/vendors/scripts/layout-settings.js"></script>
+	<script src="../../static/src/plugins/jquery-steps/jquery.steps.js"></script>
+	<script src="../../static/vendors/scripts/steps-setting.js"></script>
 </body>
 </html>
