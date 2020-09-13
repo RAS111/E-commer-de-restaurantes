@@ -74,7 +74,7 @@ class Perfil {
         $mysql->actualizar($sql);
     }
 
-     public function eliminarModulos() {
+    public function eliminarModulos() {
         $sql = "DELETE FROM perfil_modulo WHERE id_perfil = $this->_idPerfil";
         $mysql = new MySQL();
         $mysql->eliminar($sql);
@@ -131,17 +131,12 @@ class Perfil {
         $result = $mysql->consultar($sql);
         $mysql->desconectar();
 
-        /*
-        if ($result->num_rows > 0) {
-            return true;
-        } else {
-            return false;
-        }
-        */
-
         return $result->num_rows > 0;
     }
 
+    public function __toString(){
+        return $this->_descripcion;
+    }
 
 }
 

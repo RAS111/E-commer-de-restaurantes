@@ -92,8 +92,8 @@ class Producto extends Item {
 
     public function guardar() {
     	parent::guardar();
-    	$sql = "INSERT INTO producto (id_producto, stock_minimo, stock_actual, stock_maximo, id_item)"
-    		 . "VALUES (NULL, $this->_stockMinimo, $this->_stockActual, $this->_stockMaximo, $this->_idItem)";
+    	$sql = "INSERT INTO producto (id_producto, stock_minimo, stock_actual, stock_maximo, id_item) VALUES (NULL, $this->_stockMinimo, $this->_stockActual, $this->_stockMaximo, $this->_idItem)";
+
 
     	$mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
@@ -104,6 +104,7 @@ class Producto extends Item {
     public function actualizar() {
     	parent::actualizar();
     	$sql = "UPDATE producto SET stock_actual = $this->_stockActual WHERE id_producto = $this->_idProducto ";
+
 
     	$mysql = new MySQL();
         $mysql->actualizar($sql);
@@ -154,6 +155,38 @@ class Producto extends Item {
             $listado[] = $producto;
         }
         return $listado;
+    }
+
+    // PRUEBA 
+    public static function obtenerProductosPorIdReceta($idReceta) {
+        $sql = "SELECT *
+                FROM producto 
+                INNER JOIN item on item.id_item = producto.id_item
+                INNER JOIN receta_producto on receta_producto.id_producto = producto.id_producto 
+                INNER JOIN receta on receta.id_receta = receta_producto.id_receta 
+                WHERE receta.id_receta =  $idReceta ";
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarProductos($datos);
+        return $listado;
+    }
+
+    private function _generarProductos($datos) {
+        $listado = array();
+        while ($registro = $datos->fetch_assoc()) {
+            $producto = new Producto($registro['nombre'], $registro['precio']);
+            $producto->_idProducto = $registro['id_producto'];
+            $producto->_idItem = $registro['id_item'];
+            $listado[] = $producto;
+        }
+        return $listado;
+    }
+
+    public function __toString() {
+        return $this->_nombre;
     }
 }
 

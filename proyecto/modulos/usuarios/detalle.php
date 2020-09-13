@@ -10,13 +10,20 @@ $user = Usuario::obtenerPorId($id);
 
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Detalle de Usuarios</title>
-</head>
+	<?php include_once('../../head.php'); ?>
 <body>
 	<?php require_once '../../menu.php';?>
-	<h1>Detalle de usuarios</h1>
+	<?php require_once "../../header.php";?>
+	<?php require_once "../../sidebar.php";?>
+	<div class="main-container">
+		<div class="pd-ltr-20 xs-pd-20-10">
+			<div class="min-height-200px">
+				<div class="pd-20 card-box mb-30">
+					<div class="clearfix">
+						<h4 class="text-black h4">Detalle de <?=$user->getUsername();?></h4>
+					</div>
 	<table border="1">
+			<th>ID</th>
 			<th>Nombre</th>
 			<th>Numero de Documento</th>
 			<th>Fecha de nacimiento</th>
@@ -28,7 +35,10 @@ $user = Usuario::obtenerPorId($id);
 			        Agregar Contacto
 				</a>
 			</th>
+			<th>imagen</th>
+			
 			<tr>
+				<td><?=$user->getIdUsuario();?></td>
 				<td><?=$user;?></td>
 				
 				<td><?=$user->getNumeroDocumento();?></td>
@@ -62,9 +72,15 @@ $user = Usuario::obtenerPorId($id);
 						    Eliminar
 						</a>
 
-					<?php endforeach ?>
+					<?php endforeach; ?>
+				</td>
+				<td>
+					 <img src="../../imagenes/<?php echo $user->getImagenPerfil() ?>" width="100" height="50">
 				</td>
 			</tr>
 		</table>	
+	<?php 
+		include_once('../../file_js.php');
+	?>
 </body>
 </html>

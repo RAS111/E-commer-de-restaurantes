@@ -15,11 +15,18 @@ require_once 'class/Rubro.php';
 require_once 'class/Perfil.php';
 require_once 'class/Modulo.php';
 
-$rubro = new Rubro ('Gaseosas');
+require_once 'class/Receta.php';
+
+/*$receta = new Receta();
+$receta->setIdMenu(1);
+
+$receta->guardar();
+*/
+/*$rubro = new Rubro ('Gaseosas');
 
 $rubro->guardar();
 
-highlight_string(var_export($rubro,true));
+highlight_string(var_export($rubro,true));*/
 /*$modulo = new Modulo ("ESTADOS", "estados");
 
 $modulo->guardar();

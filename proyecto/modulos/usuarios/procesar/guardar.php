@@ -1,17 +1,19 @@
 <?php
 
 require_once "../../../class/Usuario.php";
-
+require_once "../../../config.php";
 session_start();
 
 $nombre = $_POST['txtNombre'];
 $apellido = $_POST['txtApellido'];
-$sexo = $_POST['txtSexo'];
+$sexo = $_POST['cboSexo'];
 $fechaNacimiento = $_POST['txtFechaNacimiento'];
 $tipoDocumento = $_POST['cboTipoDocumento'];
 $numeroDocumento = $_POST['txtNumeroDocumento'];
 $username = $_POST['txtNombreUsuario'];
 $password = $_POST['txtContraseña'];
+$perfil = $_POST['cboPerfil'];
+$imagen = $_FILES['fileImagen'];
 
 
 //VALIDACIOENS
@@ -73,6 +75,21 @@ if (empty(trim($password))) {
 }
 
 
+//SUBIR IMAGEN
+
+$extension = pathinfo($imagen['name'], PATHINFO_EXTENSION);
+
+$nombreSinEspacios = str_replace(" ", "_", $imagen['name']);
+
+$fechaHora = date("dmYHis");
+
+$nombreImagen = $fechaHora . "_" . $nombreSinEspacios;
+
+$rutaImagen = "../../../imagenes/" . $nombreImagen;
+
+move_uploaded_file($imagen['tmp_name'], $rutaImagen);
+
+
 // GUARDAR USUARIO
 
 $usuario = new Usuario($nombre, $apellido);
@@ -82,6 +99,8 @@ $usuario->setIdTipoDocumento($tipoDocumento);
 $usuario->setNumeroDocumento($numeroDocumento);
 $usuario->setUsername($username);
 $usuario->setPassword($password);
+$usuario->setIdPerfil($perfil);
+$usuario->setImagenPerfil($nombreImagen);
 
 $usuario->guardar();
 

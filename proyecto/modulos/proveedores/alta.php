@@ -8,69 +8,110 @@ $listadoTipoDocumento = TipoDocumento::obtenerTodos();
 
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<title>Nuevo Proveedor</title>
-	<script src="../../static/js/proveedores/validaciones.js"></script>
-</head>
+	<?php include_once('../../head.php'); ?>
+<!--<script src="../../static/js/proveedores/validaciones.js"></script>-->
 <body>
 
 	<?php require_once '../../menu.php';?>
-	<h1>Registrar Proveedor</h1>
+	<?php require_once "../../header.php"; ?>
+	<?php require_once "../../sidebar.php"; ?>
+	<div class="main-container">
+		<div class="pd-ltr-20 xs-pd-20-10">
+			<div class="min-height-200px">
+				<div class="pd-20 card-box mb-30">
+					<div class="clearfix">
+						<h4 class="text-black h4">Registrar Proveedor</h4>
+					</div>
+					<div class="wizard-content">
+						<form class="tab-wizard wizard-circle wizard" name="frmDatos" id="frmDatos" method="POST" action="procesar/guardar.php">
+							<section>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Nombre</label>
+											<input type="text" name="txtNombre" id="txtNombre"  class="form-control">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Apellido</label>
+											<input type="text" name="txtApellido" id="txtApellido" class="form-control">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Sexo</label>
+											<select name="cboSexo" id="txtSexo" class="custom-select form-control">
+												<option value="0">Seleccionar</option>
+												<option value="F">Femenino</option>
+												<option value="M">Masculino</option>
+												<option value="Otro">Otro</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Fecha Nacimiento</label>
+											<input type="date" name="txtFechaNacimiento" id="txtFechaNacimiento" class="form-control date-picker" placeholder="Seleccionar Fecha de Nacimiento">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Tipo Documento </label>
+											<select name="cboTipoDocumento" id="cboTipoDocumento"  class="custom-select form-control">
+												<option value="0">Seleccionar</option>
 
-		<form name="frmDatos" id="frmDatos" method="POST" action="procesar/guardar.php">
+												<?php foreach ($listadoTipoDocumento as $tipoDocumento): ?>
 
-	        <label>Nombre:</label>
-		    <input type="text" name="txtNombre" id="txtNombre">
-		    <br><br> <!-- Este es un comentario -->
+													<option value="<?php echo $tipoDocumento->getIdTipoDocumento(); ?>">
+														<?php echo $tipoDocumento; ?>
+													</option>
 
-		    <label>Apellido:</label>
-		    <input type="text" name="txtApellido" id="txtApellido">
-		    <br><br>
+												<?php endforeach ?>
 
-		    <label>Sexo:</label>
-		    <select name="cboSexo" id="cboSexo">
-		    	<option value="0">Seleccionar</option>
-		    	<option value="F">Femenino</option>
-		    	<option value="M">Masculino</option>
-		    	<option value="Otros">Otros</option>
-		    </select>
-		    <br><br>
-		  
-		    <label>Fecha Nacimiento:</label>
-		    <input type="date" name="txtFechaNacimiento" id="txtFechaNacimiento">
-			<br><br> <!-- Salto de lineas -->
-
-			<label>Tipo Documento: </label>
-			<select name="cboTipoDocumento" id="cboTipoDocumento">
-				<option value="0">Seleccionar</option>
-
-				<?php foreach ($listadoTipoDocumento as $tipoDocumento): ?>
-
-					<option value="<?php echo $tipoDocumento->getIdTipoDocumento(); ?>">
-						<?php echo $tipoDocumento; ?>
-					</option>
-
-				<?php endforeach ?>
-
-			</select>
-			<br><br> <!-- Salto de lineas -->
-
-		    <label>Numero Documento:</label>
-		    <input type="text" name="txtNumeroDocumento" id="txtNumeroDocumento">
-			<br><br> <!-- Salto de lineas -->
-
-		    <label>Razon Social:</label>
-		    <input type="text" name="txtRazonSocial" id="txtRazonSocial">
-			<br><br> <!-- Salto de lineas -->
-
-			<label>Cuil:</label>
-		    <input type="text" name="txtCuil" id="txtCuil">
-			<br><br> <!-- Salto de lineas -->
-
-		    <input type="button" value="Guardar" onclick="validarDatos();">			
-
-		</form>
-	
+											</select>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Numero Documento</label>
+											<input type="text" name="txtNumeroDocumento" id="txtNumeroDocumento"  class="form-control">
+										</div>
+									</div>	
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Razon Social</label>
+											<input type="text" name="txtRazonSocial" id="txtRazonSocial" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Cuil:</label>
+											<input type="text" name="txtCuil" id="txtCuil" class="form-control">
+										</div>
+									</div>	
+								</div>
+							</section>
+							<input type="submit" class="btn btn-success" value="Guardar" onclick="validarDatos();">	
+							<!--Con JS<input type="button" value="Guardar" onclick="validarDatos();">-->	
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- js -->
+	<script src="../../static/vendors/scripts/core.js"></script>
+	<script src="../../static/vendors/scripts/script.min.js"></script>
+	<script src="../../static/vendors/scripts/process.js"></script>
+	<script src="../../static/vendors/scripts/layout-settings.js"></script>
+	<script src="../../static/src/plugins/jquery-steps/jquery.steps.js"></script>
+	<script src="../../static/vendors/scripts/steps-setting.js"></script>
 </body>
 </html>

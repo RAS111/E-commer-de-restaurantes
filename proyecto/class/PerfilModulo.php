@@ -109,21 +109,6 @@ class PerfilModulo {
         }
         return $listado;
     }
-  
-  //NO SE SI SE UTILIZA ASI, POR LAS DUDAS DEJA COMO COMENTARIO
-    /*public static function obtenerModulosPorIdPerfil($idPerfil) {
-        $sql = "SELECT * "
-             . "FROM perfil_modulo "
-             . "WHERE perfil.id_perfil =  '$idPerfil' ";
-
-        $mysql = new MySQL();
-        $datos = $mysql->consultar($sql);
-        $mysql->desconectar();
-
-        $listado = self::_generarListadoPerfilModulo($datos);
-        return $listado;
-    }*/
-
 
 }
 

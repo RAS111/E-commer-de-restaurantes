@@ -148,6 +148,7 @@ class Proveedor extends Persona{
         $mysql->actualizar($sql);
     }
 
+    
 }
 
 ?>
