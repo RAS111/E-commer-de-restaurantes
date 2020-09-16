@@ -1,10 +1,10 @@
 <?php
 
-require_once '../../class/Barrio.php';
+require_once '../../class/Pedido.php';
 
 const SIN_ACCION = 0;
-const BARRIO_GUARDADO = 1;
-const BARRIO_MODIFICADO = 2;
+const PEDIDO_GUARDADO = 1;
+const PEDIDO_MODIFICADO = 2;
 
 
 if(isset($_GET['mensaje'])) {
@@ -13,7 +13,7 @@ if(isset($_GET['mensaje'])) {
 	$mensaje = SIN_ACCION;
 }
 
-$listadoBarrio = Barrio::obtenerTodos();
+$listadoPedido = Pedido::obtenerTodos();
 
 ?>
 
@@ -33,47 +33,52 @@ $listadoBarrio = Barrio::obtenerTodos();
 				<!-- Simple Datatable start -->
 				<div class="card-box mb-30">
 					<div class="pd-20">
-						<h4 class="text-blue h4">Listado de Barrios</h4>
+						<h4 class="text-blue h4">Listado de Pedidos</h4>
 					</div>
 					<div class="pb-20">
-						<a class="dropdown-item" href="alta.php" title="Agregar Barrio"><i class="dw dw-add-user"></i></a>
+						<a class="dropdown-item" href="alta.php" title="Agregar Pedido"><i class="dw dw-add-user"></i></a>
 	
-						<?php if($mensaje == BARRIO_GUARDADO):?>
-							<h3>Barrio Guardado</h3>
+						<?php if($mensaje == PEDIDO_GUARDADO):?>
+							<h3>Pedido Guardado</h3>
 							<br>
-						<?php elseif($mensaje == BARRIO_MODIFICADO):?>
-							<h3>Barrio Modificado</h3>
+						<?php elseif($mensaje == PEDIDO_MODIFICADO):?>
+							<h3>Pedido Modificado</h3>
 							<br>
 						<?php  endif;?>
 						<table class="data-table table stripe hover nowrap">
 							<thead>
 								<tr>
 									<th class="table-plus datatable-nosort">ID</th>
-									<th>Nombre</th>
-									<th class="datatable-nosort">Action</th>
+									<th>Fecha</th>
+									<th>Tipo de Envio</th>
+									<th>Estado</th>
+									<th>Total</th>
+									<th class="datatable-nosort">Accion</th>
 								</tr>
 							</thead>
 							<tbody>
 
-								<?php foreach ($listadoBarrio as $barrio): ?>
+								<?php foreach ($listadoPedido as $pedido): ?>
 
 								<tr>
-									<td> <?= $barrio->getIdBarrio(); ?> </td>
-									<td> <?= $barrio->getNombre(); ?> </td>
+									<td><?=$pedido->getIdPedido();?> </td>
+									<td><?=$pedido->getFecha();?> </td>
+									<td><?=$pedido->getTipoEnvio();?></td>
+									<td><?=$pedido->pedidoEstado;?></td>
+									<td><?=$pedido->arrDetallePedido;?></td>
 									<td>
 									<div class="dropdown">
 										<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
 											<i class="dw dw-more"></i>
 										</a>
 										<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-												
-											<a class="dropdown-item" href="modificar.php?id=<?=$barrio->getIdBarrio();?>"><i class="dw dw-edit2"></i> Modificar</a>
-												
+											<a class="dropdown-item" href="detalle.php?id=<?=$pedido->getIdPedido();?>"><i class="dw dw-eye"></i> View</a>
 										</div>
 									</div>
 									</td>
 								</tr>
 								<?php endforeach ?>
+
 							</tbody>
 						</table>
 					</div>

@@ -50,7 +50,7 @@ $listadoMenus = Menu::obtenerTodos();
 									<th>Nombre</th>
 									<th>Precio</th>
 									<th>Recetas</th>
-									<th class="datatable-nosort">Action</th>
+									<th class="datatable-nosort">Accion</th>
 								</tr>
 							</thead>
 							<tbody>

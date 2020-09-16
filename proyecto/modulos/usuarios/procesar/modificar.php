@@ -98,7 +98,6 @@ $usuario->setFechaNacimiento($fechaNacimiento);
 $usuario->setIdTipoDocumento($tipoDocumento);
 $usuario->setNumeroDocumento($numeroDocumento);
 $usuario->setUsername($username);
-$usuario->setPassword($password);
 $usuario->setIdPerfil($perfil);
 $usuario->setImagenPerfil($nombreImagen);
 $usuario->actualizar();

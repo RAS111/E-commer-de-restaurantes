@@ -108,6 +108,7 @@ class Usuario extends Persona{
     private function _generarUsuario($data) {
         $usuario = new Usuario($data['nombre'], $data['apellido']);
         $usuario->_idUsuario = $data['id_usuario'];
+        $usuario->_sexo = $data['sexo'];
         $usuario->_username = $data['username'];
         $usuario->_idPersona = $data['id_persona'];
         $usuario->_fechaNacimiento = $data['fecha_nacimiento'];
@@ -164,11 +165,13 @@ class Usuario extends Persona{
             $usuario = new Usuario($registro['nombre'], $registro['apellido']);
             $usuario->_idUsuario = $registro['id_usuario'];
             $usuario->_idPersona = $registro['id_persona'];
+            $usuario->_sexo = $registro['sexo'];
+            $usuario->_tipoDocumento = $registro['id_tipo_documento'];
             $usuario->_username = $registro['username'];
             $usuario->_idPerfil = $registro['id_perfil'];
             $usuario->_estaLogueado = true;
-             $usuario->_imagenPerfil = $registro['imagen_perfil'];
-            //cargar foto, sexo, y el tipo documento
+            $usuario->_imagenPerfil = $registro['imagen_perfil'];
+            
             $usuario->perfil = Perfil::obtenerPorId($usuario->_idPerfil);
         } else {
             $usuario = new Usuario('', '');
@@ -198,7 +201,7 @@ class Usuario extends Persona{
     public function actualizar() {
         parent::actualizar();
 
-        $sql = "UPDATE usuario SET username = '$this->_username', password = '$this->_password', id_perfil = $this->_idPerfil, imagen_perfil = '$this->_imagenPerfil' " 
+        $sql = "UPDATE usuario SET username = '$this->_username', id_perfil = $this->_idPerfil, imagen_perfil = '$this->_imagenPerfil' " 
                 ."WHERE id_usuario = $this->_idUsuario";
 
 
@@ -207,8 +210,6 @@ class Usuario extends Persona{
 
     }
 
-
-    
 
     /**
      * @return mixed

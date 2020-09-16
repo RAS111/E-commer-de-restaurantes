@@ -112,14 +112,6 @@ $listadoPerfil = Perfil::obtenerTodos();
 									</div>	
 									<div class="col-md-6">
 										<div class="form-group">
-											<label>Contraseña</label>
-											<input type="password" name="txtContraseña" id="txtContraseña" class="form-control"  value="<?= $user->getPassword(); ?>">
-										</div>
-									</div>	
-								</div>	
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group">
 											<label>Perfil</label>
 											<select name="cboPerfil" id="cboPerfil" class="custom-select form-control">
 												<option value="0">Seleccionar</option>
@@ -137,10 +129,12 @@ $listadoPerfil = Perfil::obtenerTodos();
 													</option>
 
 												<?php endforeach ?>
-
 											</select>
 										</div>
-									</div>
+									</div>	
+								</div>	
+								<div class="row">
+									
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Imagen</label> 
