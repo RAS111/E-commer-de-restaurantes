@@ -68,7 +68,6 @@ $listadoMenus = Menu::obtenerTodos();
 												<i class="dw dw-more"></i>
 											</a>
 											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-												<a class="dropdown-item" href="detalle.php?id=<?=$menu->getIdMenu();?>"><i class="dw dw-eye"></i> View</a>
 												<a class="dropdown-item" href="modificar.php?id=<?=$menu->getIdMenu();?>"><i class="dw dw-edit2"></i> Modificar</a>	
 											</div>
 										</div>

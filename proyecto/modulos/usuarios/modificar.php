@@ -11,6 +11,7 @@ $user = Usuario::obtenerPorId($id);
 $listadoTipoDocumento = TipoDocumento::obtenerTodos();
 $listadoPerfil = Perfil::obtenerTodos();
 
+
 ?>
 
 <!DOCTYPE html>

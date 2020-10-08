@@ -23,6 +23,18 @@ $barrio = Barrio::obtenerPorId($id);
 					<div class="clearfix">
 						<h4 class="text-black h4">Modificar Barrio</h4>
 					</div>
+					<?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+						<font color="red">
+							<?php echo $_SESSION['mensaje_error'] ?>
+						</font>
+
+						<br><br>
+
+					<?php
+							unset($_SESSION['mensaje_error']);
+						endif;
+					?>
 					<div class="wizard-content">
 						<form class="tab-wizard wizard-circle wizard" name="frmDatos" id="frmDatos" method="POST" action="procesar/modificar.php">
 							<section>

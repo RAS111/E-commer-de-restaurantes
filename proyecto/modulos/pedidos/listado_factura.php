@@ -2,18 +2,7 @@
 
 require_once '../../class/Pedido.php';
 
-const SIN_ACCION = 0;
-const PEDIDO_GUARDADO = 1;
-const PEDIDO_MODIFICADO = 2;
-
-
-if(isset($_GET['mensaje'])) {
-	$mensaje = $_GET['mensaje'];
-}else {
-	$mensaje = SIN_ACCION;
-}
-
-$listadoPedido = Pedido::obtenerTodos();
+$listadoPedido = Pedido::obtenerPedidoParaFacturar();
 
 ?>
 
@@ -33,18 +22,8 @@ $listadoPedido = Pedido::obtenerTodos();
 				<!-- Simple Datatable start -->
 				<div class="card-box mb-30">
 					<div class="pd-20">
-						<h4 class="text-blue h4">Listado de Pedidos</h4>
+						<h4 class="text-blue h4">Pedidos Para Facturar</h4>
 					</div>
-					<div class="pb-20">
-						<a class="dropdown-item" href="alta.php" title="Agregar Pedido"><i class="dw dw-add-user"></i></a>
-	
-						<?php if($mensaje == PEDIDO_GUARDADO):?>
-							<h3>Pedido Guardado</h3>
-							<br>
-						<?php elseif($mensaje == PEDIDO_MODIFICADO):?>
-							<h3>Pedido Modificado</h3>
-							<br>
-						<?php  endif;?>
 						<table class="data-table table stripe hover nowrap">
 							<thead>
 								<tr>
@@ -75,9 +54,6 @@ $listadoPedido = Pedido::obtenerTodos();
 										</a>
 										<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 											<a class="dropdown-item" href="detalle.php?id=<?=$pedido->getIdPedido();?>"><i class="dw dw-eye"></i> Ver</a>
-											
-											<a class="dropdown-item" href="listado_factura.php"><i class="dw dw-list3"></i> Pedidos para Facturar</a>	
-											
 										</div>
 									</div>
 									</td>

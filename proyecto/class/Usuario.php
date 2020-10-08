@@ -100,26 +100,26 @@ class Usuario extends Persona{
         $mysql->desconectar();
 
         $data = $result->fetch_assoc();
-        $usuario = self::_generarUsuario($data);
+        $user = self::_generarUsuario($data);
 
-        return $usuario;
+        return $user;
     }
 
     private function _generarUsuario($data) {
-        $usuario = new Usuario($data['nombre'], $data['apellido']);
-        $usuario->_idUsuario = $data['id_usuario'];
-        $usuario->_sexo = $data['sexo'];
-        $usuario->_username = $data['username'];
-        $usuario->_idPersona = $data['id_persona'];
-        $usuario->_fechaNacimiento = $data['fecha_nacimiento'];
-        $usuario->_tipoDocumento = $data['id_tipo_documento'];
-        $usuario->_numeroDocumento = $data['numero_documento'];
-        $usuario->setDomicilio();
-        $usuario->setContactos();
-        $usuario->_idPerfil = $data['id_perfil'];
-        $usuario->_imagenPerfil = $data['imagen_perfil'];
-        $usuario->_estado = $data['id_estado'];
-        return $usuario;
+        $user = new Usuario($data['nombre'], $data['apellido']);
+        $user->_idUsuario = $data['id_usuario'];
+        $user->_sexo = $data['sexo'];
+        $user->_username = $data['username'];
+        $user->_idPersona = $data['id_persona'];
+        $user->_fechaNacimiento = $data['fecha_nacimiento'];
+        $user->_tipoDocumento = $data['id_tipo_documento'];
+        $user->_numeroDocumento = $data['numero_documento'];
+        $user->setDomicilio();
+        $user->setContactos();
+        $user->_idPerfil = $data['id_perfil'];
+        $user->_imagenPerfil = $data['imagen_perfil'];
+        $user->_estado = $data['id_estado'];
+        return $user;
     }
 
     public static function obtenerTodos() {

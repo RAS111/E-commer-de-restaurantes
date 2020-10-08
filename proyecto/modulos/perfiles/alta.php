@@ -20,13 +20,25 @@ $listadoModulos = Modulo::obtenerTodos();
 					<div class="clearfix">
 						<h4 class="text-black h4">Registrar Perfiles</h4>
 					</div>
+					<?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+						<font color="red">
+							<?php echo $_SESSION['mensaje_error'] ?>
+						</font>
+
+						<br><br>
+
+					<?php
+							unset($_SESSION['mensaje_error']);
+						endif;
+					?>
 					<div class="wizard-content">
 						<form class="tab-wizard wizard-circle wizard" name="frmDatos" id="frmDatos" method="POST" action="procesar/guardar.php">
 							<section>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label>Descricpcion</label>
+											<label>Descricpción</label>
 											<input type="text" name="txtDescripcion" class="form-control">
 										</div>
 									</div>

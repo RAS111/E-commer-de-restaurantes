@@ -42,7 +42,7 @@ $user = Usuario::obtenerPorId($id);
 								<?=$user->getFechaNacimiento();?>
 							</li>
 							<li>
-								<span>Domicilio</span>
+								<span>Domicilio:</span>
 								<?php if (is_null($user->domicilio)) : ?>	    
 
 									<a href="/E-commerce-de-restaurantes/proyecto/modulos/domicilios/alta.php?idPersona=<?php echo $user->getIdPersona(); ?>&idLlamada=<?php echo $user->getIdUsuario(); ?>&modulo=usuarios">
@@ -59,7 +59,7 @@ $user = Usuario::obtenerPorId($id);
 								<?php endif ?>
 							</li>
 							<li>
-								<span>Contacto 
+								<span>Contacto: 
 									<a href="/E-commerce-de-restaurantes/proyecto/modulos/contactos/alta.php?idPersona=<?php echo $user->getIdPersona(); ?>&idLlamada=<?php echo $user->getIdUsuario(); ?>&modulo=usuarios">
 										Agregar Contacto
 									</a>

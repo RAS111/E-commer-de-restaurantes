@@ -1,5 +1,7 @@
 <?php
 
+require_once 'MySQL.php';
+
 class Factura {
 	private $_idFactura;
 	private $_fecha;
@@ -126,6 +128,33 @@ class Factura {
         $this->_idPedido = $_idPedido;
 
         return $this;
+    }
+
+    public function obtenerTodos() {
+         $sql = "SELECT * FROM factura";
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarListadoFactura($datos);
+
+        return $listado;
+    }
+
+    private function _generarListadoFactura($datos) {
+        $listado = array();
+        while ($registro = $datos->fetch_assoc()) {
+            $factura = new Factura();
+            $factura->_idFactura = $registro['id_factura'];
+            $factura->_fecha = $registro['fecha'];
+            $factura->_numero = $registro['numero'];
+            $factura->_tipo = $registro['tipo'];    
+            $factura->_idFormaPago = $registro['id_forma_pago'];
+            $factura->_idPedido = $registro['id_pedido']; 
+            $listado[] = $factura;
+        }
+        return $listado;
     }
 }
 

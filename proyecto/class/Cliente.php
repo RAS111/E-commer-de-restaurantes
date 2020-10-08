@@ -100,7 +100,7 @@ class Cliente extends Persona{
     }
 
     public function __toString(){
-        return $this->_nombre;
+        return $this->_nombre ." ". $this->_apellido;
     }
 
 }

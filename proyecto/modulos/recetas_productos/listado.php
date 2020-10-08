@@ -1,6 +1,7 @@
 <?php
 
 require_once '../../class/RecetaProducto.php';
+require_once '../../class/Menu.php';
 
 const SIN_ACCION = 0;
 const RECETAPRODUCTO_GUARDADO = 1;
@@ -15,7 +16,7 @@ if(isset($_GET['mensaje'])) {
 
 $idMenu = $_GET['id'];
 $listadoRecetaProducto = RecetaProducto::obtenerPorIdMenu($idMenu);
-
+$menu = Menu::obtenerPorId($idMenu);
 ?>
 
 <!DOCTYPE html>
@@ -33,10 +34,8 @@ $listadoRecetaProducto = RecetaProducto::obtenerPorIdMenu($idMenu);
 			<div class="min-height-200px">
 				<!-- Simple Datatable start -->
 				<div class="card-box mb-30">
-					<div class="pd-20">
-						<?php foreach ($listadoRecetaProducto as $recetaProducto): ?>
-							<h4 class="text-blue h4">Listado de <?= $recetaProducto->menu->getNombre(); ?></h4>
-						<?php endforeach ?>
+					<div class="pd-20">	
+						<h4 class="text-blue h4">Listado de <?=$menu;?></h4>
 					</div>
 					<div class="pb-20">
 						<a class="dropdown-item" href="alta.php?id=<?php echo $idMenu;?> " title="Agregar Receta"><i class="dw dw-add-user"></i></a>

@@ -1,11 +1,12 @@
 <?php
 
 require_once '../../class/Pedido.php';
+require_once '../../class/DetallePedido.php';
 
-$id = $_GET['id'];
+$idPedido = $_GET['id'];
 
-$pedido = Pedido::obtenerPorId($id);
-
+$pedido = Pedido::obtenerPorId($idPedido);
+$listadoDetallePedido = DetallePedido::obtenerPorIdPedido($idPedido);
 
 ?>
 
@@ -20,45 +21,85 @@ $pedido = Pedido::obtenerPorId($id);
 		<div class="pd-ltr-20 xs-pd-20-10">
 			<div class="min-height-200px">
 				<!-- Simple Datatable start -->
+
 				<div class="card-box mb-30">
 					<div class="pd-20">
-						<h4 class="text-blue h4">Detalle del Pedido</h4>
+						<h4 class="text-black h4">Pedido Nro:<?=$pedido->getIdPedido();?></h4>
 					</div>
 
 					<table class="data-table table stripe hover nowrap">
 						<thead>
 							<tr>
-								<th>ID</th>
+								
 								<th>Fecha</th>
 								<th>Tipo de Envio</th>		
 								<th>Cliente</th>
-								<th>Empleado</th>
 								<th>Estado</th>
-								<th>Id item</th>
-								<th>Cantidad</th>
-								<th>Total</th>
+								
 								
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td><?=$pedido->getIdPedido();?> </td>
+								
 								<td><?=$pedido->getFecha();?> </td>
 								<td><?=$pedido->getTipoEnvio();?></td>
 								<td><?=$pedido->cliente;?></td>
-								<td><?=$pedido->empleado;?></td>
 								<td><?=$pedido->pedidoEstado;?></td>
-								<td><?=$pedido->arrDetallePedido->getIdItem();?></td>
-								<td><?=$pedido->arrDetallePedido->getCantidad();?></td>
-								<td><?=$pedido->arrDetallePedido;?></td>
+								
 								
 							</tr>
 						</tbody>
 					</table>
+					<hr>
+					<div class="pd-20">
+						<h4 class="text-blue h4">Detalle del Pedido</h4>
+					</div>
+					<table id="id_detalle_venta" class="data-table table stripe hover nowrap">
+						<thead>
+							<tr>
+								<th class="table-plus datatable-nosort">ID</th>
+								<th>Menu</th>
+								<th>Cantidad</th>
+								<th>Precio Unitario</th>
+								<th>Subtotal</th>
+								
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach ($listadoDetallePedido as $detallePedido): ?>
+								<tr>
+									<td><?=$detallePedido->getIdItem();?></td>
+									<td><?=$detallePedido->item->getNombre();?></td>
+									<td><?=$detallePedido->getCantidad();?></td>
+									<td><?=$detallePedido->getPrecio();?></td>
+									<td><?=$detallePedido->calcularSubtotal();?></td>				
+								</tr>
+							<?php endforeach ?>
+						</tbody>
+					</table>
+					<div class="row row-cols-2">
+						<div class="col">
+							<p class="lead">Totales</p>
+							<div class="table-responsive">
+								<table class="table table-sm">
+									<tbody>
+										<tr>
+											<th class="w-50">Total:</th>
+											<td id="id_total"><?=$pedido->calcularTotal();?></td>
+										</tr>
+										
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	
 	<?php include_once('../../file_js.php');?>
 </body>
 </html>

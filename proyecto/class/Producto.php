@@ -152,12 +152,37 @@ class Producto extends Item {
             $producto = new Producto($registro['nombre'], $registro['precio']);
             $producto->_idProducto = $registro['id_producto'];
             $producto->_idItem = $registro['id_item'];
+            $producto->_stockActual = $registro['stock_actual'];
             $listado[] = $producto;
         }
         return $listado;
     }
 
-    // PRUEBA 
+    public static function obtenerPorRubro() {
+        $sql = "SELECT * FROM item INNER JOIN producto ON producto.id_item = item.id_item WHERE id_rubro = 2 ";
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarListadoPorRubro($datos);
+
+        return $listado;
+    }
+
+    private function _generarListadoPorRubro($datos) {
+        $listado = array();
+        while ($registro = $datos->fetch_assoc()) {
+            $producto = new Producto($registro['nombre'], $registro['precio']);
+            $producto->_idProducto = $registro['id_producto'];
+            $producto->_idItem = $registro['id_item'];
+            $producto->_stockActual = $registro['stock_actual'];
+            $producto->_idRubro = $registro['id_rubro'];
+            $listado[] = $producto;
+        }
+        return $listado;
+    }
+
     public static function obtenerProductosPorIdReceta($idReceta) {
         $sql = "SELECT *
                 FROM producto 
@@ -184,6 +209,7 @@ class Producto extends Item {
         }
         return $listado;
     }
+
 
     public function __toString() {
         return $this->_nombre;

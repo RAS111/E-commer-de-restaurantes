@@ -1,10 +1,10 @@
 <?php
 
-require_once '../../class/Pedido.php';
+require_once '../../class/Factura.php';
 
 const SIN_ACCION = 0;
-const PEDIDO_GUARDADO = 1;
-const PEDIDO_MODIFICADO = 2;
+const FACTURA_GUARDADO = 1;
+const FACTURA_MODIFICADO = 2;
 
 
 if(isset($_GET['mensaje'])) {
@@ -13,7 +13,9 @@ if(isset($_GET['mensaje'])) {
 	$mensaje = SIN_ACCION;
 }
 
-$listadoPedido = Pedido::obtenerTodos();
+$listadoFactura = Factura::obtenerTodos();
+
+
 
 ?>
 
@@ -33,51 +35,41 @@ $listadoPedido = Pedido::obtenerTodos();
 				<!-- Simple Datatable start -->
 				<div class="card-box mb-30">
 					<div class="pd-20">
-						<h4 class="text-blue h4">Listado de Pedidos</h4>
+						<h4 class="text-blue h4">Listado de Ventas</h4>
 					</div>
 					<div class="pb-20">
-						<a class="dropdown-item" href="alta.php" title="Agregar Pedido"><i class="dw dw-add-user"></i></a>
+						<a class="dropdown-item" href="alta.php" title="Agregar Factura"><i class="dw dw-add-user"></i></a>
 	
-						<?php if($mensaje == PEDIDO_GUARDADO):?>
-							<h3>Pedido Guardado</h3>
-							<br>
-						<?php elseif($mensaje == PEDIDO_MODIFICADO):?>
-							<h3>Pedido Modificado</h3>
-							<br>
+						<?php if($mensaje == FACTURA_GUARDADO):?>
+							<h3>Factura Guardado</h3>
+							
+						<?php elseif($mensaje == FACTURA_MODIFICADO):?>
+							<h3>Factura Modificado</h3>
+							
 						<?php  endif;?>
 						<table class="data-table table stripe hover nowrap">
 							<thead>
 								<tr>
 									<th class="table-plus datatable-nosort">ID</th>
-									<th>Cliente</th>
 									<th>Fecha</th>
-									<th>Tipo de Envio</th>
-									<th>Estado</th>
-									
+									<th>Numero</th>
+									<th>Forma de Pago</th>
 									<th class="datatable-nosort">Accion</th>
 								</tr>
 							</thead>
 							<tbody>
-
-								<?php foreach ($listadoPedido as $pedido): ?>
-
+								<?php foreach ($listadoFactura as $factura): ?>
 								<tr>
-									<td><?=$pedido->getIdPedido();?></td>
-									<td><?=$pedido->cliente;?></td>
-									<td><?=$pedido->getFecha();?> </td>
-									<td><?=$pedido->getTipoEnvio();?></td>
-									<td><?=$pedido->pedidoEstado;?></td>
-									
-									<td>
+									<td><?=$factura->getIdFactura();?></td>
+									<td><?=$factura->getFecha();?></td>
+									<td><?=$factura->getNumero();?> </td>
+									<td><?=$factura->getIdFormaPago();?></td><td>
 									<div class="dropdown">
 										<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
 											<i class="dw dw-more"></i>
 										</a>
 										<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-											<a class="dropdown-item" href="detalle.php?id=<?=$pedido->getIdPedido();?>"><i class="dw dw-eye"></i> Ver</a>
-											
-											<a class="dropdown-item" href="listado_factura.php"><i class="dw dw-list3"></i> Pedidos para Facturar</a>	
-											
+											<a class="dropdown-item" href="detalle.php?id=<?=$factura->getIdFactura();?>"><i class="dw dw-eye"></i> Ver</a>
 										</div>
 									</div>
 									</td>

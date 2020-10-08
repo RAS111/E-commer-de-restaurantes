@@ -5,21 +5,24 @@ require_once 'DetallePedido.php';
 require_once 'PedidoEstado.php';
 require_once 'Cliente.php';
 require_once 'Empleado.php';
+
 class Pedido {
 	private $_idPedido;
 	private $_fecha;
 	private $_tipoEnvio;
 	private $_idPedidoEstado;
 	private $_idCliente;
-	private $_idEmpleado;
-	private $_idDetallePedido;
-	private $_idFactura;
+	
 
 	public $cliente;
-	public $empleado;
 	public $arrDetallePedido;
 	public $pedidoEstado;
 
+    const PENDIENTE = 1;
+    public function __construct(){
+        $this->_idPedidoEstado = self::PENDIENTE;
+    }
+    
     /**
      * @return mixed
      */
@@ -120,65 +123,6 @@ class Pedido {
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getIdEmpleado()
-    {
-        return $this->_idEmpleado;
-    }
-
-    /**
-     * @param mixed $_idEmpleado
-     *
-     * @return self
-     */
-    public function setIdEmpleado($_idEmpleado)
-    {
-        $this->_idEmpleado = $_idEmpleado;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getIdDetallePedido()
-    {
-        return $this->_idDetallePedido;
-    }
-
-    /**
-     * @param mixed $_idDetallePedido
-     *
-     * @return self
-     */
-    public function setIdDetallePedido($_idDetallePedido)
-    {
-        $this->_idDetallePedido = $_idDetallePedido;
-
-        return $this;
-    }
-
-     /**
-     * @return mixed
-     */
-    public function getIdFactura()
-    {
-        return $this->_idFactura;
-    }
-
-    /**
-     * @param mixed $_idFactura
-     *
-     * @return self
-     */
-    public function setIdFactura($_idFactura)
-    {
-        $this->_idFactura = $_idFactura;
-
-        return $this;
-    }
 
      /**
      * @return mixed
@@ -200,25 +144,6 @@ class Pedido {
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getEmpleado()
-    {
-        return $this->empleado;
-    }
-
-    /**
-     * @param mixed $empleado
-     *
-     * @return self
-     */
-    public function setEmpleado()
-    {
-        $this->empleado = Empleado::obtenerPorId($this->_idEmpleado);
-
-        return $this;
-    }
 
     /**
      * @return mixed
@@ -235,7 +160,7 @@ class Pedido {
      */
     public function setArrDetallePedido()
     {
-         $this->arrDetallePedido = DetallePedido::obtenerPorId($this->_idDetallePedido);
+        $this->arrDetallePedido = DetallePedido::obtenerPorIdPedido($this->_idPedido);
 
         return $this;
     }
@@ -260,9 +185,35 @@ class Pedido {
         return $this;
     }
 
-     public static function obtenerPorId($id) {
-        $sql = "SELECT * FROM pedido WHERE id_pedido = $id ";
+    public function guardar() {
+        $sql = "INSERT INTO pedidoss (id_pedido, fecha, tipo_envio, id_cliente,  id_pedido_estado) VALUES (NULL, '$this->_fecha', '$this->_tipoEnvio',  $this->_idCliente, $this->_idPedidoEstado)";
 
+        $mysql = new MySQL();
+        $idInsertado = $mysql->insertar($sql);
+
+        $this->_idPedido = $idInsertado;
+    }
+
+    public function actualizar() {
+        $sql  = "UPDATE pedidoss SET fecha = '$this->_fecha', tipo_envio = '$this->_tipoEnvio', id_detalle_pedido = $this->_idDetallePedido, id_cliente = $this->_idCliente,  id_pedido_estado = $this->_idPedidoEstado WHERE id_pedido = $this->_idPedido";
+        
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+    }
+
+    public function calcularTotal() {
+        $total = 0;
+        foreach ($this->arrDetallePedido as $detalle) {
+           
+            $total = $total + $detalle->calcularSubtotal();
+        }
+        return $total;
+    }
+
+    public static function obtenerPorId($id) {
+        $sql = "SELECT * FROM pedidoss WHERE id_pedido = $id ";
+
+        
         $mysql = new MySQL();
         $result = $mysql->consultar($sql);
         $mysql->desconectar();
@@ -278,20 +229,19 @@ class Pedido {
         $pedido->_idPedido = $data['id_pedido'];
         $pedido->_fecha = $data['fecha'];
         $pedido->_tipoEnvio = $data['tipo_envio'];    
-        $pedido->_idDetallePedido = $data['id_detalle_pedido'];    
+           
         $pedido->_idPedidoEstado = $data['id_pedido_estado'];       
         $pedido->_idCliente = $data['id_cliente']; 
-        $pedido->_idEmpleado = $data['id_empleado'];
+        
         $pedido->setCliente(); 
-        $pedido->setEmpleado(); 
+        $pedido->setArrDetallePedido(); 
         $pedido->setPedidoEstado();
-        $pedido->setArrDetallePedido();
-        $pedido->_idFactura = $data['id_factura']; 
+       
         return $pedido;
     }
 
     public static function obtenerTodos() {
-        $sql = "SELECT * FROM pedido";
+        $sql = "SELECT * FROM pedidoss ORDER BY id_pedido DESC";
 
         $mysql = new MySQL();
         $datos = $mysql->consultar($sql);
@@ -310,16 +260,45 @@ class Pedido {
             $pedido->_fecha = $registro['fecha'];
             $pedido->_tipoEnvio = $registro['tipo_envio'];
             $pedido->_idPedidoEstado = $registro['id_pedido_estado'];    
-            $pedido->_idDetallePedido = $registro['id_detalle_pedido'];
+            
+            $pedido->_idCliente = $registro['id_cliente'];
+            $pedido->setCliente(); 
             $pedido->setPedidoEstado();
-            $pedido->setArrDetallePedido();    
+             
             $listado[] = $pedido;
         }
         return $listado;
     }
    
+    public static function obtenerPedidoParaFacturar() {
+        $sql = "SELECT * FROM pedidoss WHERE id_pedido_estado = 4";
 
-   
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarListadoFactura($datos);
+
+        return $listado;
+    }
+
+    private function _generarListadoFactura($datos) {
+        $listado = array();
+        while ($registro = $datos->fetch_assoc()) {
+            $pedido = new Pedido();
+            $pedido->_idPedido = $registro['id_pedido'];
+            $pedido->_fecha = $registro['fecha'];
+            $pedido->_tipoEnvio = $registro['tipo_envio'];
+            $pedido->_idPedidoEstado = $registro['id_pedido_estado'];        
+            $pedido->_idCliente = $registro['id_cliente'];
+            $pedido->setCliente(); 
+            $pedido->setPedidoEstado();
+             
+            $listado[] = $pedido;
+        }
+        return $listado;
+    }
+
 }
 
 ?>
