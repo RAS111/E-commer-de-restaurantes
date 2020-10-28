@@ -3,11 +3,11 @@
 require_once 'Item.php';
 
 class DetallePedido {
-	private $_idDetallePedido;
-	private $_cantidad;
-	private $_precio;
-	private $_idItem;
-    private $_idPedido;
+	public $_idDetallePedido;
+	public $_cantidad;
+	public $_precio;
+	public $_idItem;
+    public $_idPedido;
 
 	public $item;
     /**
@@ -147,6 +147,12 @@ class DetallePedido {
         $mysql->actualizar($sql);
     }
 
+    public function eliminar($idPedido){
+        $sql = "DELETE FROM detallepedido WHERE id_pedido = " .$idPedido;
+        $mysql = new MySQL();
+        $mysql->eliminar($sql);
+    }
+
     public function calcularSubtotal() {
         $subtotal = $this->_cantidad * $this->_precio;
         return $subtotal;
@@ -206,8 +212,6 @@ class DetallePedido {
     public function obtenerPorIdPedido($_idPedido){
         $sql = "SELECT * FROM detallepedido INNER JOIN pedidoss ON pedidoss.id_pedido = detallepedido.id_pedido WHERE pedidoss.id_pedido = $_idPedido ";
         
-
-        
         $mysql = new MySQL();
         $datos = $mysql->consultar($sql);
         $mysql->desconectar();
@@ -216,6 +220,7 @@ class DetallePedido {
 
         return $listado;
     }
+    //esta funcion esta de mas
     private function _generarListadoDetallePedidos($datos) {
         $listado = array();
         while ($registro = $datos->fetch_assoc()) {

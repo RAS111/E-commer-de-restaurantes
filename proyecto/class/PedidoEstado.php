@@ -44,7 +44,7 @@ class PedidoEstado {
         return $this;
     }
 
-     public static function obtenerPorId($id) {
+    public static function obtenerPorId($id) {
         $sql = "SELECT * FROM pedidoestado WHERE id_pedido_estado = $id ";
 
         $mysql = new MySQL();
@@ -62,6 +62,30 @@ class PedidoEstado {
         $pedidoEstado->_idPedidoEstado = $data['id_pedido_estado'];
         $pedidoEstado->_descripcion = $data['descripcion'];
         return $pedidoEstado;
+    }
+
+    public static function obtenerTodos() {
+        $sql = "SELECT * FROM pedidoestado ";
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarListadoEstados($datos);
+
+        return $listado;
+    }
+
+    private function _generarListadoEstados($datos) {
+        $listado = array();
+        while ($registro = $datos->fetch_assoc()) {
+            $pedidoEstado = new PedidoEstado();
+            $pedidoEstado->_idPedidoEstado = $registro['id_pedido_estado'];
+            $pedidoEstado->_descripcion = $registro['descripcion'];
+             
+            $listado[] = $pedidoEstado;
+        }
+        return $listado;
     }
 
     public function __toString() {

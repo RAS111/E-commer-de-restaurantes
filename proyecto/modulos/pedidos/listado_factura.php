@@ -23,7 +23,14 @@ $listadoPedido = Pedido::obtenerPedidoParaFacturar();
 				<div class="card-box mb-30">
 					<div class="pd-20">
 						<h4 class="text-blue h4">Pedidos Para Facturar</h4>
+
 					</div>
+					<a type="button" class="btn" data-bgcolor="#007bb5" data-color="#ffffff"  href="listado.php" >
+						listado de pedidos
+					</a>
+					<a type="button" class="btn" data-bgcolor="#007bb5" data-color="#ffffff"  href="../ventas/listado.php" >
+						listado de Facturas
+					</a>
 						<table class="data-table table stripe hover nowrap">
 							<thead>
 								<tr>
@@ -31,8 +38,7 @@ $listadoPedido = Pedido::obtenerPedidoParaFacturar();
 									<th>Cliente</th>
 									<th>Fecha</th>
 									<th>Tipo de Envio</th>
-									<th>Estado</th>
-									
+									<th>Estado</th>		
 									<th class="datatable-nosort">Accion</th>
 								</tr>
 							</thead>
@@ -54,12 +60,13 @@ $listadoPedido = Pedido::obtenerPedidoParaFacturar();
 										</a>
 										<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 											<a class="dropdown-item" href="detalle.php?id=<?=$pedido->getIdPedido();?>"><i class="dw dw-eye"></i> Ver</a>
+											<a class="dropdown-item" href="../ventas/alta.php?id=<?=$pedido->getIdPedido();?>"><i class="icon-copy dw dw-invoice-1"></i>Crear Factura</a>
 										</div>
+										
 									</div>
 									</td>
 								</tr>
 								<?php endforeach ?>
-
 							</tbody>
 						</table>
 					</div>
@@ -67,6 +74,7 @@ $listadoPedido = Pedido::obtenerPedidoParaFacturar();
 			</div>
 		</div>
 	</div>
+
 	<?php 
 		include_once('../../file_js.php');
 	?>

@@ -2,7 +2,7 @@
 
 require_once 'MySQL.php';
 
-class barrio {
+class Barrio {
 	private $_idBarrio;
 	private $_nombre;
 

@@ -1,6 +1,8 @@
 <?php
 
 require_once '../../../class/Pedido.php';
+require_once '../../../class/Factura.php';
+require_once '../../../class/Producto.php';
 require_once '../../../class/DetallePedido.php';
 
 /*$detallePedido = new DetallePedido();
@@ -36,6 +38,21 @@ exit;*/
 $pedido->setIdCliente(2);
 $pedido->actualizar();
 highlight_string(var_export($pedido,true));
+exit;
+*/
+
+/*$factura = new Factura ();
+$factura->setFecha('2020-10-11');
+$factura->setNumero(11);
+$factura->setTipo('C');
+$factura->setIdFormaPago(1);
+$factura->setIdPedido(78);
+$factura->guardar();
+
+$producto =Producto::obtenerPorIdPedido(78);
+$producto->descontarStock(78);
+
+highlight_string(var_export($factura,true));
 exit;
 */
 ?>

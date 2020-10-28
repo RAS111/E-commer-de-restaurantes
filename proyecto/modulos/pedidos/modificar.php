@@ -5,12 +5,16 @@ require_once '../../class/Item.php';
 require_once '../../class/Menu.php';
 require_once '../../class/Producto.php';
 require_once '../../class/Cliente.php';
+require_once '../../class/PedidoEstado.php';
 
-$listadoPedido = Pedido::obtenerTodos();
+$id = $_GET['id'];
+
+$pedido = Pedido::obtenerPorId($id);
 $listadoItem = Item::obtenerTodos();
 $listadoMenu = Menu::obtenerTodos();
 $listadoProducto = Producto::obtenerPorRubro();
 $listadoCliente = Cliente::obtenerTodos();
+$listadoEstados = PedidoEstado::obtenerTodos();
 
 ?>
 <!DOCTYPE html>
@@ -27,27 +31,32 @@ $listadoCliente = Cliente::obtenerTodos();
 			<div class="min-height-200px">
 				<div class="pd-20 card-box mb-30">
 					<div class="clearfix">
-						<h4 class="text-black h4">Registrar Pedido</h4>
+						<h4 class="text-black h4">Modificar Pedido</h4>
 					</div>	
 					<hr>	
 					<div class="wizard-content">
 						<form class="tab-wizard wizard-circle wizard" name="frmDatos" id="frmDatos" >
 							<section>
 								<div class="row">
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<div class="form-group">
+											<input type="hidden" name="txtId" id="txtId" value="<?php echo $pedido->getIdPedido(); ?>">
 											<label>Fecha</label>
-											<input type="date" name="txtFecha" id="txtFecha" class="form-control date-picker" placeholder="Seleccionar Fecha de Nacimiento" value="<?php echo date("Y-m-d");?>">
+											<input type="date" name="txtFecha" id="txtFecha" class="form-control date-picker" placeholder="Seleccionar Fecha de Nacimiento" value="<?=$pedido->getFecha(); ?>">
 										</div>
 									</div>
-									<div class="col-md-4" >
+									<div class="col-md-3" >
 										<div class="form-group ">
 											<label>Cliente </label>
 											<select name="cboCliente" id="cboCliente"  class="custom-select2 form-control">
 												<option value="0">Seleccionar</option>
-												<?php foreach ($listadoCliente as $cliente): ?>
-
-													<option value="<?php echo $cliente->getIdCliente(); ?>">
+												<?php foreach ($listadoCliente as $cliente): 
+													$selected = '';
+													if ($pedido->getIdCliente() == $cliente->getIdCliente()) {
+														$selected = "SELECTED";
+													}
+												?>
+													<option value="<?php echo $cliente->getIdCliente(); ?>"<?php echo $selected; ?>>
 														<?php echo $cliente; ?>
 													</option>
 
@@ -55,14 +64,28 @@ $listadoCliente = Cliente::obtenerTodos();
 											</select>
 										</div>
 									</div>
-									<div class="col-md-4" >
+									<div class="col-md-3" >
 										<div class="form-group ">
 											<label>Tipo de envio </label>
-											<select name="cboTipoEnvio" id="cboTipoEnvio"  class="custom-select form-control">
+											<input type="text" name="cboTipoEnvio" id="cboTipoEnvio" class="custom-select form-control" value="<?=$pedido->getTipoEnvio(); ?>">
+										</div>
+									</div>
+									<div class="col-md-3" >
+										<div class="form-group ">
+											<label>Estado </label>
+											<select name="cboEstado" id="cboEstado"  class="custom-select form-control" >
 												<option value="0">Seleccionar</option>
-												<option value="Local">Local</option>
-												<option value="Retiro en local">Retiro en Local</option>
-												<option value="Delivery">Delivery</option>
+												<?php foreach ($listadoEstados as $estado):
+													$selected = '';
+													if ($pedido->getIdPedidoEstado() == $estado->getIdPedidoEstado()) {
+														$selected = "SELECTED";
+													}
+												?>
+													<option value="<?php echo $estado->getIdPedidoEstado(); ?>"<?php echo $selected; ?>>
+														<?php echo $estado; ?>
+													</option>
+
+												<?php endforeach ?>
 											</select>
 										</div>
 									</div>
@@ -114,13 +137,14 @@ $listadoCliente = Cliente::obtenerTodos();
 														<th class="w-50">Total:</th>
 														<td id="id_total">$0.0</td>
 													</tr>
+													
 												</tbody>
 											</table>
 										</div>
 									</div>
 								</div>
 							</section>
-							<input type="button" onclick="guardarFormVentas();" class="btn btn-success" value="Guardar">	
+							<input type="button" onclick="guardarFormVentas();" class="btn btn-success" value="Actualizar">	
 							<!--para validaciones con js<input type="button" value="Guardar" onclick="validarDatos();">-->			
 						</form>
 					</div>
@@ -224,8 +248,64 @@ function abrirListaProductos(){
     $('#id_lista_productos').modal('show');
 }
 
+$.ajax({
+    type: 'GET',
+    url : 'obtenerPorId.php',
+    data: {'id': $('#txtId').val() },
+
+    success: function(data){
+    	console.log(data);
+        var datosDetallePedido = JSON.parse(data);
+        //console.log(datosDetallePedido);
+
+        for (var x = 0; x < datosDetallePedido.length ; x++) {
+
+          	console.log(datosDetallePedido[x])
+
+            let subtotal = calcularSubtotal(datosDetallePedido[x]._cantidad, datosDetallePedido[x]._precio);
+
+           	let items = {}; //items del detalle
+
+           	items['indice'] = indice;
+            items['id'] = datosDetallePedido[x].item['_idItem'];
+            items['precio'] = datosDetallePedido[x]._precio;
+            items['cantidad'] = datosDetallePedido[x]._cantidad;
+            items['subtotal'] = subtotal;
+            //console.log(items);
+        	detalle_ventas.push(items); //armando detalle para el envio
+        	//console.log(detallePedido);
+
+            $('#id_detalle_venta tr:last').before('<tr id=' + indice +'><td>' + datosDetallePedido[x].item['_idItem'] + '</td><td>' + datosDetallePedido[x].item['_nombre'] + '</td><td>' + datosDetallePedido[x]._cantidad + '</td><td>$' + datosDetallePedido[x].item['_precio'] + '</td><td>$' + subtotal + '</td><td> <button type="button" onclick="eliminarItem(' + indice + ')" <a class="dropdown-item"><i class="dw dw-delete-3"</td></tr>');
+
+            indice ++;
+        }
+    }
+})
+
+//console.log(detallePedido);
+
+function eliminarItem(indiceDelete){
+	let respuesta=[];
+	for (let index = 0; index < detalle_ventas.length; index++){
+		if(detalle_ventas[index].indice !== indiceDelete){
+			respuesta.push(detalle_ventas[index])
+			//console.log(respuesta[index]);
+		} else {
+			console.log('borra este id');
+			console.log(index);
+			$('#' + detalle_ventas[index].indice).remove();
+			restarSubtotal(detalle_ventas[index].subtotal);
+			//respuesta.splice(index, 1);
+		}
+	}
+	//console.log(respuesta);
+	detalle_ventas = respuesta;
+	console.log(detalle_ventas);
+	return detalle_ventas;		
+}
+
 function setCantidadProducto(id, nombre, precio, stock){
-    
+
     let cantidad = parseInt(prompt('Ingrese la cantidad'));
     
     if (cantidad == null || cantidad == 0){
@@ -242,13 +322,17 @@ function setCantidadProducto(id, nombre, precio, stock){
     let subtotal = calcularSubtotal(cantidad, precio);
     let items = {};
 
-    items['id_item'] = id;
+
+    items['indice'] = indice;
+    items['id'] = id;
     items['precio'] = precio;
     items['cantidad'] = cantidad;
-    
-    detalle_ventas.push(items);
+    items['subtotal'] = subtotal;
 
-    $('#id_detalle_venta tr:last').before('<tr id=' + indice + ' ><td >' + id + '</td><td>' + nombre + '</td><td>' + cantidad + '</td><td>' + '$' + precio + '</td><td>' + '$' + + subtotal + '</td><td> 	<a class="dropdown-item"><i class="dw dw-delete-3" onclick="eliminarArticulo(' + indice + ');"></i></a></td></tr>')
+    detalle_ventas.push(items);
+    console.log(detalle_ventas);
+
+    $('#id_detalle_venta tr:last').before('<tr id=' + indice + ' ><td >' + id + '</td><td>' + nombre + '</td><td>' + cantidad + '</td><td>' + '$' + precio + '</td><td>' + '$' + + subtotal + '</td><td> 	<a class="dropdown-item"><i class="dw dw-delete-3" onclick="eliminarItem(' + indice + ');"></i></a></td></tr>')
     indice += 1;
 }
 
@@ -259,62 +343,43 @@ function calcularSubtotal(cantidad, precio){
     return resultado;
 }
 
-$('#id_pago').on('keypress',function(e) {
-    if(e.which == 13) {
-    	e.preventDefault();
-        calcularVuelto();
-    }
-});
 
-function calcularVuelto(){
-    let valor_pago = $('#id_pago').val();
-    let resultado =  valor_pago - total;
-    $('#id_vuelto').text('$' + resultado);
-}
-
-function restarSubtotal(cantidad, precio){
-    let resultado = parseFloat(cantidad) * parseFloat(precio);
+function restarSubtotal(precio){
+    let resultado = precio;
     total -= resultado; //restar cantidad
     $('#id_total').text('$' + total);
-    return resultado;
+    console.log(resultado);
+    return total;
+
 }
 
-/*------------
-eliminar de la tabla
----------*/
-
-function eliminarArticulo(i){
-    $('#' + i).remove(); // removemos de la tabla
-    restarSubtotal(detalle_ventas[i].cantidad, detalle_ventas[i].precio);
-    detalle_ventas.splice(i, 1); // quita un elemento del array
-}
-
-
-/*------------
-eliminar de la tabla
----------*/
 
 /*------------------
  guardar formulario
 ----------------*/
 function guardarFormVentas(){
-
+	let idPedido = $('#txtId').val();
 	let fecha = $('#txtFecha').val();
 	let cliente = $('#cboCliente').val();
 	let tipoEnvio = $('#cboTipoEnvio').val();
+	let estadoPedido = $('#cboEstado').val();
+
 
     if (detalle_ventas.length > 0){
         $.ajax({
             type: 'post',
-            url: 'procesar/guardar.php',
+            url: 'procesar/modificar.php',
             data: {
+            	'idPedido': idPedido,
             	'fecha': fecha,
             	'cliente': cliente,
             	'tipoEnvio': tipoEnvio,
+            	'estadoPedido': estadoPedido,
                 'items': detalle_ventas
             },
            	success: function(data){
-               window.location.href = '../pedidos/listado.php?mensaje=1';
+               //console.log(data);
+               window.location.href = '../pedidos/listado.php?mensaje=2';
             }
         })
     }else{

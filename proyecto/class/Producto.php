@@ -5,10 +5,10 @@ require_once 'Item.php';
 
 class Producto extends Item {
 
-	private $_idProducto;
-	private $_stockMinimo;
-	private $_stockActual;
-	private $_stockMaximo;
+	public $_idProducto;
+	public $_stockMinimo;
+	public $_stockActual;
+	public $_stockMaximo;
 	
     /**
      * @return mixed
@@ -110,6 +110,45 @@ class Producto extends Item {
         $mysql->actualizar($sql);
     }
 
+    //
+    public function descontarStock($idPedido) {
+        $sql = "UPDATE producto 
+               INNER JOIN detallepedido ON detallepedido.id_item = producto.id_item
+               INNER JOIN pedidoss ON pedidoss.id_pedido = detallepedido.id_pedido
+               SET producto.stock_actual = producto.stock_actual - detallepedido.cantidad
+               WHERE pedidoss.id_pedido = $idPedido";
+
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+    }
+
+    public function obtenerPorIdPedido($idPedido){
+        $sql = "SELECT * FROM producto
+                INNER JOIN detallepedido ON detallepedido.id_item = producto.id_item
+                INNER JOIN pedidoss ON pedidoss.id_pedido = detallepedido.id_pedido
+                INNER JOIN item ON item.id_item = producto.id_item
+                WHERE pedidoss.id_pedido = $idPedido";
+
+
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $data = $result->fetch_assoc();
+        $producto = self::_generarProductoPorIdPedido($data);
+        return $producto;
+    }
+
+     private function _generarProductoPorIdPedido($data) {
+        $producto = new Producto($data['nombre'], $data['precio']);
+        $producto->_idProducto = $data['id_producto'];
+        $producto->_idItem = $data['id_item'];
+        $producto->_idRubro = $data['id_rubro'];
+        $producto->_stockActual = $data['stock_actual'];
+        return $producto;
+    }
+    //
+
     public static function obtenerPorId($id) {
         $sql = "SELECT * FROM producto INNER JOIN item ON item.id_item = producto.id_item WHERE id_producto = '$id' ";
 
@@ -129,6 +168,8 @@ class Producto extends Item {
         $producto->_idItem = $data['id_item'];
         $producto->_idRubro = $data['id_rubro'];
         $producto->_stockActual = $data['stock_actual'];
+        $producto->_stockMinimo = $data['stock_minimo'];
+        $producto->_stockMaximo = $data['stock_maximo'];
         return $producto;
     }
 
@@ -209,6 +250,8 @@ class Producto extends Item {
         }
         return $listado;
     }
+
+
 
 
     public function __toString() {

@@ -75,9 +75,12 @@ $listadoPedido = Pedido::obtenerTodos();
 										</a>
 										<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 											<a class="dropdown-item" href="detalle.php?id=<?=$pedido->getIdPedido();?>"><i class="dw dw-eye"></i> Ver</a>
-											
+											<?php if($pedido->pedidoEstado->getIdPedidoEstado() != 4):?>
+											<a class="dropdown-item" href="modificar.php?id=<?=$pedido->getIdPedido();?>"><i class="dw dw-edit2"></i> Modificar</a>
+											<?php endif;?>
+											<?php if($pedido->pedidoEstado->getIdPedidoEstado() == 4):?>
 											<a class="dropdown-item" href="listado_factura.php"><i class="dw dw-list3"></i> Pedidos para Facturar</a>	
-											
+											<?php endif;?>
 										</div>
 									</div>
 									</td>

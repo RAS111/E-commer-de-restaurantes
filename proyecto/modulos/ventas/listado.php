@@ -38,8 +38,6 @@ $listadoFactura = Factura::obtenerTodos();
 						<h4 class="text-blue h4">Listado de Ventas</h4>
 					</div>
 					<div class="pb-20">
-						<a class="dropdown-item" href="alta.php" title="Agregar Factura"><i class="dw dw-add-user"></i></a>
-	
 						<?php if($mensaje == FACTURA_GUARDADO):?>
 							<h3>Factura Guardado</h3>
 							
@@ -47,13 +45,18 @@ $listadoFactura = Factura::obtenerTodos();
 							<h3>Factura Modificado</h3>
 							
 						<?php  endif;?>
+						<a type="button" class="btn" data-bgcolor="#007bb5" data-color="#ffffff"  href="../pedidos/listado_factura.php" >
+							Pedidos para Facturar
+						</a>
 						<table class="data-table table stripe hover nowrap">
 							<thead>
 								<tr>
 									<th class="table-plus datatable-nosort">ID</th>
+									<th>Cliente</th>
 									<th>Fecha</th>
 									<th>Numero</th>
 									<th>Forma de Pago</th>
+									<th>Total</th>
 									<th class="datatable-nosort">Accion</th>
 								</tr>
 							</thead>
@@ -61,17 +64,20 @@ $listadoFactura = Factura::obtenerTodos();
 								<?php foreach ($listadoFactura as $factura): ?>
 								<tr>
 									<td><?=$factura->getIdFactura();?></td>
+									<td><?=$factura->pedido->cliente;?></td>
 									<td><?=$factura->getFecha();?></td>
 									<td><?=$factura->getNumero();?> </td>
-									<td><?=$factura->getIdFormaPago();?></td><td>
-									<div class="dropdown">
-										<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-											<i class="dw dw-more"></i>
-										</a>
-										<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-											<a class="dropdown-item" href="detalle.php?id=<?=$factura->getIdFactura();?>"><i class="dw dw-eye"></i> Ver</a>
+									<td><?=$factura->formaPago;?></td>
+									<td>$<?=$factura->pedido->calcularTotal()?></td>
+									<td>
+										<div class="dropdown">
+											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+												<i class="dw dw-more"></i>
+											</a>
+											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+												<a class="dropdown-item" href="detalle.php?id=<?=$factura->getIdFactura();?>"><i class="dw dw-eye"></i> Ver</a>
+											</div>
 										</div>
-									</div>
 									</td>
 								</tr>
 								<?php endforeach ?>

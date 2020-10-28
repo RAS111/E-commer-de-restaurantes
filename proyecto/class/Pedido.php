@@ -195,7 +195,7 @@ class Pedido {
     }
 
     public function actualizar() {
-        $sql  = "UPDATE pedidoss SET fecha = '$this->_fecha', tipo_envio = '$this->_tipoEnvio', id_detalle_pedido = $this->_idDetallePedido, id_cliente = $this->_idCliente,  id_pedido_estado = $this->_idPedidoEstado WHERE id_pedido = $this->_idPedido";
+        $sql  = "UPDATE pedidoss SET fecha = '$this->_fecha', tipo_envio = '$this->_tipoEnvio', id_cliente = $this->_idCliente,  id_pedido_estado = $this->_idPedidoEstado WHERE id_pedido = $this->_idPedido";
         
         $mysql = new MySQL();
         $mysql->actualizar($sql);
@@ -271,7 +271,7 @@ class Pedido {
     }
    
     public static function obtenerPedidoParaFacturar() {
-        $sql = "SELECT * FROM pedidoss WHERE id_pedido_estado = 4";
+        $sql = "SELECT * FROM pedidoss WHERE id_pedido_estado = 4 ORDER BY id_pedido DESC";
 
         $mysql = new MySQL();
         $datos = $mysql->consultar($sql);

@@ -62,6 +62,7 @@ $producto->setStockMaximo($stockMaximo);
 $producto->setIdRubro($rubro);
 
 $producto->guardar();
+//highlight_string(var_export($producto,true));
 
 // REDIRECCION
 

@@ -3,11 +3,11 @@
 require_once 'MySQL.php';
 
 class Item {
-	protected $_idItem;
-	protected $_nombre;
-	protected $_precio;
-	protected $_idRubro;
-	protected $_arrImagen;
+	public $_idItem;
+	public $_nombre;
+	public $_precio;
+	public $_idRubro;
+	public $_arrImagen;
 
 
 	public function __construct($nombre, $precio){

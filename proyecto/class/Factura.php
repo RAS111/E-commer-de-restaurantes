@@ -1,6 +1,8 @@
 <?php
 
 require_once 'MySQL.php';
+require_once 'Pedido.php';
+require_once 'formaPago.php';
 
 class Factura {
 	private $_idFactura;
@@ -10,6 +12,8 @@ class Factura {
 	private $_idFormaPago;
 	private $_idPedido;
 
+    public $pedido;
+    public $formaPago;
     /**
      * @return mixed
      */
@@ -130,6 +134,28 @@ class Factura {
         return $this;
     }
 
+    public function setPedido()
+    {
+        $this->pedido = Pedido::obtenerPorId($this->_idPedido);
+
+        return $this;
+    }
+    public function setFormaPago()
+    {
+        $this->formaPago = FormaPago::obtenerPorId($this->_idFormaPago);
+
+        return $this;
+    }
+
+    public function guardar(){
+        $sql = "INSERT INTO factura (id_factura, fecha, numero, tipo, id_forma_pago, id_pedido) VALUES (NULL, '$this->_fecha', $this->_numero, '$this->_tipo', $this->_idFormaPago, $this->_idPedido);";
+
+        $mysql = new MySQL();
+        $idInsertado = $mysql->insertar($sql);
+
+        $this->_idFactura = $idInsertado;
+    }
+
     public function obtenerTodos() {
          $sql = "SELECT * FROM factura";
 
@@ -152,6 +178,8 @@ class Factura {
             $factura->_tipo = $registro['tipo'];    
             $factura->_idFormaPago = $registro['id_forma_pago'];
             $factura->_idPedido = $registro['id_pedido']; 
+            $factura->setPedido();
+            $factura->setFormaPago();
             $listado[] = $factura;
         }
         return $listado;
