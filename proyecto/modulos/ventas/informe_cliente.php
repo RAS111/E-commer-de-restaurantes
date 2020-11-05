@@ -57,7 +57,7 @@ if (isset($cliente) ) {
                                         </div>  
                                     </div>  
                                 </div>
-                                <div cla
+                            
                                 <div class="row">
                                    <div class="col-md-4" >
                                         <div class="form-group ">

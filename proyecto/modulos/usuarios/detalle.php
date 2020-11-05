@@ -6,6 +6,7 @@ $id = $_GET['id'];
 
 $user = Usuario::obtenerPorId($id);
 
+
 ?>
 
 <!DOCTYPE html>

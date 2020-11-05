@@ -5,8 +5,8 @@ require_once 'MySQL.php';
 class Imagen {
 
 	private $_idImagen;
-	private $_imagen;	
-    private $_item;
+	private $_descripcion;	
+    private $_idItem;
 
     /**
      * @return mixed
@@ -31,26 +31,45 @@ class Imagen {
     /**
      * @return mixed
      */
-    public function getImagen()
+    public function getDescripcion()
     {
-        return $this->_imagen;
+        return $this->_descripcion;
     }
 
     /**
-     * @param mixed $_imagen
+     * @param mixed $_descripcion
      *
      * @return self
      */
-    public function setImagen($_imagen)
+    public function setImagen($_descripcion)
     {
-        $this->_imagen = $_imagen;
+        $this->_descripcion = $_descripcion;
 
         return $this;
     }
 
-    public function guardar() {
-    	$sql = "INSERT INTO imagen (id_imagen, imagen, id_item) VALUES (NULL, $this->_imagen, $this->_item)";
+    /**
+     * @return mixed
+     */
+    public function getIdItem()
+    {
+        return $this->_idItem;
+    }
 
+    /**
+     * @param mixed $_idItem
+     *
+     * @return self
+     */
+    public function setIdItem($_idItem)
+    {
+        $this->_idItem = $_idItem;
+
+        return $this;
+    }
+    public function guardar() {
+    	$sql = "INSERT INTO imagen (id_imagen, imagen, id_item) VALUES (NULL, '$this->_descripcion', $this->_idItem)";
+        
     	$mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
 
@@ -58,12 +77,44 @@ class Imagen {
     }
 
     public function actualizar() {
-    	$sql = "UPDATE imagen SET imagen = '$this->_imagen' WHERE id_imagen = $this->_idImagen";
+    	$sql = "UPDATE imagen SET imagen = '$this->_descripcion' WHERE id_imagen = $this->_idImagen";
 
     	$mysql = new MySQL();
         $mysql->actualizar($sql);
     }
 
+     public function obtenerPorIdItem($_idItem){
+        $sql = "SELECT * FROM imagen INNER JOIN item ON item.id_item = imagen.id_item WHERE item.id_item = $_idItem ";
+
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarListadoImagen($datos);
+
+        return $listado;
+    }
+
+    private function _generarListadoImagen($datos) {
+        $listado = array();
+        while ($registro = $datos->fetch_assoc()) {
+            $imagen = new Imagen();
+            $imagen->_idImagen = $registro['id_imagen'];
+            $imagen->_descripcion = $registro['descripcion'];
+            $imagen->_idItem = $registro['id_item'];
+            
+            $listado[] = $imagen;
+        }
+
+        return $listado;
+
+    }
+
+    public function __toString(){
+        return $this->_descripcion;
+    }
+    
 }
 
 ?>

@@ -77,6 +77,8 @@ $listadoPedido = Pedido::obtenerTodos();
 											<a class="dropdown-item" href="detalle.php?id=<?=$pedido->getIdPedido();?>"><i class="dw dw-eye"></i> Ver</a>
 											<?php if($pedido->pedidoEstado->getIdPedidoEstado() != 4):?>
 											<a class="dropdown-item" href="modificar.php?id=<?=$pedido->getIdPedido();?>"><i class="dw dw-edit2"></i> Modificar</a>
+											<a class="dropdown-item" href="#" onclick="modificarEstado(<?php echo $pedido->getIdPedido(); ?>, <?=$pedido->pedidoEstado->getIdPedidoEstado();?>);"><i class="dw dw-edit2"></i> Cambiar Estado
+											</a>
 											<?php endif;?>
 											<?php if($pedido->pedidoEstado->getIdPedidoEstado() == 4):?>
 											<a class="dropdown-item" href="listado_factura.php"><i class="dw dw-list3"></i> Pedidos para Facturar</a>	
@@ -94,22 +96,66 @@ $listadoPedido = Pedido::obtenerTodos();
 			</div>
 		</div>
 	</div>
-	<?php 
-		include_once('../../file_js.php');
-	?>
-	<script src="src/plugins/datatables/js/jquery.dataTables.min.js"></script>
-	<script src="src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
-	<script src="src/plugins/datatables/js/dataTables.responsive.min.js"></script>
-	<script src="src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
-	<!-- buttons for Export datatable -->
-	<script src="src/plugins/datatables/js/dataTables.buttons.min.js"></script>
-	<script src="src/plugins/datatables/js/buttons.bootstrap4.min.js"></script>
-	<script src="src/plugins/datatables/js/buttons.print.min.js"></script>
-	<script src="src/plugins/datatables/js/buttons.html5.min.js"></script>
-	<script src="src/plugins/datatables/js/buttons.flash.min.js"></script>
-	<script src="src/plugins/datatables/js/pdfmake.min.js"></script>
-	<script src="src/plugins/datatables/js/vfs_fonts.js"></script>
-	<!-- Datatable Setting js -->
-	<script src="vendors/scripts/datatable-setting.js"></script>
+	<!-- Modal lista de productos -->
+    <div class="modal fade" id="id_estado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Estados</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<?php
+					require_once '../../class/PedidoEstado.php';
+
+					$listadoEstados = PedidoEstado::obtenerTodos();
+					
+				?>
+				<form class="tab-wizard wizard-circle wizard" name="frmDatos" id="frmDatos" method="POST" action="procesar/cambiar_estado.php" >
+					<div class="modal-body">
+					
+						<section>
+							<div class="row">
+								<div class="col-md-12" >
+									<div class="form-group">
+										<input type="hidden" name="txtIdPedido" id="txtIdPedido" value="<?php echo $pedido->getIdPedido(); ?>">
+										<select name="cboEstado" id="cboEstado"  class="custom-select form-control" >
+											<option value="0">Seleccionar</option>
+											<?php foreach ($listadoEstados as $estado):
+												$selected = '';
+												if ($pedido->getIdPedidoEstado() == $estado->getIdPedidoEstado()) {
+													$selected = "SELECTED";
+												}
+											?>
+												<option value="<?php echo $estado->getIdPedidoEstado(); ?>"<?php echo $selected; ?>>
+													<?php echo $estado; ?>
+												</option>
+
+											<?php endforeach ?>
+										</select>
+									</div>
+								</div>
+							</div>
+						</section>
+					
+					</div>
+					<div class="modal-footer">
+						<input type="submit" class="btn btn-success" value="Guardar">
+					</div>
+           		</div>
+            </form>
+        </div>
+    </div>
+	<?php include_once('../../file_js.php');?>
+
+<script type="text/javascript">
+function modificarEstado(id, idEstado){
+    $('#id_estado').modal('show');
+    $('#txtIdPedido').val(id);
+    $('#cboEstado').val(idEstado);
+}
+
+</script>
 </body>
 </html>

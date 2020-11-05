@@ -378,8 +378,8 @@ function guardarFormVentas(){
                 'items': detalle_ventas
             },
            	success: function(data){
-               //console.log(data);
-               window.location.href = '../pedidos/listado.php?mensaje=2';
+               console.log(data);
+               //window.location.href = '../pedidos/listado.php?mensaje=2';
             }
         })
     }else{

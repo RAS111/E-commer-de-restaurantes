@@ -63,7 +63,7 @@ $listadoFormaPago = FormaPago::obtenerTodos();
 												<?php foreach ($listadoProveedor as $proveedor): 
 													$selected = '';
 													if ($compra->getIdProveedor() == $proveedor->getIdProveedor()) {
-														$selected = "SELECTED";
+														$selected = " SELECTED";
 													}
 												?>
 													<option value="<?php echo $proveedor->getIdProveedor(); ?>"<?php echo $selected; ?>>
@@ -82,7 +82,7 @@ $listadoFormaPago = FormaPago::obtenerTodos();
 												<?php foreach ($listadoFormaPago as $formaPago):
 													$selected = '';
 													if ($compra->getIdFormaPago() == $formaPago->getIdFormaPago()) {
-														$selected = "SELECTED";
+														$selected = " SELECTED";
 													}
 												?>
 													<option value="<?php echo $formaPago->getIdFormaPago(); ?>"<?php echo $selected; ?>>
@@ -408,6 +408,7 @@ function restarSubtotal(precio){
  guardar formulario
 ----------------*/
 function guardarFormVentas(){
+
 	let idCompra = $('#txtId').val();
 	let fecha = $('#txtFecha').val();
 	let numero = $('#txtNumero').val();

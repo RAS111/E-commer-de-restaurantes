@@ -75,7 +75,13 @@ $listadoFactura = Factura::obtenerTodos();
 												<i class="dw dw-more"></i>
 											</a>
 											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-												<a class="dropdown-item" href="detalle.php?id=<?=$factura->getIdFactura();?>"><i class="dw dw-eye"></i> Ver</a>
+												<a class="dropdown-item" href="detalle.php?id=<?=$factura->getIdFactura();?>">
+													<i class="dw dw-eye"></i> Ver
+												</a>
+												
+												<a class="dropdown-item" href="../notas_de_creditos/alta.php?id=<?=$factura->getIdFactura();?>">
+													<i class="icon-copy dw dw-invoice-1"></i> Nota de Credito
+												</a>
 											</div>
 										</div>
 									</td>

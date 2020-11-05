@@ -5,7 +5,8 @@ require_once '../../class/Producto.php';
 $id = $_GET['id'];
 
 $producto = Producto::obtenerPorId($id);
-
+//highlight_string(var_export($producto,true));
+//exit;
 
 ?>
 
@@ -30,12 +31,15 @@ $producto = Producto::obtenerPorId($id);
 								<th class="table-plus datatable-nosort">ID</th>
 								<th>Precio</th>
 								<th>Stock Actual</th>
+								
 							</tr>
 						</thead>
 						<tbody>
 							<td><?=$producto->getIdProducto();?></td>
 							<td><?=$producto->getPrecio();?>$</td>
 							<td><?=$producto->getStockActual();?></td>
+							
+							
 						</tbody>
 					</table>
 				</div>

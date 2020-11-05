@@ -1,13 +1,16 @@
 <?php
 
 require_once 'MySQL.php';
+require_once 'Imagen.php';
 
 class Item {
 	public $_idItem;
 	public $_nombre;
 	public $_precio;
 	public $_idRubro;
-	public $_arrImagen;
+    public $_idImagen;
+
+	public $arrImagen;
 
 
 	public function __construct($nombre, $precio){
@@ -100,19 +103,21 @@ class Item {
      */
     public function getArrImagen()
     {
-        return $this->_arrImagen;
+        return $this->arrImagen;
     }
 
     /**
-     * @param mixed $_arrImagen
+     * @param mixed $arrImagen
      *
      * @return self
      */
-    public function setArrImagen($_arrImagen)
+    public function setArrImagen()
     {
-        $this->_arrImagen = $_arrImagen;
+
+        $this->arrImagen = Imagen::obtenerPorIdItem($this->_idItem);
 
         return $this;
+        
     }
 
     public function guardar() {
@@ -182,6 +187,26 @@ class Item {
     	return $this->_nombre . "," . $this->_precio;
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function getIdImagen()
+    {
+        return $this->_idImagen;
+    }
+
+    /**
+     * @param mixed $_idImagen
+     *
+     * @return self
+     */
+    public function setIdImagen($_idImagen)
+    {
+        $this->_idImagen = $_idImagen;
+
+        return $this;
+    }
 }
 
 ?>

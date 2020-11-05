@@ -94,7 +94,6 @@ class Producto extends Item {
     	parent::guardar();
     	$sql = "INSERT INTO producto (id_producto, stock_minimo, stock_actual, stock_maximo, id_item) VALUES (NULL, $this->_stockMinimo, $this->_stockActual, $this->_stockMaximo, $this->_idItem)";
 
-
     	$mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
 
@@ -150,7 +149,9 @@ class Producto extends Item {
     //
 
     public static function obtenerPorId($id) {
-        $sql = "SELECT * FROM producto INNER JOIN item ON item.id_item = producto.id_item WHERE id_producto = '$id' ";
+        $sql = "SELECT * FROM producto INNER JOIN item ON item.id_item = producto.id_item 
+            
+            WHERE id_producto = '$id' ";
 
         $mysql = new MySQL();
         $result = $mysql->consultar($sql);
@@ -170,6 +171,7 @@ class Producto extends Item {
         $producto->_stockActual = $data['stock_actual'];
         $producto->_stockMinimo = $data['stock_minimo'];
         $producto->_stockMaximo = $data['stock_maximo'];
+       
         return $producto;
     }
 
@@ -193,6 +195,8 @@ class Producto extends Item {
             $producto = new Producto($registro['nombre'], $registro['precio']);
             $producto->_idProducto = $registro['id_producto'];
             $producto->_idItem = $registro['id_item'];
+            
+
             $producto->_stockActual = $registro['stock_actual'];
             $listado[] = $producto;
         }

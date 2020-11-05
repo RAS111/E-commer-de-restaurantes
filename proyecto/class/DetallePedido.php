@@ -220,22 +220,20 @@ class DetallePedido {
 
         return $listado;
     }
-    //esta funcion esta de mas
-    private function _generarListadoDetallePedidos($datos) {
-        $listado = array();
-        while ($registro = $datos->fetch_assoc()) {
-            $detallePedidos = new DetallePedido();
-            $detallePedidos->_idDetallePedido = $datos['id_detalle_pedido'];
-            $detallePedidos->_cantidad = $datos['cantidad'];
-            $detallePedidos->_precio = $datos['precio'];
-            $detallePedidos->_idItem = $datos ['id_item'];
-            $detallePedidos->setItem();
-            $detallePedidos->_idPedido = $datos ['id_pedido'];
-            $listado[] = $detallePedido;
-        }
+
+    public function obtenerPorIdFactura($_idFactura){
+        $sql = "SELECT * FROM detallepedido 
+                INNER JOIN pedidoss ON pedidoss.id_pedido = detallepedido.id_pedido 
+                INNER JOIN factura ON factura.id_pedido = pedidoss.id_pedido
+                WHERE factura.id_factura = $_idFactura ";
+        
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarListadoDetalle($datos);
 
         return $listado;
-
     }
 
     public function __toString() {

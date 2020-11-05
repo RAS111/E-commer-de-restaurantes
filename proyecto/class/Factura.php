@@ -156,8 +156,35 @@ class Factura {
         $this->_idFactura = $idInsertado;
     }
 
+    public static function obtenerPorId($id) {
+        $sql = "SELECT * FROM factura WHERE id_factura = $id ";
+
+        
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $data = $result->fetch_assoc();
+        $pedido = self::_generarListadoPedido($data);
+
+        return $pedido;
+    }
+
+    private function _generarListadoPedido($data) {
+        $factura = new Factura();
+        $factura->_idFactura = $data['id_factura'];
+        $factura->_fecha = $data['fecha'];
+        $factura->_numero = $data['numero'];    
+        $factura->_tipo = $data['tipo'];    
+        $factura->_idFormaPago = $data['id_forma_pago'];
+        $factura->_idPedido = $data['id_pedido']; 
+        $factura->setPedido();
+        $factura->setFormaPago();
+        return $factura;
+    }
+
     public function obtenerTodos() {
-         $sql = "SELECT * FROM factura";
+        $sql = "SELECT * FROM factura ORDER BY id_factura DESC";
 
         $mysql = new MySQL();
         $datos = $mysql->consultar($sql);
@@ -183,6 +210,10 @@ class Factura {
             $listado[] = $factura;
         }
         return $listado;
+    }
+
+    public function __toString(){
+        return $this->_numero;
     }
 }
 

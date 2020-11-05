@@ -187,6 +187,8 @@ class Compra {
     public function guardar() {
     	$sql = "INSERT INTO compra (id_compra, numero, descripcion, fecha, id_proveedor, id_forma_pago) VALUES (NULL, $this->_numero, '$this->_descripcion', '$this->_fecha', $this->_idProveedor, $this->_idFormaPago)";
 
+        echo $sql;
+        exit;
     	$mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
 
@@ -194,7 +196,7 @@ class Compra {
     }
 
     public function actualizar() {
-    	$sql = "UPDATE compra SET numero = $this->_numero, descripcion = '$this->_descripcion', fecha = $'$this->_fecha' id_proveedor = $this->_idProveedor, id_forma_pago = $this->_idFormaPago WHERE id_compra = $this->_idCompra";
+    	$sql = "UPDATE compra SET numero = $this->_numero, descripcion = '$this->_descripcion', fecha = '$this->_fecha' id_proveedor = $this->_idProveedor, id_forma_pago = $this->_idFormaPago WHERE id_compra = $this->_idCompra";
     	
     	$mysql = new MySQL();
         $mysql->actualizar($sql);

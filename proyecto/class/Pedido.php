@@ -12,7 +12,6 @@ class Pedido {
 	private $_tipoEnvio;
 	private $_idPedidoEstado;
 	private $_idCliente;
-	
 
 	public $cliente;
 	public $arrDetallePedido;
@@ -241,7 +240,7 @@ class Pedido {
     }
 
     public static function obtenerTodos() {
-        $sql = "SELECT * FROM pedidoss ORDER BY id_pedido DESC";
+        $sql = "SELECT * FROM pedidoss ORDER BY id_pedido DESC ";
 
         $mysql = new MySQL();
         $datos = $mysql->consultar($sql);
@@ -296,6 +295,18 @@ class Pedido {
              
             $listado[] = $pedido;
         }
+        return $listado;
+    }
+
+     public function obtenerPorIdFactura($_idFactura){
+        $sql = "SELECT * FROM pedido INNER JOIN factura ON pedidoss.id_pedido = factura.id_pedido WHERE factura.id_factura = $_idFactura ";
+        
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarListadoPedido($datos);
+
         return $listado;
     }
 
