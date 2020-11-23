@@ -6,7 +6,7 @@ session_start();
 
 $id = $_POST['txtId'];
 $nombre = $_POST['txtNombre'];
-$precio = $_POST['numPrecio'];
+$precio = $_POST['txtPrecio'];
 $rubro = $_POST['cboRubro'];
 
 // VALIDACIONES

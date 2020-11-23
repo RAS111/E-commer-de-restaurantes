@@ -3,7 +3,6 @@
 require_once '../../class/Modulo.php';
 
 $id = $_GET['id'];
-
 $modulo = Modulo::obtenerPorId($id);
 
 ?>
@@ -11,7 +10,9 @@ $modulo = Modulo::obtenerPorId($id);
 <html>
 	<?php include_once('../../head.php'); ?>
 <body>
+
 	<?php require_once '../../menu.php';?>
+	
 	<?php require_once "../../header.php"; ?>
 	<?php require_once "../../sidebar.php"; ?>
 	<div class="main-container">
@@ -39,20 +40,20 @@ $modulo = Modulo::obtenerPorId($id);
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<input type="hidden" name="txtId" value="<?=$modulo->getIdModulo(); ?>">
+											<input type="hidden" name="txtIdModulo" id="txtIdModulo" value="<?=$modulo->getIdModulo(); ?>">
 											<label>Descripción</label>
-											<input type="text" name="txtDescripcion" class="form-control" value="<?=$modulo->getDescripcion(); ?>">
+											<input type="text" name="txtDescripcion" id="txtDescripcion" class="form-control" value="<?=$modulo->getDescripcion(); ?>">
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Directorio</label>
-											<input type="text" name="txtDirectorio" class="form-control" value="<?=$modulo->getDirectorio(); ?>">
+											<input type="text" name="txtDirectorio" id="txtDirectorio" class="form-control" value="<?=$modulo->getDirectorio(); ?>">
 										</div>
 									</div>
 								</div>
 							</section>
-							<input type="submit" class="btn btn-success" value="Actualizar" onclick="validarDatos();">		
+							<input type="button" class="btn btn-success" value="Actualizar" onclick="validarDatos();">		
 						</form>
 					</div>
 				</div>
@@ -60,6 +61,7 @@ $modulo = Modulo::obtenerPorId($id);
 		</div>
 	</div>			
 	<!-- js -->
+	<script src="../../static/js/modulos/validaciones.js"></script>
 	<script src="../../static/vendors/scripts/core.js"></script>
 	<script src="../../static/vendors/scripts/script.min.js"></script>
 	<script src="../../static/vendors/scripts/process.js"></script>

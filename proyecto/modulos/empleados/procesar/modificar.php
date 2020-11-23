@@ -40,6 +40,22 @@ if ((int) $tipoDocumento == 0) {
 	exit;
 }
 
+if ($sexo == '0') {
+	$_SESSION['mensaje_error'] = "debe seleccionar el sexo";
+	header("Location: ../modificar.php?id=$id");
+	exit;
+}
+
+if(empty(trim($fechaNacimiento))) {
+	$_SESSION['mensaje_error'] = "la fecha no debe estar vacio";
+	header("Location: ../modificar.php?id=$id");
+	exit;
+} elseif($fechaNacimiento > date("Y-m-d")){
+	$_SESSION['mensaje_error'] = "la fecha ingresada es incorrecta";
+	header("Location: ../modificar.php?id=$id");
+	exit;
+}
+
 if(empty(trim($numeroDocumento))) {
 	$_SESSION['mensaje_error'] = "El numero de documento no debe estar vacio";
 	header('Location: ../modificar.php?id=' .$id);

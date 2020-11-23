@@ -299,15 +299,16 @@ class Pedido {
     }
 
      public function obtenerPorIdFactura($_idFactura){
-        $sql = "SELECT * FROM pedido INNER JOIN factura ON pedidoss.id_pedido = factura.id_pedido WHERE factura.id_factura = $_idFactura ";
+        $sql = "SELECT * FROM pedidoss INNER JOIN factura ON pedidoss.id_pedido = factura.id_pedido WHERE factura.id_factura = $_idFactura ";
         
         $mysql = new MySQL();
-        $datos = $mysql->consultar($sql);
+        $result = $mysql->consultar($sql);
         $mysql->desconectar();
 
-        $listado = self::_generarListadoPedido($datos);
+        $data = $result->fetch_assoc();
+        $pedido = self::_generarListadoPedido($data);
 
-        return $listado;
+        return $pedido;
     }
 
 }

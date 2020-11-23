@@ -138,13 +138,14 @@ $listadoFormaPago = FormaPago::obtenerTodos();
 									</div>
 								</div>
 							</section>
-							<input type="submit" class="btn btn-success" value="Guardar" onclick="validarDatos();">		
+							<input type="button" class="btn btn-success" value="Guardar" onclick="validarDatos();">		
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<script src="../../static/js/ventas/validaciones.js"></script>
 	<?php include_once('../../file_js.php');?>
 </body>
 </html>

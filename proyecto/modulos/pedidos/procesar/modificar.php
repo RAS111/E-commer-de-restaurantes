@@ -11,16 +11,12 @@ $estadoPedido = $_POST['estadoPedido'];
 
 $pedido = Pedido::obtenerPorId($idPedido);
 $pedido->setFecha($fecha);
-$pedido->setIdCliente($cliente);    //$pedido->setMetodoPago($metodoPago);
+$pedido->setIdCliente($cliente);   
 $pedido->setIdPedidoEstado($estadoPedido);
 $pedido->actualizar();
 
-
-
 $detallePedido = new DetallePedido();
-
 $detallePedido->eliminar($pedido->getIdPedido());
-
 
 foreach ($_POST['items'] as $item) {
     $detallePedido = new DetallePedido();

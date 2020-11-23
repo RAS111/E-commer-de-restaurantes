@@ -10,7 +10,9 @@ $sexo = $_POST['cboSexo'];
 $fechaNacimiento = $_POST['txtFechaNacimiento'];
 $tipoDocumento = $_POST['cboTipoDocumento'];
 $numeroDocumento = $_POST['txtNumeroDocumento'];
+$comprobarDocumento = Usuario::comprobarDocumento($numeroDocumento);
 $username = $_POST['txtNombreUsuario'];
+$comprobar = Usuario::comprobarUsuario($username);
 $password = $_POST['txtContraseña'];
 $perfil = $_POST['cboPerfil'];
 $imagen = $_FILES['fileImagen'];
@@ -34,6 +36,22 @@ if (empty(trim($apellido))) {
 	exit;
 } elseif (strlen(trim($apellido)) < 3) {
 	$_SESSION['mensaje_error'] = "el apellido debe contener al menos 3 caracteres";
+	header('Location: ../alta.php');
+	exit;
+}
+
+if ($sexo == '0') {
+	$_SESSION['mensaje_error'] = "debe seleccionar el sexo";
+	header("location: ../alta.php");
+	exit;
+}
+
+if(empty(trim($fechaNacimiento))) {
+	$_SESSION['mensaje_error'] = "la fecha no debe estar vacia";
+	header('Location: ../alta.php');
+	exit;
+} elseif($fechaNacimiento > date("Y-m-d")){
+	$_SESSION['mensaje_error'] = "la fecha ingresada es incorrecta";
 	header('Location: ../alta.php');
 	exit;
 }
@@ -74,6 +92,12 @@ if (empty(trim($password))) {
 	exit;
 }
 
+if ((int) $perfil == 0) {
+	$_SESSION['mensaje_error'] = "debe seleccionar el perfil";
+	header("location: ../alta.php");
+	exit;
+}
+
 
 //SUBIR IMAGEN
 
@@ -101,6 +125,7 @@ $usuario->setUsername($username);
 $usuario->setPassword($password);
 $usuario->setIdPerfil($perfil);
 $usuario->setImagenPerfil($nombreImagen);
+
 
 $usuario->guardar();
 

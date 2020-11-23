@@ -39,11 +39,19 @@ $listadoPedido = Pedido::obtenerTodos();
 						<a class="dropdown-item" href="alta.php" title="Agregar Pedido"><i class="dw dw-add-user"></i></a>
 	
 						<?php if($mensaje == PEDIDO_GUARDADO):?>
-							<h3>Pedido Guardado</h3>
-							<br>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<strong>Pedido Guardado</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 						<?php elseif($mensaje == PEDIDO_MODIFICADO):?>
-							<h3>Pedido Modificado</h3>
-							<br>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<strong>Pedido Modificado</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 						<?php  endif;?>
 						<table class="data-table table stripe hover nowrap">
 							<thead>
@@ -75,7 +83,7 @@ $listadoPedido = Pedido::obtenerTodos();
 										</a>
 										<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 											<a class="dropdown-item" href="detalle.php?id=<?=$pedido->getIdPedido();?>"><i class="dw dw-eye"></i> Ver</a>
-											<?php if($pedido->pedidoEstado->getIdPedidoEstado() != 4):?>
+											<?php if($pedido->pedidoEstado->getIdPedidoEstado() != 4 && $pedido->pedidoEstado->getIdPedidoEstado() != 6):?>
 											<a class="dropdown-item" href="modificar.php?id=<?=$pedido->getIdPedido();?>"><i class="dw dw-edit2"></i> Modificar</a>
 											<a class="dropdown-item" href="#" onclick="modificarEstado(<?php echo $pedido->getIdPedido(); ?>, <?=$pedido->pedidoEstado->getIdPedidoEstado();?>);"><i class="dw dw-edit2"></i> Cambiar Estado
 											</a>

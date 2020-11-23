@@ -15,8 +15,6 @@ if(isset($_GET['mensaje'])) {
 
 $listadoFactura = Factura::obtenerTodos();
 
-
-
 ?>
 
 <!DOCTYPE html>
@@ -39,11 +37,19 @@ $listadoFactura = Factura::obtenerTodos();
 					</div>
 					<div class="pb-20">
 						<?php if($mensaje == FACTURA_GUARDADO):?>
-							<h3>Factura Guardado</h3>
-							
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<strong>Factura Guardada</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 						<?php elseif($mensaje == FACTURA_MODIFICADO):?>
-							<h3>Factura Modificado</h3>
-							
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<strong>Factura Modificado</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 						<?php  endif;?>
 						<a type="button" class="btn" data-bgcolor="#007bb5" data-color="#ffffff"  href="../pedidos/listado_factura.php" >
 							Pedidos para Facturar
@@ -56,6 +62,7 @@ $listadoFactura = Factura::obtenerTodos();
 									<th>Fecha</th>
 									<th>Numero</th>
 									<th>Forma de Pago</th>
+									<th>Estado</th>
 									<th>Total</th>
 									<th class="datatable-nosort">Accion</th>
 								</tr>
@@ -68,6 +75,7 @@ $listadoFactura = Factura::obtenerTodos();
 									<td><?=$factura->getFecha();?></td>
 									<td><?=$factura->getNumero();?> </td>
 									<td><?=$factura->formaPago;?></td>
+									<td><?=$factura->facturaEstado;?></td>
 									<td>$<?=$factura->pedido->calcularTotal()?></td>
 									<td>
 										<div class="dropdown">
@@ -78,11 +86,12 @@ $listadoFactura = Factura::obtenerTodos();
 												<a class="dropdown-item" href="detalle.php?id=<?=$factura->getIdFactura();?>">
 													<i class="dw dw-eye"></i> Ver
 												</a>
-												
+												<?php if($factura->facturaEstado->getIdFacturaEstado() != 2):?>
 												<a class="dropdown-item" href="../notas_de_creditos/alta.php?id=<?=$factura->getIdFactura();?>">
 													<i class="icon-copy dw dw-invoice-1"></i> Nota de Credito
 												</a>
-											</div>
+												<?php endif;?>
+												</div>
 										</div>
 									</td>
 								</tr>

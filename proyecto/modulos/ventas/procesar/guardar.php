@@ -2,6 +2,8 @@
 
 require_once "../../../class/Factura.php";
 require_once '../../../class/Producto.php';
+require_once '../../../class/Pedido.php';
+
 
 $fecha = $_POST['txtFecha'];
 $numero = $_POST['txtNumero'];
@@ -20,6 +22,10 @@ $factura->guardar();
 
 $producto = Producto::obtenerPorIdPedido($idPedido);
 $producto->descontarStock($idPedido);
+
+$pedido = Pedido::obtenerPorId($idPedido);
+$pedido->setIdPedidoEstado(5);
+$pedido->actualizar();
 
 header('Location: ../listado.php?mensaje=1');
 ?>

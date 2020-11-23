@@ -34,6 +34,7 @@ $listadoDetallePedido = DetallePedido::obtenerPorIdFactura($idFactura);
 								<th>Fecha</th>
 								<th>Tipo de Factura</th>		
 								<th>Forma de pago</th>
+								<th>Estado</th>
 								
 							</tr>
 						</thead>
@@ -43,7 +44,7 @@ $listadoDetallePedido = DetallePedido::obtenerPorIdFactura($idFactura);
 								<td><?=$factura->getFecha();?> </td>
 								<td><?=$factura->getTipo();?></td>
 								<td><?=$factura->formaPago;?></td>
-								
+								<td><?=$factura->facturaEstado;?></td>
 							</tr>
 						</tbody>
 					</table>

@@ -36,11 +36,19 @@ $listadoCompras = Compra::obtenerTodos();
 						<a class="dropdown-item" href="alta.php" title="Agregar Compra"><i class="dw dw-add-user"></i></a>
 	
 						<?php if($mensaje == COMPRA_GUARDADA):?>
-							<h3>Compra Guardada</h3>
-							<br>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<strong>Compra Guardada</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 						<?php elseif($mensaje == COMPRA_MODIFICADA):?>
-							<h3>Compra Modificada</h3>
-							<br>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<strong>Compra Modificada</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 						<?php  endif;?>
 						<table class="data-table table stripe hover nowrap">
 							<thead>

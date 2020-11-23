@@ -3,9 +3,13 @@
 require_once "../../../class/Pedido.php";
 require_once "../../../class/DetallePedido.php";
 
+session_start();
+
 $fechaPedido = $_POST['fecha'];
 $cliente = $_POST['cliente'];
 $tipoEnvio = $_POST['tipoEnvio'];
+
+
 
 $pedido = new Pedido();
 $pedido->setIdCliente($cliente);

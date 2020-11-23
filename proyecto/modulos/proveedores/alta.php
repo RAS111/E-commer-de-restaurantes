@@ -9,8 +9,6 @@ $listadoTipoDocumento = TipoDocumento::obtenerTodos();
 <!DOCTYPE html>
 <html>
 	<?php include_once('../../head.php'); ?>
-<!--<script src="../../static/js/proveedores/validaciones.js"></script>-->
-<body>
 
 	<?php require_once '../../menu.php';?>
 	<?php require_once "../../header.php"; ?>
@@ -22,6 +20,18 @@ $listadoTipoDocumento = TipoDocumento::obtenerTodos();
 					<div class="clearfix">
 						<h4 class="text-black h4">Registrar Proveedor</h4>
 					</div>
+					<?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+						<font color="red">
+							<?php echo $_SESSION['mensaje_error'] ?>
+						</font>
+
+						<br><br>
+
+					<?php
+							unset($_SESSION['mensaje_error']);
+						endif;
+					?>
 					<div class="wizard-content">
 						<form class="tab-wizard wizard-circle wizard" name="frmDatos" id="frmDatos" method="POST" action="procesar/guardar.php">
 							<section>
@@ -45,8 +55,8 @@ $listadoTipoDocumento = TipoDocumento::obtenerTodos();
 											<label>Sexo</label>
 											<select name="cboSexo" id="txtSexo" class="custom-select form-control">
 												<option value="0">Seleccionar</option>
-												<option value="F">Femenino</option>
-												<option value="M">Masculino</option>
+												<option value="Femenino">Femenino</option>
+												<option value="Masculino">Masculino</option>
 												<option value="Otro">Otro</option>
 											</select>
 										</div>
@@ -98,7 +108,7 @@ $listadoTipoDocumento = TipoDocumento::obtenerTodos();
 									</div>	
 								</div>
 							</section>
-							<input type="submit" class="btn btn-success" value="Guardar" onclick="validarDatos();">	
+							<input type="button" class="btn btn-success" value="Guardar" onclick="validarDatos();">	
 							<!--Con JS<input type="button" value="Guardar" onclick="validarDatos();">-->	
 						</form>
 					</div>
@@ -107,6 +117,7 @@ $listadoTipoDocumento = TipoDocumento::obtenerTodos();
 		</div>
 	</div>
 	<!-- js -->
+	<script src="../../static/js/proveedores/validaciones.js"></script>
 	<script src="../../static/vendors/scripts/core.js"></script>
 	<script src="../../static/vendors/scripts/script.min.js"></script>
 	<script src="../../static/vendors/scripts/process.js"></script>

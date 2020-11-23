@@ -2,10 +2,11 @@
 
 require_once "../../../class/Compra.php";
 require_once "../../../class/DetalleCompra.php";
+require_once "../../../class/Producto.php";
 
 $fecha = $_POST['fecha'];
 $numero = $_POST['numero'];
-$descripcion = $_POST['descripcion'];
+$observacion = $_POST['observacion'];
 $proveedor = $_POST['proveedor'];
 $formaPago = $_POST['formaPago'];
 
@@ -13,7 +14,7 @@ $compra = new Compra();
 $compra->setIdProveedor($proveedor);
 $compra->setFecha($fecha);
 $compra->setNumero($numero);
-$compra->setDescripcion($descripcion);
+$compra->setDescripcion($observacion);
 $compra->setIdFormaPago($formaPago);
 $compra->guardar();
 
@@ -26,6 +27,8 @@ foreach ($_POST['items'] as $item) {
 	$detalleCompra->guardar();
 }
 
+$producto = Producto::obtenerPorNumeroFactura($numero);
+$producto->aumentarStock($numero);
 
 
 ?>

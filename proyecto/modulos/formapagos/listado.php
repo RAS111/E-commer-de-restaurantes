@@ -41,11 +41,19 @@ $listadoFormaPago = FormaPago::obtenerTodos();
 					<div class="pb-20">
 						<a class="dropdown-item" href="alta.php" title="Agregar Forma de Pago"><i class="dw dw-add-user"></i></a>
 						<?php if($mensaje == FORMAPAGO_GUARDADO):?>
-							<h3>Forma de Pago Guardado</h3>
-							<br>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<strong>Forma de Pago Guardada</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 						<?php elseif($mensaje == FORMAPAGO_MODIFICADO):?>
-							<h3>Forma de Pago Modificado</h3>
-							<br>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<strong>Forma de Pago Modificada</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 						<?php  endif;?>
 						<table class="data-table table stripe hover nowrap">
 							<thead>

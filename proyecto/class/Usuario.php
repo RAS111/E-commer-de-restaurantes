@@ -94,7 +94,6 @@ class Usuario extends Persona{
 
     public static function obtenerPorId($id) {
         $sql = "SELECT * FROM usuario INNER JOIN persona  ON usuario.id_persona = persona.id_persona WHERE id_usuario =" .$id;
-
         $mysql = new MySQL();
         $result = $mysql->consultar($sql);
         $mysql->desconectar();
@@ -112,7 +111,7 @@ class Usuario extends Persona{
         $user->_username = $data['username'];
         $user->_idPersona = $data['id_persona'];
         $user->_fechaNacimiento = $data['fecha_nacimiento'];
-        $user->_tipoDocumento = $data['id_tipo_documento'];
+        $user->_idTipoDocumento = $data['id_tipo_documento'];
         $user->_numeroDocumento = $data['numero_documento'];
         $user->setDomicilio();
         $user->setContactos();
@@ -210,6 +209,35 @@ class Usuario extends Persona{
 
     }
 
+    public function comprobarUsuario($username){
+        $sql = " SELECT * FROM usuario WHERE username = '$username' ";
+
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        if ($result->num_rows > 0 ) {
+            $_SESSION['mensaje_error'] = "Usuario no disponible";
+            header('Location: ../alta.php');
+            exit;
+        } 
+    }
+
+    public function comprobarDocumento($numeroDocumento){
+        $sql = "SELECT persona.numero_documento FROM usuario 
+                INNER JOIN persona ON persona.id_persona = usuario.id_persona
+                WHERE persona.numero_documento = $numeroDocumento";
+
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        if ($result->num_rows > 0 ) {
+            $_SESSION['mensaje_error'] = "Dni no disponible";
+            header('Location: ../alta.php');
+            exit;
+        } 
+    }
 
     /**
      * @return mixed

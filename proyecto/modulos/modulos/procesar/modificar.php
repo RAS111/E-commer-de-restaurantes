@@ -3,13 +3,11 @@ require_once "../../../class/Modulo.php";
 
 session_start();
 
-$id = $_POST['txtId'];
+$id = $_POST['txtIdModulo'];
 $descripcion = $_POST['txtDescripcion'];
 $directorio = $_POST['txtDirectorio'];
 
-$modulo = Modulo::obtenerPorId($id);
-$modulo->setDescripcion($descripcion);
-$modulo->setDirectorio($directorio);
+
 
 //VALIDACIONES
 if(empty(trim($descripcion))) {
@@ -31,6 +29,9 @@ if(empty(trim($directorio))) {
 	header('Location: ../modificar.php?id=$id');
 	exit;
 }
+$modulo = Modulo::obtenerPorId($id);
+$modulo->setDescripcion($descripcion);
+$modulo->setDirectorio($directorio);
 
 $modulo->actualizar();
 

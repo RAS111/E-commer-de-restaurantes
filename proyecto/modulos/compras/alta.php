@@ -32,27 +32,20 @@ $listadoFormaPago = FormaPago::obtenerTodos();
 						<form class="tab-wizard wizard-circle wizard" name="frmDatos" id="frmDatos" >
 							<section>
 								<div class="row">
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<div class="form-group">
 											<label>Fecha</label>
 											<input type="date" name="txtFecha" id="txtFecha" class="form-control date-picker" placeholder="Seleccionar Fecha de Nacimiento" value="<?php echo date("Y-m-d");?>">
 										</div>
 									</div>
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<div class="form-group">
 											<label>N° de Compra</label>
 											<input type="text" name="txtNumero" id="txtNumero" class="form-control">
 										</div>
 									</div>
-									<div class="col-md-4">
-										<div class="form-group">
-											<label>Descripción</label>
-											<input type="text" name="txtDescripcion" id="txtDescripcion" class="form-control">
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-6" >
+									
+									<div class="col-md-3" >
 										<div class="form-group ">
 											<label>Proveedor </label>
 											<select name="cboProveedor" id="cboProveedor"  class="custom-select2 form-control">
@@ -67,7 +60,7 @@ $listadoFormaPago = FormaPago::obtenerTodos();
 											</select>
 										</div>
 									</div>
-									<div class="col-md-6">
+									<div class="col-md-3">
 										<div class="form-group">
 											<label>Forma de pago </label>
 											<select name="cboFormaPago" id="cboFormaPago" class="custom-select form-control">
@@ -82,6 +75,7 @@ $listadoFormaPago = FormaPago::obtenerTodos();
 										</div>
 									</div>
 								</div>
+								
 								<hr>
 								<div class="row">
 									<div class="col-md-6 col-sm-12 mb-30">
@@ -133,6 +127,15 @@ $listadoFormaPago = FormaPago::obtenerTodos();
 												</tbody>
 											</table>
 										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label>Observacion</label>
+											<textarea class="form-control" name="txtObservacion" id="txtObservacion"></textarea>
+										</div>
+									</div>
 									</div>
 								</div>
 							</section>
@@ -350,38 +353,26 @@ function eliminarProducto(indiceDelete){
 	return detalle_ventas;		
 }
 
-/*function guardarFormProductos(){
-	let nombre = $('#txtNombre').val();
-	let precio = $('#txtPrecio').val();
-	let stockMinimo = $('#txtStockMinimo').val();
-	let stockActual = $('#txtStockActual').val();
-	let stockMaximo = $('#txtStockMaximo').val();
-	let rubro = $('#cboRubro').val();
-    $.ajax({
-        type: 'post',
-        url: '../productos/procesar/guardar.php',
-        data: {
-        	'nombre': nombre,
-        	'precio': precio,
-        	'stockMinimo': stockMinimo,
-        	'stockActual': stockActual,
-        	'stockMaximo': stockMaximo,
-            'rubro': rubro
-        },
-       	success: function(data){
-           console.log(data);
-           //window.location.href = '../compras/listado.php?mensaje=1';
-        }
-    })
-}
-    
-*/
 function guardarFormVentas(){
 	let fecha = $('#txtFecha').val();
 	let numero = $('#txtNumero').val();
-	let descripcion = $('#txtDescripcion').val();
+	let observacion = $('#txtObservacion').val();
 	let proveedor = $('#cboProveedor').val();
 	let formaPago = $('#cboFormaPago').val();
+
+	if (numero.trim() == "") {
+        alert("El numero de compra no debe estar vacio");
+        return;
+    }
+
+	if (proveedor == 0) {
+		alert("Debe seleccionar el proveedor");
+		return;
+	}
+	if (formaPago == 0) {
+		alert("Debe seleccionar la forma de pago");
+		return;
+	}
 
     if (detalle_ventas.length > 0){
         $.ajax({
@@ -390,7 +381,7 @@ function guardarFormVentas(){
             data: {
             	'fecha': fecha,
             	'numero': numero,
-            	'descripcion': descripcion,
+            	'observacion': observacion,
             	'proveedor': proveedor,
             	'formaPago': formaPago,
                 'items': detalle_ventas

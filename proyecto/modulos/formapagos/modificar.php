@@ -47,7 +47,7 @@ $formaPago = FormaPago::obtenerPorId($id);
 									</div>
 								</div>
 							</section>
-							<input type="submit" class="btn btn-success" value="Actualizar" onclick="validarDatos();">		
+							<input type="button" class="btn btn-success" value="Actualizar" onclick="validarDatos();">		
 						</form>
 					</div>
 				</div>
@@ -55,6 +55,7 @@ $formaPago = FormaPago::obtenerPorId($id);
 		</div>
 	</div>			
 	<!-- js -->
+	<script src="../../static/js/formapagos/validaciones.js"></script>
 	<script src="../../static/vendors/scripts/core.js"></script>
 	<script src="../../static/vendors/scripts/script.min.js"></script>
 	<script src="../../static/vendors/scripts/process.js"></script>

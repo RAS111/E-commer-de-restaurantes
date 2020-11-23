@@ -39,13 +39,13 @@ $listadoModulos = Modulo::obtenerTodos();
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Descricpción</label>
-											<input type="text" name="txtDescripcion" class="form-control">
+											<input type="text" name="txtDescripcion" id="txtDescripcion" class="form-control">
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Modulos</label>
-											<select name="cboModulos[]" class="custom-select2 form-control" multiple="multiple" style="width: 100%;">
+											<select name="cboModulos[]" id="cboModulos" class="custom-select2 form-control" multiple="multiple" style="width: 100%;">
 
 												<?php foreach ($listadoModulos as $modulo) :?>
 
@@ -60,7 +60,7 @@ $listadoModulos = Modulo::obtenerTodos();
 									</div>
 								</div>
 							</section>
-							<input type="submit" class="btn btn-success" value="Guardar" onclick="validarDatos();">		
+							<input type="button" class="btn btn-success" value="Guardar" onclick="validarDatos();">		
 						</form>
 					</div>
 				</div>
@@ -68,6 +68,7 @@ $listadoModulos = Modulo::obtenerTodos();
 		</div>
 	</div>			
 	<!-- js -->
+	<script src="../../static/js/perfil/validaciones.js"></script>
 	<script src="../../static/vendors/scripts/core.js"></script>
 	<script src="../../static/vendors/scripts/script.min.js"></script>
 	<script src="../../static/vendors/scripts/process.js"></script>

@@ -45,7 +45,7 @@ $listadoRubro = Rubro::obtenerTodos();
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Precio</label>
-											<input type="text" name="numPrecio" class="form-control">
+											<input type="text" name="txtPrecio" id="txtPrecio" class="form-control">
 										</div>
 									</div>
 								</div>
@@ -53,7 +53,7 @@ $listadoRubro = Rubro::obtenerTodos();
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Rubro </label>
-											<select name="cboRubro" class="custom-select form-control">
+											<select name="cboRubro" id="cboRubro" class="custom-select form-control">
 												<option value="0">Seleccionar</option>
 												<?php foreach ($listadoRubro as $rubro): ?>
 
@@ -66,7 +66,7 @@ $listadoRubro = Rubro::obtenerTodos();
 									</div>
 								</div>
 							</section>	
-							<input type="submit" class="btn btn-success" value="Guardar" onclick="validarDatos();">		
+							<input type="button" class="btn btn-success" value="Guardar" onclick="validarDatos();">		
 						</form>
 					</div>
 				</div>
@@ -74,6 +74,7 @@ $listadoRubro = Rubro::obtenerTodos();
 		</div>
 	</div>
 	<!--JS-->
+	<script src="../../static/js/menu/validaciones.js"></script>
 	<script src="../../static/vendors/scripts/core.js"></script>
 	<script src="../../static/vendors/scripts/script.min.js"></script>
 	<script src="../../static/vendors/scripts/process.js"></script>

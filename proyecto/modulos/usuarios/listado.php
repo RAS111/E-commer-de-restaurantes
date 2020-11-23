@@ -36,12 +36,20 @@ $listadoUsuarios = Usuario::obtenerTodos();
 					<div class="pb-20">
 						<a class="dropdown-item" href="alta.php" title="Agregar Usuario"><i class="dw dw-add-user"></i></a>
 						<?php if($mensaje == USUARIO_GUARDADO):?>
-							<h3>Usuario Guardado</h3>
-							<br>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<strong>Usuario Guardado</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 						<?php elseif($mensaje == USUARIO_MODIFICADO):?>
-							<h3>Usuario Modificado</h3>
-							<br>
-						<?php  endif;?>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<strong>Usuario Modificado</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+						<?php  endif;?>	
 						<table class="data-table table stripe hover nowrap">
 							<thead>
 								<tr>

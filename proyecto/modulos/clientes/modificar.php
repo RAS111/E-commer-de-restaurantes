@@ -13,7 +13,7 @@ $listadoTipoDocumento = TipoDocumento::obtenerTodos();
 <!DOCTYPE html>
 <html>
 	<?php include_once('../../head.php');?>
-<!--<script src="../../static/js/clientes-empleados/validaciones.js"></script>-->
+
 <body>
 	
 	<?php require_once '../../menu.php';?>
@@ -60,7 +60,22 @@ $listadoTipoDocumento = TipoDocumento::obtenerTodos();
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Sexo</label>
-											<input type="text" name="txtSexo" id="txtSexo" class="custom-select form-control" value="<?=$cliente->getSexo(); ?>">
+											<select name="cboSexo" id="cboSexo" class="custom-select form-control">
+												<option value="0">Sin Seleccionar</option>
+												<?php if ($cliente->getSexo() == "Femenino"): ?>
+													<option value="Femenino" selected><?=$cliente->getSexo()?></option>
+													<option value="Masculino">Masculino</option>
+													<option value="Otro">Otro</option>
+												<?php elseif($cliente->getSexo() == "Masculino"):?>
+													<option value="Femenino">Femenino</option>
+													<option value="Masculino" selected><?=$cliente->getSexo()?></option>
+													<option value="Otro">Otro</option>
+												<?php elseif($cliente->getSexo() == "Otro"):?>
+													<option value="Femenino">Femenino</option>
+													<option value="Masculino">Masculino</option>
+													<option value="Otro" selected><?=$cliente->getSexo()?></option>
+												<?php endif ?>
+											</select>
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -102,7 +117,7 @@ $listadoTipoDocumento = TipoDocumento::obtenerTodos();
 									</div>	
 								</div>
 							</section>
-							<input type="submit" class="btn btn-success" value="Actualizar" onclick="validarDatos();">	
+							<input type="button" class="btn btn-success" value="Actualizar" onclick="validarDatos();">	
 							<!--para validaciones con js<input type="button" value="Actualizar" onclick="validarDatos();">-->			
 						</form>
 					</div>
@@ -111,6 +126,7 @@ $listadoTipoDocumento = TipoDocumento::obtenerTodos();
 		</div>
 	</div>
 	<!-- js -->
+	<script src="../../static/js/clientes-empleados/validaciones.js"></script>
 	<script src="../../static/vendors/scripts/core.js"></script>
 	<script src="../../static/vendors/scripts/script.min.js"></script>
 	<script src="../../static/vendors/scripts/process.js"></script>

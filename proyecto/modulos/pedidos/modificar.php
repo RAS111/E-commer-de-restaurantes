@@ -127,9 +127,10 @@ $listadoEstados = PedidoEstado::obtenerTodos();
 										</tr>
 									</tbody>
 								</table>
-								<div class="row row-cols-2">
-									<div class="col">
-										<p class="lead">Totales</p>
+								<div class="row">
+									<div class="col-6 mt-3 pt-3"></div>
+									<div class="col-6 mt-3 pt-3">
+										<p class="lead">Monto a pagar</p>
 										<div class="table-responsive">
 											<table class="table table-sm">
 												<tbody>
@@ -137,15 +138,13 @@ $listadoEstados = PedidoEstado::obtenerTodos();
 														<th class="w-50">Total:</th>
 														<td id="id_total">$0.0</td>
 													</tr>
-													
 												</tbody>
 											</table>
 										</div>
 									</div>
 								</div>
 							</section>
-							<input type="button" onclick="guardarFormVentas();" class="btn btn-success" value="Actualizar">	
-							<!--para validaciones con js<input type="button" value="Guardar" onclick="validarDatos();">-->			
+							<input type="button" onclick="guardarFormVentas();" class="btn btn-success" value="Actualizar">			
 						</form>
 					</div>
 				</div>

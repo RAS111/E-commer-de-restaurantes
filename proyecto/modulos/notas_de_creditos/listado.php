@@ -37,11 +37,19 @@ $listadoNotaDeCredito = NotaDeCredito::obtenerTodos();
 					</div>
 					<div class="pb-20">
 						<?php if($mensaje == NOTADECREDITO_GUARDADA):?>
-							<h3>Nota de Credito Guardada</h3>
-							
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<strong>Nota de Credito Guardada</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 						<?php elseif($mensaje == NOTADECREDITO_MODIFICADA):?>
-							<h3>Nota de Credito Modificada</h3>
-							
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<strong>Nota de Credito Modificado</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 						<?php  endif;?>
 						
 						<table class="data-table table stripe hover nowrap">

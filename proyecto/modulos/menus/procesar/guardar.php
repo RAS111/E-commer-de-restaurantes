@@ -5,7 +5,7 @@ require_once "../../../class/Menu.php";
 session_start();
 
 $nombre = $_POST['txtNombre'];
-$precio = $_POST['numPrecio'];
+$precio = $_POST['txtPrecio'];
 $rubro = $_POST['cboRubro'];
 
 // VALIDACIONES

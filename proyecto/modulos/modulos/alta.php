@@ -45,7 +45,7 @@
 									</div>
 								</div>
 							</section>
-							<input type="submit" class="btn btn-success" value="Guardar" onclick="validarDatos();">		
+							<input type="button" class="btn btn-success" value="Guardar" onclick="validarDatos();">		
 						</form>
 					</div>
 				</div>
@@ -54,6 +54,7 @@
 	</div>
 	
 	<!-- js -->
+	<script src="../../static/js/modulos/validaciones.js"></script>
 	<script src="../../static/vendors/scripts/core.js"></script>
 	<script src="../../static/vendors/scripts/script.min.js"></script>
 	<script src="../../static/vendors/scripts/process.js"></script>

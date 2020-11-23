@@ -72,16 +72,11 @@ if (isset($producto)) {
                         
                            
                        
-                            <?php if (!is_null($datos)): ?>
-                                <?php if ($producto == 1): ?>
-                                    <div class="clearfix">
-                                        <h4 class="text-black h5">Productos con Stock Minimo</h4>
-                                    </div>
-                                <?php elseif ($producto == 2): ?>
-                                    <div class="clearfix">
-                                        <h4 class="text-black h5"> Todos los productos</h4>
-                                    </div>
-                                <?php endif ?>
+                        <?php if (!is_null($datos)): ?>
+                            <?php if ($producto == 1): ?>
+                                <div class="clearfix">
+                                    <h4 class="text-black h5">Productos con Stock Minimo</h4>
+                                </div>
                                 <table class="table table-striped">
                                     <tr>
                                         <th>Nombre</th>
@@ -91,14 +86,39 @@ if (isset($producto)) {
                                     </tr>
                                     <?php while($row = $datos->fetch_assoc()): ?>
                                         <tr>
-                                        <td><?php echo $row['nombre'] ?></td>
-                                        <td><?php echo $row['stock_minimo'] ?></td>
-                                        <td><?php echo $row['stock_actual'] ?></td>
-                                        
+                                            <td><?php echo $row['nombre'] ?></td>
+                                            <td><?php echo $row['stock_minimo'] ?></td>
+                                            <td><?php echo $row['stock_actual'] ?></td>
                                         </tr>
                                     <?php endwhile ?>
                                 </table>
-                            <?php endif ?>
+                            <?php elseif ($producto == 2): ?>
+                                <div class="clearfix">
+                                    <h4 class="text-black h5"> Todos los productos</h4>
+                                </div>
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Stock Minimo</th>
+                                        <th>Stock Actual</th>
+                                       
+                                    </tr>
+                                    <?php while($row = $datos->fetch_assoc()): ?>
+                                        <tr>
+                                        <?php if ($row['stock_actual'] <= $row['stock_minimo']): ?>
+                                            <td class="table-danger"><?php echo $row['nombre'] ?></td>
+                                            <td class="table-danger"><?php echo $row['stock_minimo'] ?></td>
+                                            <td class="table-danger"><?php echo $row['stock_actual'] ?></td>
+                                        <?php else:?>
+                                            <td><?php echo $row['nombre'] ?></td>
+                                            <td><?php echo $row['stock_minimo'] ?></td>
+                                            <td><?php echo $row['stock_actual'] ?></td>
+                                         <?php endif ?>
+                                        </tr>
+                                    <?php endwhile ?>
+                                </table>
+                            <?php endif ?>           
+                        <?php endif ?>
                     </div>
                 </div>
             </div>

@@ -25,7 +25,19 @@ $listadoUsuarios = Usuario::obtenerTodos();
 				<div class="pd-20 card-box mb-30">
 					<div class="clearfix">
 						<h4 class="text-black h4">Registrar Nota de Credito</h4>
-					</div>	
+					</div>
+					<?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+							<font color="red">
+								<?php echo $_SESSION['mensaje_error'] ?>
+							</font>
+
+							<br><br>
+
+					<?php
+							unset($_SESSION['mensaje_error']);
+						endif;
+					?>	
 					<hr>
 					<div class="wizard-content">
 						<form class="tab-wizard wizard-circle wizard" name="frmDatos" id="frmDatos" method="POST" action="procesar/guardar.php">
@@ -57,13 +69,13 @@ $listadoUsuarios = Usuario::obtenerTodos();
 											<label>Motivo</label>
 											<select name="cboMotivo" id="cboMotivo" class="custom-select form-control" id="cboTipoFactura">
 											<option value="0">Seleccionar</option>     
-											<option value="Corregir datos, valores o informacion diligenciada en la factura">
+											<option value="Corregir datos en la factura">
 												Corregir datos, valores o información diligenciada en la factura
 											</option>
 											<option value="Devoluciones del cliente por inconformidad">
 												Devoluciones del cliente por inconformidad
 											</option>
-											<option value="Se emitió una factura por error">
+											<option value="Se emitio una factura por error">
 												Se emitió una factura por error
 											</option>
 											<option value="Diferencia del precio real y el importe cobrado">
@@ -83,7 +95,7 @@ $listadoUsuarios = Usuario::obtenerTodos();
 									<div class="col-md-12">
 										<div class="form-group">
 											<label>Observacion</label>
-											<textarea class="form-control" name="txtObservacion"></textarea>
+											<textarea class="form-control" name="txtObservacion" id="txtObservacion"></textarea>
 										</div>
 									</div>
 								</div>
@@ -176,7 +188,7 @@ $listadoUsuarios = Usuario::obtenerTodos();
 									</div>
 								</div>
 							</section>
-							<input type="submit" class="btn btn-success" value="Guardar" onclick="validarDatos();">	
+							<input type="button" class="btn btn-success" value="Guardar" onclick="validarDatos();">	
 						</form>
 					</div>
 				</div>
@@ -184,7 +196,7 @@ $listadoUsuarios = Usuario::obtenerTodos();
 		</div>
 	</div>
 
-	
+	<script src="../../static/js/notas_de_creditos/validaciones.js"></script>
 	<?php include_once('../../file_js.php');?>
 </body>
 </html>

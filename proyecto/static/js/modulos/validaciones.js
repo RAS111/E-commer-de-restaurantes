@@ -1,24 +1,24 @@
 function validarDatos() {
-    var divMensajeError = $("#mensajeError");
-    var descripcion = $("#txtDescripcion").val();
-    var directorio = $("#txtDirectorio").val();
+    
+    var descripcion = document.getElementById("txtDescripcion").value;
+    var directorio = document.getElementById("txtDirectorio").value;
 
     if (descripcion.trim() == "") {
-        divMensajeError.html("<font color='red'>La descripción no debe estar vacio</font><br><br>");
+        alert("La descripcion no debe estar vacio");
         return;
-    } else if (descripcion.length < 3) {
-        divMensajeError.html("<font color='red'>La descripción debe contener al menos 3 caracteres</font><br><br>");
+    } else if (descripcion.length < 3 ) {
+        alert("La descripcion debe contener al menos 3 caracteres");
         return;
     }
 
     if (directorio.trim() == "") {
-        divMensajeError.html("<font color='red'>El directorio no debe estar vacio</font><br><br>");
+        alert("El directorio no debe estar vacio");
         return;
-    } else if (directorio.length < 3) {
-        divMensajeError.html("<font color='red'>El directorio debe contener al menos 3 caracteres</font><br><br>");
+    } else if (directorio.length < 3 ) {
+        alert("El descripcion debe contener al menos 3 caracteres");
         return;
     }
 
-    var form = $("#frmDatos");
+    var form = document.getElementById("frmDatos");
     form.submit();
 }

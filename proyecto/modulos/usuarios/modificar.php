@@ -17,7 +17,7 @@ $listadoPerfil = Perfil::obtenerTodos();
 <!DOCTYPE html>
 <html>
 	<?php include_once('../../head.php'); ?>
-<!--<script src="../../static/js/usuarios/validaciones.js"></script>-->
+
 <body>
 	<?php require_once '../../menu.php';?>
 	<?php require_once "../../header.php";?>
@@ -63,7 +63,22 @@ $listadoPerfil = Perfil::obtenerTodos();
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Sexo</label>
-											<input type="text" name="txtSexo" id="txtSexo" class="custom-select form-control"  value="<?= $user->getSexo(); ?>">
+											<select name="cboSexo" id="cboSexo" class="custom-select form-control">
+												<option value="0">Sin Seleccionar</option>
+												<?php if ($user->getSexo() == "Femenino"): ?>
+													<option value="Femenino" selected><?=$user->getSexo()?></option>
+													<option value="Masculino">Masculino</option>
+													<option value="Otro">Otro</option>
+												<?php elseif($user->getSexo() == "Masculino"):?>
+													<option value="Femenino">Femenino</option>
+													<option value="Masculino" selected><?=$user->getSexo()?></option>
+													<option value="Otro">Otro</option>
+												<?php elseif($user->getSexo() == "Otro"):?>
+													<option value="Femenino">Femenino</option>
+													<option value="Masculino">Masculino</option>
+													<option value="Otro" selected><?=$user->getSexo()?></option>
+												<?php endif ?>
+											</select>
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -143,7 +158,7 @@ $listadoPerfil = Perfil::obtenerTodos();
 										</div>
 									</div>	
 							</section>
-							<input type="submit" class="btn btn-success" value="Actualizar" onclick="validarDatos();">	
+							<input type="button" class="btn btn-success" value="Actualizar" onclick="validarDatos();">	
 							<!--Con JS<input type="button" value="Actualizar" onclick="validarDatos();">	-->	
 						</form>
 					</div>
@@ -152,6 +167,7 @@ $listadoPerfil = Perfil::obtenerTodos();
 		</div>
 	</div>
 	<!-- js -->
+	<script src="../../static/js/usuarios/validaciones_modificar.js"></script>
 	<script src="../../static/vendors/scripts/core.js"></script>
 	<script src="../../static/vendors/scripts/script.min.js"></script>
 	<script src="../../static/vendors/scripts/process.js"></script>

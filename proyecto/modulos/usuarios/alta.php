@@ -11,7 +11,7 @@ $listadoPerfil = Perfil::obtenerTodos();
 <!DOCTYPE html>
 <html>
 	<?php include_once('../../head.php'); ?>
-<!--<script src="../../static/js/usuarios/validaciones.js"></script>-->
+
 <body>
 
 	<?php require_once '../../menu.php';?>
@@ -136,7 +136,7 @@ $listadoPerfil = Perfil::obtenerTodos();
 										</div>
 									</div>	
 							</section>
-							<input type="submit" class="btn btn-success" value="Guardar" onclick="validarDatos();">	
+							<input type="button" class="btn btn-success" value="Guardar" onclick="validarDatos();">	
 							<!--Con JS<input type="button" value="Guardar" onclick="validarDatos();">-->	
 						</form>
 					</div>
@@ -145,6 +145,7 @@ $listadoPerfil = Perfil::obtenerTodos();
 		</div>
 	</div>
 	<!-- js -->
+	<script src="../../static/js/usuarios/validaciones.js"></script>
 	<script src="../../static/vendors/scripts/core.js"></script>
 	<script src="../../static/vendors/scripts/script.min.js"></script>
 	<script src="../../static/vendors/scripts/process.js"></script>

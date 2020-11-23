@@ -186,9 +186,6 @@ class Compra {
 
     public function guardar() {
     	$sql = "INSERT INTO compra (id_compra, numero, descripcion, fecha, id_proveedor, id_forma_pago) VALUES (NULL, $this->_numero, '$this->_descripcion', '$this->_fecha', $this->_idProveedor, $this->_idFormaPago)";
-
-        echo $sql;
-        exit;
     	$mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
 

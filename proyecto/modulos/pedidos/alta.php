@@ -28,7 +28,8 @@ $listadoCliente = Cliente::obtenerTodos();
 				<div class="pd-20 card-box mb-30">
 					<div class="clearfix">
 						<h4 class="text-black h4">Registrar Pedido</h4>
-					</div>	
+					</div>
+					
 					<hr>	
 					<div class="wizard-content">
 						<form class="tab-wizard wizard-circle wizard" name="frmDatos" id="frmDatos" >
@@ -104,9 +105,10 @@ $listadoCliente = Cliente::obtenerTodos();
 										</tr>
 									</tbody>
 								</table>
-								<div class="row row-cols-2">
-									<div class="col">
-										<p class="lead">Totales</p>
+								<div class="row">
+									<div class="col-6 mt-3 pt-3"></div>
+									<div class="col-6 mt-3 pt-3">
+										<p class="lead">Monto a pagar</p>
 										<div class="table-responsive">
 											<table class="table table-sm">
 												<tbody>
@@ -225,7 +227,7 @@ function abrirListaProductos(){
 }
 
 function setCantidadProducto(id, nombre, precio, stock){
-    
+
     let cantidad = parseInt(prompt('Ingrese la cantidad'));
     
     if (cantidad == null || cantidad == 0){
@@ -242,13 +244,17 @@ function setCantidadProducto(id, nombre, precio, stock){
     let subtotal = calcularSubtotal(cantidad, precio);
     let items = {};
 
+
+    items['indice'] = indice;
     items['id_item'] = id;
     items['precio'] = precio;
     items['cantidad'] = cantidad;
-    
-    detalle_ventas.push(items);
+    items['subtotal'] = subtotal;
 
-    $('#id_detalle_venta tr:last').before('<tr id=' + indice + ' ><td >' + id + '</td><td>' + nombre + '</td><td>' + cantidad + '</td><td>' + '$' + precio + '</td><td>' + '$' + + subtotal + '</td><td> 	<a class="dropdown-item"><i class="dw dw-delete-3" onclick="eliminarArticulo(' + indice + ');"></i></a></td></tr>')
+    detalle_ventas.push(items);
+    console.log(detalle_ventas);
+
+    $('#id_detalle_venta tr:last').before('<tr id=' + indice + ' ><td >' + id + '</td><td>' + nombre + '</td><td>' + cantidad + '</td><td>' + '$' + precio + '</td><td>' + '$' + + subtotal + '</td><td> 	<a class="dropdown-item"><i class="dw dw-delete-3" onclick="eliminarItem(' + indice + ');"></i></a></td></tr>')
     indice += 1;
 }
 
@@ -272,21 +278,37 @@ function calcularVuelto(){
     $('#id_vuelto').text('$' + resultado);
 }
 
-function restarSubtotal(cantidad, precio){
-    let resultado = parseFloat(cantidad) * parseFloat(precio);
+function restarSubtotal(precio){
+    let resultado = precio;
     total -= resultado; //restar cantidad
     $('#id_total').text('$' + total);
-    return resultado;
+    console.log(resultado);
+    return total;
+
 }
 
 /*------------
 eliminar de la tabla
 ---------*/
 
-function eliminarArticulo(i){
-    $('#' + i).remove(); // removemos de la tabla
-    restarSubtotal(detalle_ventas[i].cantidad, detalle_ventas[i].precio);
-    detalle_ventas.splice(i, 1); // quita un elemento del array
+function eliminarItem(indiceDelete){
+	let respuesta=[];
+	for (let index = 0; index < detalle_ventas.length; index++){
+		if(detalle_ventas[index].indice !== indiceDelete){
+			respuesta.push(detalle_ventas[index])
+			//console.log(respuesta[index]);
+		} else {
+			console.log('borra este id');
+			console.log(index);
+			$('#' + detalle_ventas[index].indice).remove();
+			restarSubtotal(detalle_ventas[index].subtotal);
+			//respuesta.splice(index, 1);
+		}
+	}
+	//console.log(respuesta);
+	detalle_ventas = respuesta;
+	console.log(detalle_ventas);
+	return detalle_ventas;		
 }
 
 
@@ -303,6 +325,15 @@ function guardarFormVentas(){
 	let cliente = $('#cboCliente').val();
 	let tipoEnvio = $('#cboTipoEnvio').val();
 
+	if (cliente == 0) {
+		alert("Debe seleccionar el cliente");
+		return;
+	}
+	if (tipoEnvio == 0) {
+		alert("Debe seleccionar el tipo de envio");
+		return;
+	}
+
     if (detalle_ventas.length > 0){
         $.ajax({
             type: 'post',
@@ -314,6 +345,7 @@ function guardarFormVentas(){
                 'items': detalle_ventas
             },
            	success: function(data){
+               //console.log(data);
                window.location.href = '../pedidos/listado.php?mensaje=1';
             }
         })

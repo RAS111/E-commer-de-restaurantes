@@ -78,9 +78,10 @@ $listadoDetallePedido = DetallePedido::obtenerPorIdPedido($idPedido);
 							<?php endforeach ?>
 						</tbody>
 					</table>
-					<div class="row row-cols-2">
-						<div class="col">
-							<p class="lead">Totales</p>
+					<div class="row">
+						<div class="col-6 mt-3 pt-3"></div>
+						<div class="col-6 mt-3 pt-3">
+							<p class="lead">Monto a pagar:</p>
 							<div class="table-responsive">
 								<table class="table table-sm">
 									<tbody>
