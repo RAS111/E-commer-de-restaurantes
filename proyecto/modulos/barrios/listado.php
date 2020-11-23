@@ -39,11 +39,19 @@ $listadoBarrio = Barrio::obtenerTodos();
 						<a class="dropdown-item" href="alta.php" title="Agregar Barrio"><i class="dw dw-add-user"></i></a>
 	
 						<?php if($mensaje == BARRIO_GUARDADO):?>
-							<h3>Barrio Guardado</h3>
-							<br>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<strong>Barrio Guardado</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 						<?php elseif($mensaje == BARRIO_MODIFICADO):?>
-							<h3>Barrio Modificado</h3>
-							<br>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<strong>Usuario Modificado</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 						<?php  endif;?>
 						<table class="data-table table stripe hover nowrap">
 							<thead>
@@ -98,7 +106,5 @@ $listadoBarrio = Barrio::obtenerTodos();
 	<script src="src/plugins/datatables/js/vfs_fonts.js"></script>
 	<!-- Datatable Setting js -->
 	<script src="vendors/scripts/datatable-setting.js"></script>
-					
-	
 </body>
 </html>

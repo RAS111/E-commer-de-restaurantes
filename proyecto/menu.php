@@ -35,11 +35,11 @@ if (is_null($imagen)){
 						</a>
 						<ul class="submenu">
 			
-							<?php foreach ($usuario->perfil->getModulos() as $modulo): ?>
+							<?php foreach ($usuario->perfil->getModulos() as $modulos): ?>
 
 							<li class="nav-item">
-								<a href="/E-commerce-de-restaurantes/proyecto/modulos/<?=$modulo->getDirectorio() ?>/listado.php" class="nav-link">
-									<?php echo $modulo; ?>
+								<a href="/E-commerce-de-restaurantes/proyecto/modulos/<?=$modulos->getDirectorio() ?>/listado.php" class="nav-link">
+									<?php echo $modulos; ?>
 								</a>
 							</li>
 

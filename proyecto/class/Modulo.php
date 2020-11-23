@@ -92,14 +92,15 @@ class Modulo {
     }
 
     public static function obtenerPorId($id) {
-        $sql = "SELECT * FROM modulo WHERE id_modulo = '$id' " ;
-    
+        $sql = "SELECT * FROM modulo WHERE id_modulo = $id " ;
+
         $mysql = new MySQL();
         $result = $mysql->consultar($sql);
         $mysql->desconectar();
 
         $data = $result->fetch_assoc();
         $modulo = self::_generarModulo($data);
+        
         return $modulo;
     }
 

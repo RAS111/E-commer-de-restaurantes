@@ -62,7 +62,6 @@ $producto->setStockMaximo($stockMaximo);
 $producto->setIdRubro($rubro);
 
 $producto->guardar();
-
 // REDIRECCION
 
 header('Location: ../listado.php?mensaje=1');

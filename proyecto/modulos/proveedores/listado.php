@@ -39,11 +39,19 @@ $listadoProveedor = Proveedor::obtenerTodos();
 						<a class="dropdown-item" href="alta.php" title="Agregar Proveedor"><i class="dw dw-add-user"></i></a>
 
 						<?php if($mensaje == PROVEEDOR_GUARDADO):?>
-							<h3>Proveedor Guardado</h3>
-							<br>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<strong>Proveedor Guardado</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 						<?php elseif($mensaje == PROVEEDOR_MODIFICADO):?>
-							<h3>Proveedor Modificado</h3>
-							<br>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<strong>Proveedor Modificado</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 						<?php  endif;?>
 
 						<table class="data-table table stripe hover nowrap">

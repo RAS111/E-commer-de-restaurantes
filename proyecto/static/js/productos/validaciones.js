@@ -5,7 +5,7 @@ function validarDatos() {
     var stockActual = document.getElementById("txtStockActual").value;
     var stockMaximo = document.getElementById("txtStockMaximo").value;
     var rubro = document.getElementById("cboRubro").value;
-
+    
     // NOMBRE
     if (nombre.trim() == "") {
         alert("El nombre no debe estar vacio");

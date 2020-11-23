@@ -23,6 +23,18 @@ $barrio = Barrio::obtenerPorId($id);
 					<div class="clearfix">
 						<h4 class="text-black h4">Modificar Barrio</h4>
 					</div>
+					<?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+						<font color="red">
+							<?php echo $_SESSION['mensaje_error'] ?>
+						</font>
+
+						<br><br>
+
+					<?php
+							unset($_SESSION['mensaje_error']);
+						endif;
+					?>
 					<div class="wizard-content">
 						<form class="tab-wizard wizard-circle wizard" name="frmDatos" id="frmDatos" method="POST" action="procesar/modificar.php">
 							<section>
@@ -36,7 +48,7 @@ $barrio = Barrio::obtenerPorId($id);
 									</div>
 								</div>
 							</section>
-							<input type="submit" class="btn btn-success" value="Actualizar" onclick="validarDatos();">		
+							<input type="button" class="btn btn-success" value="Actualizar" onclick="validarDatos();">		
 						</form>
 					</div>
 				</div>
@@ -44,6 +56,7 @@ $barrio = Barrio::obtenerPorId($id);
 		</div>
 	</div>			
 	<!-- js -->
+	<script src="../../static/js/barrios/validaciones.js"></script>
 	<script src="../../static/vendors/scripts/core.js"></script>
 	<script src="../../static/vendors/scripts/script.min.js"></script>
 	<script src="../../static/vendors/scripts/process.js"></script>

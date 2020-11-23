@@ -210,7 +210,7 @@ class Persona {
              . "id_tipo_documento = $this->_idTipoDocumento "
              . "WHERE id_persona = $this->_idPersona";
 
-        //echo $sql;
+        
         $mysql = new MySQL();
         $mysql->actualizar($sql);
     }

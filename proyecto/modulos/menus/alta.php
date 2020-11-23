@@ -20,6 +20,18 @@ $listadoRubro = Rubro::obtenerTodos();
 					<div class="clearfix">
 						<h4 class="text-black h4">Registrar Menu</h4>
 					</div>
+					<?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+						<font color="red">
+							<?php echo $_SESSION['mensaje_error'] ?>
+						</font>
+
+						<br><br>
+
+					<?php
+							unset($_SESSION['mensaje_error']);
+						endif;
+					?>
 					<div class="wizard-content">
 						<form class="tab-wizard wizard-circle wizard" name="frmDatos" id="frmDatos" method="POST" action="procesar/guardar.php">
 							<section>
@@ -33,7 +45,7 @@ $listadoRubro = Rubro::obtenerTodos();
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Precio</label>
-											<input type="text" name="numPrecio" class="form-control">
+											<input type="text" name="txtPrecio" id="txtPrecio" class="form-control">
 										</div>
 									</div>
 								</div>
@@ -41,7 +53,7 @@ $listadoRubro = Rubro::obtenerTodos();
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Rubro </label>
-											<select name="cboRubro" class="custom-select form-control">
+											<select name="cboRubro" id="cboRubro" class="custom-select form-control">
 												<option value="0">Seleccionar</option>
 												<?php foreach ($listadoRubro as $rubro): ?>
 
@@ -54,7 +66,7 @@ $listadoRubro = Rubro::obtenerTodos();
 									</div>
 								</div>
 							</section>	
-							<input type="submit" class="btn btn-success" value="Guardar" onclick="validarDatos();">		
+							<input type="button" class="btn btn-success" value="Guardar" onclick="validarDatos();">		
 						</form>
 					</div>
 				</div>
@@ -62,6 +74,7 @@ $listadoRubro = Rubro::obtenerTodos();
 		</div>
 	</div>
 	<!--JS-->
+	<script src="../../static/js/menu/validaciones.js"></script>
 	<script src="../../static/vendors/scripts/core.js"></script>
 	<script src="../../static/vendors/scripts/script.min.js"></script>
 	<script src="../../static/vendors/scripts/process.js"></script>

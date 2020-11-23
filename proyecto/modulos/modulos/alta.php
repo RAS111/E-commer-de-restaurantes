@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 	<?php include_once('../../head.php'); ?>
+
 <body>
 
 	<?php require_once '../../menu.php';?>
@@ -13,6 +15,18 @@
 					<div class="clearfix">
 						<h4 class="text-black h4">Registrar Modulos</h4>
 					</div>
+					<?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+						<font color="red">
+							<?php echo $_SESSION['mensaje_error'] ?>
+						</font>
+
+					<br><br>
+
+					<?php
+							unset($_SESSION['mensaje_error']);
+						endif;
+					?>
 					<div class="wizard-content">
 						<form class="tab-wizard wizard-circle wizard" name="frmDatos" id="frmDatos" method="POST" action="procesar/guardar.php">
 							<section>
@@ -20,25 +34,27 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Descripcion</label>
-											<input type="text" name="txtDescripcion" class="form-control">
+											<input type="text" name="txtDescripcion" id="txtDescripcion" class="form-control">
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Directorio</label>
-											<input type="text" name="txtDirectorio" class="form-control">
+											<input type="text" name="txtDirectorio" id="txtDirectorio" class="form-control">
 										</div>
 									</div>
 								</div>
 							</section>
-							<input type="submit" class="btn btn-success" value="Guardar" onclick="validarDatos();">		
+							<input type="button" class="btn btn-success" value="Guardar" onclick="validarDatos();">		
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>			
+	</div>
+	
 	<!-- js -->
+	<script src="../../static/js/modulos/validaciones.js"></script>
 	<script src="../../static/vendors/scripts/core.js"></script>
 	<script src="../../static/vendors/scripts/script.min.js"></script>
 	<script src="../../static/vendors/scripts/process.js"></script>

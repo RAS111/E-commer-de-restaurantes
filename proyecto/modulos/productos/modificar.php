@@ -26,6 +26,18 @@ $listadoRubro = Rubro::obtenerTodos();
 					<div class="clearfix">
 						<h4 class="text-black h4">Modificar Producto</h4>
 					</div>
+					<?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+						<font color="red">
+							<?php echo $_SESSION['mensaje_error'] ?>
+						</font>
+
+						<br><br>
+
+					<?php
+							unset($_SESSION['mensaje_error']);
+						endif;
+					?>
 					<div class="wizard-content">
 						<form class="tab-wizard wizard-circle wizard" name="frmDatos" id="frmDatos" method="POST" action="procesar/modificar.php">
 							<section>
@@ -34,27 +46,41 @@ $listadoRubro = Rubro::obtenerTodos();
 										<div class="form-group">
 											<input type="hidden" name="txtId" value="<?=$producto->getIdProducto(); ?>">
 											<label>Nombre</label>
-											<input type="text" name="txtNombre" class="form-control" value="<?=$producto->getNombre(); ?>">
+											<input type="text" name="txtNombre" id="txtNombre" class="form-control" value="<?=$producto->getNombre(); ?>">
 										</div>
 									</div>
 									<div class="col-md-6" >
 										<div class="form-group ">
 											<label>Precio</label>
-											<input type="text" name="numPrecio"  class="form-control" value="<?=$producto->getPrecio(); ?>">
+											<input type="text" name="txtPrecio" id="txtPrecio" class="form-control" value="<?=$producto->getPrecio(); ?>">
 										</div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
+											<label>Stock Minimo</label>
+											<input type="text" name="txtStockMinimo" id="txtStockMinimo" value="<?=$producto->getStockMinimo(); ?>" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
 											<label>Stock Actual</label>
-											<input type="text" name="numStockActual" class="form-control" value="<?=$producto->getStockActual(); ?>">
+											<input type="text" name="txtStockActual" id="txtStockActual" class="form-control" value="<?=$producto->getStockActual(); ?>">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Stock Maximo</label>
+											<input type="text" name="txtStockMaximo" id="txtStockMaximo" value="<?=$producto->getStockMaximo(); ?>" class="form-control">
 										</div>
 									</div>
 									<div class="col-md-6" >
 										<div class="form-group ">
 											<label>Rubro</label>
-											<select name="cboRubro"  class="custom-select form-control">
+											<select name="cboRubro" id="cboRubro" class="custom-select form-control">
 												<option value="0">Seleccionar</option>
 
 												<?php
@@ -75,7 +101,7 @@ $listadoRubro = Rubro::obtenerTodos();
 									</div>
 								</div>
 							</section>	
-							<input type="submit" class="btn btn-success" value="Actualizar" onclick="validarDatos();">		
+							<input type="button" class="btn btn-success" value="Actualizar" onclick="validarDatos();">		
 						</form>
 					</div>
 				</div>
@@ -83,6 +109,7 @@ $listadoRubro = Rubro::obtenerTodos();
 		</div>
 	</div>>
 	<!--JS-->
+	<script src="../../static/js/productos/validaciones.js"></script>
 	<script src="../../static/vendors/scripts/core.js"></script>
 	<script src="../../static/vendors/scripts/script.min.js"></script>
 	<script src="../../static/vendors/scripts/process.js"></script>

@@ -94,6 +94,46 @@ class RecetaProducto {
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getProducto()
+    {
+        return $this->producto;
+    }
+
+    /**
+     * @param mixed $producto
+     *
+     * @return self
+     */
+    public function setProducto()
+    {
+        $this->producto = Producto::obtenerPorId($this->_idProducto);
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMenu()
+    {
+        return $this->producto;
+    }
+
+    /**
+     * @param mixed $producto
+     *
+     * @return self
+     */
+    public function setMenu()
+    {
+        $this->menu = Menu::obtenerPorId($this->_idMenu);
+
+        return $this;
+    }
+
     public function guardar(){
     	$sql = "INSERT INTO receta_producto (id_receta_producto, cantidad, id_producto, id_menu)VALUES (NULL, $this->_cantidad, $this->_idProducto, $this->_idMenu) ";
 
@@ -164,7 +204,6 @@ class RecetaProducto {
         return $listado;
     }
 
-    //PRUEBA
     public static function obtenerPorIdMenu($idMenu) {
         $sql = "SELECT * FROM receta_producto WHERE id_menu = $idMenu";
 
@@ -190,47 +229,9 @@ class RecetaProducto {
         }
         return $listado;
     }
-    //FIN PRUEBA
+  
 
-    /**
-     * @return mixed
-     */
-    public function getProducto()
-    {
-        return $this->producto;
-    }
-
-    /**
-     * @param mixed $producto
-     *
-     * @return self
-     */
-    public function setProducto()
-    {
-        $this->producto = Producto::obtenerPorId($this->_idProducto);
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMenu()
-    {
-        return $this->producto;
-    }
-
-    /**
-     * @param mixed $producto
-     *
-     * @return self
-     */
-    public function setMenu()
-    {
-        $this->menu = Menu::obtenerPorId($this->_idMenu);
-
-        return $this;
-    }
+    
    
 }
 

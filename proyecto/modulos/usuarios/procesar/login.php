@@ -17,7 +17,7 @@ if ($usuario->estaLogueado()) {
 	$_SESSION['usuario'] = $usuario;
 	header("location:/E-commerce-de-restaurantes/proyecto/modulos/dashboard/dashboard.php");
 } else {
-	header("location: ../../../formulario_login.php");
+	header("location:E-commerce-de-restaurantes/proyecto/formulario_login.php");
 }
 
 ?>

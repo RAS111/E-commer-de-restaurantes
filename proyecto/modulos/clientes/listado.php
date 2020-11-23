@@ -39,11 +39,19 @@ $listadoClientes = Cliente::obtenerTodos();
 						<a class="dropdown-item" href="alta.php" title="Agregar Cliente"><i class="dw dw-add-user"></i></a>
 						
 						<?php if($mensaje == CLIENTE_GUARDADO):?>
-							<h3>Cliente Guardado</h3>
-							<br>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<strong>Cliente Guardado</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 						<?php elseif($mensaje == CLIENTE_MODIFICADO):?>
-							<h3>Cliente Modificado</h3>
-							<br>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<strong>Cliente Modificado</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 						<?php  endif;?>
 						<table class="data-table table stripe hover nowrap">
 							<thead>

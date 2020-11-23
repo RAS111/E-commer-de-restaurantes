@@ -37,11 +37,19 @@ $listadoMenus = Menu::obtenerTodos();
 					<div class="pb-20">
 						<a class="dropdown-item" href="alta.php" title="Agregar Menu"><i class="dw dw-add-user"></i></a>
 						<?php if($mensaje == MENU_GUARDADO):?>
-							<h3>Menu Guardado</h3>
-							<br>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<strong>Menu Guardado</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 						<?php elseif($mensaje == MENU_MODIFICADO):?>
-							<h3>Menu Modificado</h3>
-							<br>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<strong>Menu Modificado</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 						<?php  endif;?>		
 						<table class="data-table table stripe hover nowrap">
 							<thead>
@@ -50,7 +58,7 @@ $listadoMenus = Menu::obtenerTodos();
 									<th>Nombre</th>
 									<th>Precio</th>
 									<th>Recetas</th>
-									<th class="datatable-nosort">Action</th>
+									<th class="datatable-nosort">Accion</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -68,7 +76,6 @@ $listadoMenus = Menu::obtenerTodos();
 												<i class="dw dw-more"></i>
 											</a>
 											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-												<a class="dropdown-item" href="detalle.php?id=<?=$menu->getIdMenu();?>"><i class="dw dw-eye"></i> View</a>
 												<a class="dropdown-item" href="modificar.php?id=<?=$menu->getIdMenu();?>"><i class="dw dw-edit2"></i> Modificar</a>	
 											</div>
 										</div>

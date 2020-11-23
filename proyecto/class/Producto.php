@@ -5,10 +5,10 @@ require_once 'Item.php';
 
 class Producto extends Item {
 
-	private $_idProducto;
-	private $_stockMinimo;
-	private $_stockActual;
-	private $_stockMaximo;
+	public $_idProducto;
+	public $_stockMinimo;
+	public $_stockActual;
+	public $_stockMaximo;
 	
     /**
      * @return mixed
@@ -94,7 +94,6 @@ class Producto extends Item {
     	parent::guardar();
     	$sql = "INSERT INTO producto (id_producto, stock_minimo, stock_actual, stock_maximo, id_item) VALUES (NULL, $this->_stockMinimo, $this->_stockActual, $this->_stockMaximo, $this->_idItem)";
 
-
     	$mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
 
@@ -110,8 +109,124 @@ class Producto extends Item {
         $mysql->actualizar($sql);
     }
 
+    public function descontarStock($idPedido) {
+        $sql = "UPDATE producto 
+               INNER JOIN detallepedido ON detallepedido.id_item = producto.id_item
+               INNER JOIN pedidoss ON pedidoss.id_pedido = detallepedido.id_pedido
+               SET producto.stock_actual = producto.stock_actual - detallepedido.cantidad
+               WHERE pedidoss.id_pedido = $idPedido";
+
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+    }
+
+    public function aumentarStockVenta($idFactura) {
+        $sql = "UPDATE producto 
+               INNER JOIN detallepedido ON detallepedido.id_item = producto.id_item
+               INNER JOIN pedidoss ON pedidoss.id_pedido = detallepedido.id_pedido
+               INNER JOIN factura ON factura.id_pedido = pedidoss.id_pedido
+               SET producto.stock_actual = producto.stock_actual + detallepedido.cantidad
+               WHERE factura.id_factura = $idFactura";
+
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+    }
+
+    public function aumentarStock($numero) {
+        $sql = "UPDATE producto 
+                INNER JOIN detallecompra ON detallecompra.id_producto = producto.id_producto
+                INNER JOIN compra ON compra.id_compra = detallecompra.id_compra
+                SET producto.stock_actual = producto.stock_actual + detallecompra.cantidad
+                WHERE compra.numero = $numero";
+
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+    }
+
+    public function descontarStockCompra($numero) {
+        $sql = "UPDATE producto 
+                INNER JOIN detallecompra ON detallecompra.id_producto = producto.id_producto
+                INNER JOIN compra ON compra.id_compra = detallecompra.id_compra
+                SET producto.stock_actual = producto.stock_actual - detallecompra.cantidad
+                WHERE compra.numero = $numero";
+        
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+    }
+
+    public function obtenerPorNumeroFactura($numero){
+        $sql = "SELECT * FROM producto
+                INNER JOIN detallecompra ON detallecompra.id_producto = producto.id_producto
+                INNER JOIN compra ON compra.id_compra = detallecompra.id_compra
+                WHERE compra.id_compra = $numero";
+
+
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $data = $result->fetch_assoc();
+        $producto = self::_generarProductoPorNumeroFactura($data);
+        return $producto;
+    }
+
+     private function _generarProductoPorNumeroFactura($data) {
+        $producto = new Producto($data['nombre'], $data['precio']);
+        $producto->_idProducto = $data['id_producto'];
+        $producto->_idItem = $data['id_item'];
+        $producto->_idRubro = $data['id_rubro'];
+        $producto->_stockActual = $data['stock_actual'];
+        return $producto;
+    }
+
+    public function obtenerPorIdFactura($idFactura) {
+        $sql = "SELECT * FROM producto 
+                INNER JOIN detallepedido ON detallepedido.id_item = producto.id_item
+                INNER JOIN pedidoss ON pedidoss.id_pedido = detallepedido.id_pedido
+                INNER JOIN item ON item.id_item = producto.id_item
+                INNER JOIN factura ON factura.id_pedido = pedidoss.id_pedido
+                WHERE factura.id_factura = $idFactura";
+
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $data = $result->fetch_assoc();
+        $producto = self::_generarProducto($data);
+        return $producto;
+    }
+
+    public function obtenerPorIdPedido($idPedido){
+        $sql = "SELECT * FROM producto
+                INNER JOIN detallepedido ON detallepedido.id_item = producto.id_item
+                INNER JOIN pedidoss ON pedidoss.id_pedido = detallepedido.id_pedido
+                INNER JOIN item ON item.id_item = producto.id_item
+                WHERE pedidoss.id_pedido = $idPedido";
+
+
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $data = $result->fetch_assoc();
+        $producto = self::_generarProductoPorIdPedido($data);
+        return $producto;
+    }
+
+    private function _generarProductoPorIdPedido($data) {
+        $producto = new Producto($data['nombre'], $data['precio']);
+        $producto->_idProducto = $data['id_producto'];
+        $producto->_idItem = $data['id_item'];
+        $producto->_idRubro = $data['id_rubro'];
+        $producto->_stockActual = $data['stock_actual'];
+        return $producto;
+    }
+    
+
     public static function obtenerPorId($id) {
-        $sql = "SELECT * FROM producto INNER JOIN item ON item.id_item = producto.id_item WHERE id_producto = '$id' ";
+        $sql = "SELECT * FROM producto INNER JOIN item ON item.id_item = producto.id_item 
+            
+            WHERE id_producto = '$id' ";
 
         $mysql = new MySQL();
         $result = $mysql->consultar($sql);
@@ -129,6 +244,9 @@ class Producto extends Item {
         $producto->_idItem = $data['id_item'];
         $producto->_idRubro = $data['id_rubro'];
         $producto->_stockActual = $data['stock_actual'];
+        $producto->_stockMinimo = $data['stock_minimo'];
+        $producto->_stockMaximo = $data['stock_maximo'];
+       
         return $producto;
     }
 
@@ -152,12 +270,39 @@ class Producto extends Item {
             $producto = new Producto($registro['nombre'], $registro['precio']);
             $producto->_idProducto = $registro['id_producto'];
             $producto->_idItem = $registro['id_item'];
+            
+
+            $producto->_stockActual = $registro['stock_actual'];
             $listado[] = $producto;
         }
         return $listado;
     }
 
-    // PRUEBA 
+    public static function obtenerPorRubro() {
+        $sql = "SELECT * FROM item INNER JOIN producto ON producto.id_item = item.id_item WHERE id_rubro = 2 ";
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarListadoPorRubro($datos);
+
+        return $listado;
+    }
+
+    private function _generarListadoPorRubro($datos) {
+        $listado = array();
+        while ($registro = $datos->fetch_assoc()) {
+            $producto = new Producto($registro['nombre'], $registro['precio']);
+            $producto->_idProducto = $registro['id_producto'];
+            $producto->_idItem = $registro['id_item'];
+            $producto->_stockActual = $registro['stock_actual'];
+            $producto->_idRubro = $registro['id_rubro'];
+            $listado[] = $producto;
+        }
+        return $listado;
+    }
+
     public static function obtenerProductosPorIdReceta($idReceta) {
         $sql = "SELECT *
                 FROM producto 
@@ -184,6 +329,9 @@ class Producto extends Item {
         }
         return $listado;
     }
+
+
+
 
     public function __toString() {
         return $this->_nombre;

@@ -94,31 +94,31 @@ class Usuario extends Persona{
 
     public static function obtenerPorId($id) {
         $sql = "SELECT * FROM usuario INNER JOIN persona  ON usuario.id_persona = persona.id_persona WHERE id_usuario =" .$id;
-
         $mysql = new MySQL();
         $result = $mysql->consultar($sql);
         $mysql->desconectar();
 
         $data = $result->fetch_assoc();
-        $usuario = self::_generarUsuario($data);
+        $user = self::_generarUsuario($data);
 
-        return $usuario;
+        return $user;
     }
 
     private function _generarUsuario($data) {
-        $usuario = new Usuario($data['nombre'], $data['apellido']);
-        $usuario->_idUsuario = $data['id_usuario'];
-        $usuario->_username = $data['username'];
-        $usuario->_idPersona = $data['id_persona'];
-        $usuario->_fechaNacimiento = $data['fecha_nacimiento'];
-        $usuario->_tipoDocumento = $data['id_tipo_documento'];
-        $usuario->_numeroDocumento = $data['numero_documento'];
-        $usuario->setDomicilio();
-        $usuario->setContactos();
-        $usuario->_idPerfil = $data['id_perfil'];
-        $usuario->_imagenPerfil = $data['imagen_perfil'];
-        $usuario->_estado = $data['id_estado'];
-        return $usuario;
+        $user = new Usuario($data['nombre'], $data['apellido']);
+        $user->_idUsuario = $data['id_usuario'];
+        $user->_sexo = $data['sexo'];
+        $user->_username = $data['username'];
+        $user->_idPersona = $data['id_persona'];
+        $user->_fechaNacimiento = $data['fecha_nacimiento'];
+        $user->_idTipoDocumento = $data['id_tipo_documento'];
+        $user->_numeroDocumento = $data['numero_documento'];
+        $user->setDomicilio();
+        $user->setContactos();
+        $user->_idPerfil = $data['id_perfil'];
+        $user->_imagenPerfil = $data['imagen_perfil'];
+        $user->_estado = $data['id_estado'];
+        return $user;
     }
 
     public static function obtenerTodos() {
@@ -164,11 +164,13 @@ class Usuario extends Persona{
             $usuario = new Usuario($registro['nombre'], $registro['apellido']);
             $usuario->_idUsuario = $registro['id_usuario'];
             $usuario->_idPersona = $registro['id_persona'];
+            $usuario->_sexo = $registro['sexo'];
+            $usuario->_tipoDocumento = $registro['id_tipo_documento'];
             $usuario->_username = $registro['username'];
             $usuario->_idPerfil = $registro['id_perfil'];
             $usuario->_estaLogueado = true;
-             $usuario->_imagenPerfil = $registro['imagen_perfil'];
-            //cargar foto, sexo, y el tipo documento
+            $usuario->_imagenPerfil = $registro['imagen_perfil'];
+            
             $usuario->perfil = Perfil::obtenerPorId($usuario->_idPerfil);
         } else {
             $usuario = new Usuario('', '');
@@ -198,7 +200,7 @@ class Usuario extends Persona{
     public function actualizar() {
         parent::actualizar();
 
-        $sql = "UPDATE usuario SET username = '$this->_username', password = '$this->_password', id_perfil = $this->_idPerfil, imagen_perfil = '$this->_imagenPerfil' " 
+        $sql = "UPDATE usuario SET username = '$this->_username', id_perfil = $this->_idPerfil, imagen_perfil = '$this->_imagenPerfil' " 
                 ."WHERE id_usuario = $this->_idUsuario";
 
 
@@ -207,8 +209,35 @@ class Usuario extends Persona{
 
     }
 
+    public function comprobarUsuario($username){
+        $sql = " SELECT * FROM usuario WHERE username = '$username' ";
 
-    
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        if ($result->num_rows > 0 ) {
+            $_SESSION['mensaje_error'] = "Usuario no disponible";
+            header('Location: ../alta.php');
+            exit;
+        } 
+    }
+
+    public function comprobarDocumento($numeroDocumento){
+        $sql = "SELECT persona.numero_documento FROM usuario 
+                INNER JOIN persona ON persona.id_persona = usuario.id_persona
+                WHERE persona.numero_documento = $numeroDocumento";
+
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        if ($result->num_rows > 0 ) {
+            $_SESSION['mensaje_error'] = "Dni no disponible";
+            header('Location: ../alta.php');
+            exit;
+        } 
+    }
 
     /**
      * @return mixed

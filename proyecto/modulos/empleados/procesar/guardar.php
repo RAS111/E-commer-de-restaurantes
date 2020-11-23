@@ -33,6 +33,22 @@ if (empty(trim($apellido))) {
 	exit;
 }
 
+if ($sexo == '0') {
+	$_SESSION['mensaje_error'] = "debe seleccionar el sexo";
+	header("location: ../alta.php");
+	exit;
+}
+
+if(empty(trim($fechaNacimiento))) {
+	$_SESSION['mensaje_error'] = "la fecha no debe estar vacio";
+	header('Location: ../alta.php');
+	exit;
+} elseif($fechaNacimiento > date("Y-m-d")){
+	$_SESSION['mensaje_error'] = "la fecha ingresada es incorrecta";
+	header('Location: ../alta.php');
+	exit;
+}
+
 if ((int) $tipoDocumento == 0) {
 	$_SESSION['mensaje_error'] = "debe seleccionar el documento";
 	header("location: ../alta.php");

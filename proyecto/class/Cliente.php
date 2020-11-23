@@ -99,6 +99,10 @@ class Cliente extends Persona{
         $mysql->actualizar($sql);
     }
 
+    public function __toString(){
+        return $this->_nombre ." ". $this->_apellido;
+    }
+
 }
 
 ?>

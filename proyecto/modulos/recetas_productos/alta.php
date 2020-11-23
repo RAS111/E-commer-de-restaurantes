@@ -6,8 +6,6 @@ $idMenu = $_GET['id'];
 
 $listadoProducto = Producto::obtenerTodos();
 
-
-
 ?>
 
 <!DOCTYPE html>
@@ -25,6 +23,18 @@ $listadoProducto = Producto::obtenerTodos();
 					<div class="clearfix">
 						<h4 class="text-black h4">Registrar Receta</h4>
 					</div>
+					<?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+						<font color="red">
+							<?php echo $_SESSION['mensaje_error'] ?>
+						</font>
+
+						<br><br>
+
+					<?php
+							unset($_SESSION['mensaje_error']);
+						endif;
+					?>
 					<div class="wizard-content">
 						<form class="tab-wizard wizard-circle wizard" name="frmDatos" id="frmDatos" method="POST" action="procesar/guardar.php">
 							<section>
@@ -33,14 +43,14 @@ $listadoProducto = Producto::obtenerTodos();
 										<div class="form-group">
 											<input type="hidden" name="txtIdMenuVer" value="<?php echo $idMenu; ?>">		
 											<input type="hidden" name="txtId" value="<?php echo $idMenu; ?>">
-											<label>cantidad</label>
-											<input type="text" name="txtCantidad" class="form-control">
+											<label>cantidad (gramos)</label>
+											<input type="text" name="txtCantidad" id="txtCantidad" class="form-control">
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Producto</label>
-											<select name="cboProducto" class="custom-select form-control">
+											<select name="cboProducto" id="cboProducto" class="custom-select form-control">
 												<option value="0">Seleccionar</option>
 												<?php foreach ($listadoProducto as $producto) :?>
 
@@ -55,7 +65,7 @@ $listadoProducto = Producto::obtenerTodos();
 									</div>
 								</div>
 							</section>	
-							<input type="submit" class="btn btn-success" value="Guardar" onclick="validarDatos();">		
+							<input type="button" class="btn btn-success" value="Guardar" onclick="validarDatos();">		
 						</form>
 					</div>
 				</div>
@@ -63,6 +73,7 @@ $listadoProducto = Producto::obtenerTodos();
 		</div>
 	</div>
 	<!--JS-->
+	<script src="../../static/js/receta_menu/validaciones.js"></script>
 	<script src="../../static/vendors/scripts/core.js"></script>
 	<script src="../../static/vendors/scripts/script.min.js"></script>
 	<script src="../../static/vendors/scripts/process.js"></script>
